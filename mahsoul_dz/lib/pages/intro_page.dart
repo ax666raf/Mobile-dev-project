@@ -76,14 +76,14 @@ class IntroPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 100.0),
                 child: MyButton(
-                  text: 'Get started', 
+                  text: 'Get started',
                   onTap: () {
                     Navigator.pushNamed(context, '/home');
-              },
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         ),
       ),
     );
