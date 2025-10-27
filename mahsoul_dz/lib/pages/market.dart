@@ -1,0 +1,131 @@
+import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/widgets/Cards/product_card.dart';
+import 'package:mahsoul_dz/pages/main_navigation.dart';
+
+class Market extends StatefulWidget {
+  const Market({super.key});
+
+  @override
+  State<Market> createState() => _MarketState();
+}
+
+class _MarketState extends State<Market> {
+  List<String> categories = ['Vegetables', 'Fruits', 'Guns', 'Others'];
+  String selectedCategory = "Vegetables";
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 35.0,
+              vertical: 30.0,
+            ),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.0),
+                    border: Border.all(color: Colors.grey[300]!, width: 1.0),
+                  ),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search for products or farmers...',
+                      prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    _buildCategoryChip("Vegetables"),
+                    _buildCategoryChip("Fruits"),
+                    _buildCategoryChip("Grains"),
+                    _buildCategoryChip("Others"),
+                  ],
+                ),
+                const SizedBox(height: 5),
+
+                Text(
+                  selectedCategory,
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "Discover Fresh $selectedCategory from different farms",
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                const SizedBox(height: 20),
+
+                GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 16,
+                    crossAxisSpacing: 16,
+                    childAspectRatio: 0.8,
+                  ),
+                  itemCount: 6,
+                  itemBuilder: (context, index) {
+                    return ProductCard(
+                      imagePath: 'lib/assets/orders.png',
+                      name: 'Tomatoes',
+                      description: '1kg • 4.5 TND from Klay',
+                      price: '',
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Tomatoes selected')),
+                        );
+                      },
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCategoryChip(String label) {
+    final isSelected = selectedCategory == label;
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedCategory = label;
+        });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.green : Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    );
+  }
+}
