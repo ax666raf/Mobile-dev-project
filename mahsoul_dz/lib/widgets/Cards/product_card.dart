@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
-  final String imagePath;
   final String name;
-  final String description;
+  final String imageUrl;
+  final String farmName;
   final String price;
-  final VoidCallback? onPressed;
 
   const ProductCard({
     super.key,
-    required this.imagePath,
     required this.name,
-    required this.description,
+    required this.imageUrl,
+    required this.farmName,
     required this.price,
-    this.onPressed,
   });
 
   @override
@@ -21,46 +19,44 @@ class ProductCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.shade200,
-            blurRadius: 8,
-            spreadRadius: 2,
-            offset: const Offset(2, 4),
+            color: Colors.black12,
+            blurRadius: 6,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(imagePath, height: 80),
-            const SizedBox(height: 12),
+            Image.asset(imageUrl, height: 80),
+            const SizedBox(height: 10),
             Text(
               name,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const SizedBox(height: 4),
             Text(
-              description,
+              '$farmName • $price',
+              style: TextStyle(color: Colors.grey[600], fontSize: 13),
               textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 12, color: Colors.grey),
             ),
-            const Spacer(),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                minimumSize: const Size(double.infinity, 35),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+            const SizedBox(height: 8),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {},
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
-              ),
-              onPressed: onPressed,
-              child: Text(
-                "Discover More • $price",
-                style: const TextStyle(color: Colors.white, fontSize: 13),
+                child: const Text("Discover More"),
               ),
             ),
           ],
