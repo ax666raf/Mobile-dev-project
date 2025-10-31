@@ -3,6 +3,7 @@ import 'package:mahsoul_dz/themes/colors.dart';
 import 'package:mahsoul_dz/utils/extensions.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/widgets/CustomFormField.dart';
+import 'package:mahsoul_dz/widgets/Logo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -32,11 +33,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // LOGO
-                Text(
-                  'Mahsoul',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+                Logo(),
 
                 SizedBox(height: 35),
 

@@ -6,14 +6,14 @@ import 'package:mahsoul_dz/pages/FarmerSide/orders_page.dart';
 import 'package:mahsoul_dz/pages/FarmerSide/profile_page.dart';
 
 
-class MainNavigation extends StatefulWidget {
-  const MainNavigation({super.key});
+class Farmernavigation extends StatefulWidget {
+  const Farmernavigation({super.key});
 
   @override
-  State<MainNavigation> createState() => _MainNavigationState();
+  State<Farmernavigation> createState() => _FarmernavigationState();
 }
 
-class _MainNavigationState extends State<MainNavigation> {
+class _FarmernavigationState extends State<Farmernavigation> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [

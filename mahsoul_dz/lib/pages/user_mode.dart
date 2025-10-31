@@ -4,6 +4,7 @@ import 'package:mahsoul_dz/widgets/Cards/user_card.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/pages/login_page.dart';
 import 'package:mahsoul_dz/pages/FarmerSide/Login.dart' as farmer_login;
+import 'package:mahsoul_dz/widgets/Logo.dart';
 
 class UserMode extends StatefulWidget {
   const UserMode({super.key});
@@ -29,11 +30,7 @@ class _UserModeState extends State<UserMode> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // logo mn fo9
-                Text(
-                  'Mahsoul',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+                Logo(),
 
                 SizedBox(height: 60),
 

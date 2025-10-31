@@ -4,6 +4,7 @@ import 'package:mahsoul_dz/utils/extensions.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/widgets/CustomFormField.dart';
 import 'package:mahsoul_dz/widgets/photo_uploader.dart';
+import 'package:mahsoul_dz/widgets/Logo.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -35,11 +36,7 @@ class _LoginPageState extends State<LoginPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // LOGO
-                Text(
-                  'Mahsoul',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+                Logo(),
 
                 SizedBox(height: 35),
 
@@ -106,7 +103,6 @@ class _LoginPageState extends State<LoginPage> {
                       CustomFormField(
                         controller: _phoneController,
                         hintText: 'Enter your phone number',
-                        obscureText: true,
                         validator: (value) {
                           if (!value!.isValidPhone) {
                             return 'Invalid phone number';
@@ -198,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
                       MyButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            Navigator.pushNamed(context, '/MainDashboard');
+                            Navigator.pushNamed(context, '/FarmerNavigation');
                           }
                         },
                         text: 'Save & Continue',

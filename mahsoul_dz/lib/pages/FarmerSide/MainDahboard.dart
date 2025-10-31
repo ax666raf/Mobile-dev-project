@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/widgets/Cards/farmer_card.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/pages/FarmerSide/Products.dart';
 import 'package:mahsoul_dz/widgets/order.dart';
 import 'package:mahsoul_dz/models/order.dart';
 import 'package:mahsoul_dz/models/customer.dart';
 import 'package:mahsoul_dz/themes/colors.dart';
+import 'package:mahsoul_dz/widgets/Logo.dart';
+
+String shoppingCart = 'lib/assets/shoppingcart.png';
+String deliveryMan = 'lib/assets/delivery-man.png';
+String totalEarnings = 'lib/assets/earning.png';
 
 class MainDashboard extends StatefulWidget {
   final List<Order> orders = [
@@ -53,11 +59,7 @@ class _MainDashboardState extends State<MainDashboard> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // header
-                Text(
-                  'Mahsoul',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+                Logo(),
                 SizedBox(height: 20),
 
                 Row(
@@ -90,6 +92,47 @@ class _MainDashboardState extends State<MainDashboard> {
                 ),
                 SizedBox(height: 20),
 
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    FarmerCard(image: shoppingCart, title: 'Orders Today'),
+
+                    
+
+                    FarmerCard(image: totalEarnings, title: 'Total Earnings'),
+                  ],
+                ),
+
+                SizedBox(height: 15),
+
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey[200]!),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 9.0,
+                      vertical: 7.0,
+                    ),
+                    child: Row(
+                      children: [
+                        Image.asset(deliveryMan, width: 40, height: 40),
+                        SizedBox(width: 10),
+                        Text(
+                          'Pending Deliveries',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                SizedBox(height: 20),
+
                 // cards
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -100,24 +143,25 @@ class _MainDashboardState extends State<MainDashboard> {
                       Row(
                         children: [
                           MyButton(
-                             backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
                             textColor: primaryColor,
                             borderColor: primaryColor,
                             icon: Icons.add,
                             text: 'Add product',
                             onPressed: () {},
-                           ),
-                           SizedBox(width: 10),
+                          ),
+                          SizedBox(width: 10),
                           MyButton(
-                             backgroundColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
                             textColor: primaryColor,
                             borderColor: primaryColor,
                             icon: Icons.store,
                             text: 'My Products',
                             onPressed: () {
-                              Navigator.pushNamed(context, '/ProductsPage');},
+                              Navigator.pushNamed(context, '/ProductsPage');
+                            },
                           ),
-                       ],
+                        ],
                       ),
                       SizedBox(height: 20),
                       Row(
@@ -130,8 +174,8 @@ class _MainDashboardState extends State<MainDashboard> {
                             text: 'View Orders',
                             onPressed: () {
                               Navigator.pushNamed(context, '/OrdersPage');
-                        },
-                      ),
+                            },
+                          ),
                           SizedBox(width: 10),
                           MyButton(
                             backgroundColor: Colors.transparent,
@@ -143,33 +187,37 @@ class _MainDashboardState extends State<MainDashboard> {
                               Navigator.pushNamed(context, '/ProductsPage');
                             },
                           ),
-                  
                         ],
                       ),
                     ],
                   ),
                 ),
-              
 
                 SizedBox(height: 20),
-                // recent orders
-                Text(
-                  'Recent Orders',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                ),
 
+                // recent orders
                 SizedBox(height: 10),
                 Column(
-                  children:
-                      widget.orders
-                          .expand(
-                            (order) => [
-                              OrderTile(order: order),
-                              SizedBox(height: 10),
-                            ],
-                          )
-                          .toList()
-                        ..removeLast(), // Remove trailing SizedBox
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Recent Orders',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 7),
+                    ...widget.orders
+                        .expand(
+                          (order) => [
+                            OrderTile(order: order),
+                            SizedBox(height: 10),
+                          ],
+                        )
+                        .toList()
+                      ..removeLast(), // Remove trailing SizedBox
+                  ],
                 ),
 
                 // bottom navigation bar

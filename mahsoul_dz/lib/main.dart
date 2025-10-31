@@ -7,6 +7,7 @@ import 'package:mahsoul_dz/themes/app_theme.dart';
 import 'package:mahsoul_dz/pages/menu_page.dart';
 import 'package:mahsoul_dz/pages/main_navigation.dart';
 import 'package:mahsoul_dz/pages/FarmerSide/MainDahboard.dart';
+import 'package:mahsoul_dz/pages/FarmerSide/FarmerNavigation.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         '/menu': (context) => const MenuPage(),
         '/main': (context) => const MainNavigation(),
         '/MainDashboard': (context) => MainDashboard(),
+        '/FarmerNavigation': (context) => Farmernavigation(),
 
       },
     );

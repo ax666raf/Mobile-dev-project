@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:mahsoul_dz/widgets/Cards/categories.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/widgets/featuredFarmer.dart';
+import 'package:mahsoul_dz/widgets/Logo.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -28,13 +29,7 @@ class _MenuPageState extends State<MenuPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // logo
-                Center(
-                  child: Text(
-                    'Mahsoul',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
+                Logo(),
 
                 SizedBox(height: 35),
 
