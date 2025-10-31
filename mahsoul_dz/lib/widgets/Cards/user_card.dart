@@ -6,6 +6,7 @@ class UserCard extends StatelessWidget {
   final String title;
   final String description;
   final VoidCallback? onTap;
+  final bool selected;
 
   const UserCard({
     super.key,
@@ -13,6 +14,7 @@ class UserCard extends StatelessWidget {
     required this.title,
     required this.description,
     this.onTap,
+    this.selected = false,
   });
 
   // Helper method to determine if it's a farmer
@@ -27,11 +29,17 @@ class UserCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: selected ? primaryColor : Colors.transparent,
+            width: 2,
+          ),
           boxShadow: [
             BoxShadow(
-              color: isFarmer
-                  ? primaryColor.withOpacity(0.4)
-                  : Colors.grey[800]!.withOpacity(0.4),
+              color:
+                  (selected
+                          ? primaryColor
+                          : (isFarmer ? primaryColor : Colors.grey[800]!))
+                      .withOpacity(0.4),
               spreadRadius: 0,
               blurRadius: 20,
               offset: const Offset(0, 4),
@@ -41,18 +49,10 @@ class UserCard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            
             // icon
-            Image.asset(
-              iconPath,
-              width: 55,
-              height: 55.0,
-              
-            ),
+            Image.asset(iconPath, width: 55, height: 55.0),
             const SizedBox(height: 20.0),
 
-
-            
             // title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
@@ -68,7 +68,7 @@ class UserCard extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 5.0),
-                  
+
                   // description
                   Text(
                     description,

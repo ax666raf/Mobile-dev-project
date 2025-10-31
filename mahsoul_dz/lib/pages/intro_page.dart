@@ -41,14 +41,23 @@ class IntroPage extends StatelessWidget {
                           style: TextStyle(color: Colors.white, fontSize: 48),
                           textAlign: TextAlign.left,
                         ),
-                        Text(
-                          'Mahsoul',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 48,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.left,
+                        Row(
+                          children: [
+                            Text(
+                              'Mahsoul',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 48,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              textAlign: TextAlign.left,
+                            ),
+                            SizedBox(width: 10),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: Image.asset('lib/assets/MainFrame.png', width: 48, height: 48),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -77,7 +86,7 @@ class IntroPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 100.0),
                 child: MyButton(
                   text: 'Get started',
-                  onTap: () {
+                  onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   },
                 ),
