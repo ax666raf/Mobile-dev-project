@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/themes/colors.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/widgets/serviceTile.dart';
+import 'package:mahsoul_dz/widgets/Logo.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -20,10 +21,7 @@ class ProfilePage extends StatelessWidget {
             child: Column(
               children: [
                 // header
-                Text(
-                  'Profile',
-                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                ),
+                Logo(),
 
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,7 +48,7 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(height: 20),
 
                     // edit profile button
-                    MyButton(text: 'Edit Profile', onTap: () {}),
+                    MyButton(text: 'Edit Profile', onPressed: () {}),
                   ],
                 ),
 

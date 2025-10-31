@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/themes/colors.dart';
-import 'package:mahsoul_dz/pages/menu_page.dart';
-import 'package:mahsoul_dz/pages/market_page.dart';
-import 'package:mahsoul_dz/pages/profile_page.dart';
+import 'package:mahsoul_dz/pages/FarmerSide/MainDahboard.dart';
+import 'package:mahsoul_dz/pages/FarmerSide/Products.dart';
+import 'package:mahsoul_dz/pages/FarmerSide/orders_page.dart';
+import 'package:mahsoul_dz/pages/FarmerSide/profile_page.dart';
 
 
-class MainNavigation extends StatefulWidget {
-  const MainNavigation({super.key});
+class Farmernavigation extends StatefulWidget {
+  const Farmernavigation({super.key});
 
   @override
-  State<MainNavigation> createState() => _MainNavigationState();
+  State<Farmernavigation> createState() => _FarmernavigationState();
 }
 
-class _MainNavigationState extends State<MainNavigation> {
+class _FarmernavigationState extends State<Farmernavigation> {
   int _currentIndex = 0;
 
   final List<Widget> _pages = [
-    const MenuPage(),
-    const MarketPage(),
+    MainDashboard(),
+    const ProductsPage(),
+    const OrdersPage(),
     const ProfilePage(),
   ];
 
@@ -47,11 +49,15 @@ class _MainNavigationState extends State<MainNavigation> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
-            label: 'Home',
+            label: 'Dashboard',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.store),
-            label: 'Market',
+            label: 'Products',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Orders',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
