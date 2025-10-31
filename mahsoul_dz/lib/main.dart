@@ -6,6 +6,7 @@ import 'package:mahsoul_dz/pages/user_mode.dart';
 import 'package:mahsoul_dz/themes/app_theme.dart';
 import 'package:mahsoul_dz/pages/menu_page.dart';
 import 'package:mahsoul_dz/pages/main_navigation.dart';
+import 'package:mahsoul_dz/pages/FarmerSide/MainDahboard.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +28,8 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginPage(),
         '/menu': (context) => const MenuPage(),
         '/main': (context) => const MainNavigation(),
+        '/MainDashboard': (context) => MainDashboard(),
+
       },
     );
   }

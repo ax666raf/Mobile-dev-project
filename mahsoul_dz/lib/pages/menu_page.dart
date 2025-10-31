@@ -216,7 +216,7 @@ class _MenuPageState extends State<MenuPage> {
                 SizedBox(height: 20),
                 MyButton(
                   text: 'Discover The Market',
-                  onTap: () {
+                  onPressed: () {
                     // TODO: Implement the discover the market button
                   },
                 ),

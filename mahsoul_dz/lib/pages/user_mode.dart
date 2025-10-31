@@ -3,6 +3,7 @@ import 'package:mahsoul_dz/themes/colors.dart';
 import 'package:mahsoul_dz/widgets/Cards/user_card.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/pages/login_page.dart';
+import 'package:mahsoul_dz/pages/FarmerSide/Login.dart' as farmer_login;
 
 class UserMode extends StatefulWidget {
   const UserMode({super.key});
@@ -12,6 +13,7 @@ class UserMode extends StatefulWidget {
 }
 
 class _UserModeState extends State<UserMode> {
+  int? _selectedIndex; // 0: Farmer, 1: Consumer
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +65,8 @@ class _UserModeState extends State<UserMode> {
                       title: "I'm a Farmer",
                       description:
                           'showcase your harvest and connect with buyers',
-                      onTap: () {},
+                      selected: _selectedIndex == 0,
+                      onTap: () => setState(() => _selectedIndex = 0),
                     ),
                     SizedBox(height: 50),
                     UserCard(
@@ -71,7 +74,8 @@ class _UserModeState extends State<UserMode> {
                       title: "I'm a Consumer",
                       description:
                           'Discover fresh local goods directly from farmers',
-                      onTap: () {},
+                      selected: _selectedIndex == 1,
+                      onTap: () => setState(() => _selectedIndex = 1),
                     ),
                   ],
                 ),
@@ -79,13 +83,28 @@ class _UserModeState extends State<UserMode> {
                 // next button
                 MyButton(
                   text: 'Next',
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ),
-                    );
+                  onPressed: () {
+                    if (_selectedIndex == null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please select a mode')),
+                      );
+                      return;
+                    }
+                    if (_selectedIndex == 0) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const farmer_login.LoginPage(),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginPage(),
+                        ),
+                      );
+                    }
                   },
                 ),
               ],

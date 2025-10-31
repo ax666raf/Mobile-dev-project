@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/themes/colors.dart';
+import 'package:mahsoul_dz/utils/extensions.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
-import 'package:mahsoul_dz/pages/main_navigation.dart';
+import 'package:mahsoul_dz/widgets/CustomFormField.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -11,6 +12,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool rememberMe = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,112 +63,106 @@ class _LoginPageState extends State<LoginPage> {
                 Image.asset('lib/assets/login.png', width: 210, height: 210),
                 SizedBox(height: 25),
 
-                // email field
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-
-                  children: [
-                    Text(
-                      'Email Address',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Enter your email address',
-                        hintStyle: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade600,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade600),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.grey.shade600),
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 10),
-
-                    // password
-                    Text(
-                      'Password',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12,
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    TextField(
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your password',
-                        hintStyle: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade600,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.grey.shade600),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(color: Colors.grey.shade600),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                // remember me and forgot password
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Row(
+                //  FORM
+                Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // remember me
-                      Checkbox(value: false, onChanged: (value) {}),
-                      Text(
-                        'Remember me',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade600,
+                      // email field
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text(
+                          'Email Address',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      Spacer(),
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(fontSize: 14, color: primaryColor),
+                      CustomFormField(
+                        controller: _emailController,
+                        hintText: 'Enter you email address',
+                        validator: (value) {
+                          if (!value!.isValidEmail) {
+                            return 'Invalid email adress';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 10),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Text(
+                          'Password',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      CustomFormField(
+                        controller: _passwordController,
+                        hintText: 'Enter your password',
+                        obscureText: true,
+                        validator: (value) {
+                          if (!value!.isValidPassword) {
+                            return 'Invalid password';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: 20),
+
+                      // remember me and forgot password
+                      Row(
+                        children: [
+                          Checkbox(
+                            value: rememberMe,
+                            onChanged: (value) =>
+                                setState(() => rememberMe = value ?? false),
+                          ),
+                          const Text('Remember me'),
+                          const Spacer(),
+                          TextButton(
+                            onPressed: () {
+                              // Navigate to forgot password
+                            },
+                            child: Text(
+                              'Forgot password?',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 20),
+
+                      // login buttonr
+                      MyButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate()) {
+                            Navigator.pushNamed(context, '/main');
+                          }
+                        },
+                        text: 'Login',
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20),
-
-                // login buttonr
-                MyButton(
-                  text: 'Login',
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const MainNavigation(),
-                      ),
-                    );
-                  },
-                ),
 
                 SizedBox(height: 20),
 
-                // sign up
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 60.0),
+                SizedBox(height: 20),
+
+                // dont have account & sign up
+                Center(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Don't have an account?",

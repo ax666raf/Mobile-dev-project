@@ -50,7 +50,7 @@ class ProfilePage extends StatelessWidget {
                     SizedBox(height: 20),
 
                     // edit profile button
-                    MyButton(text: 'Edit Profile', onTap: () {}),
+                    MyButton(text: 'Edit Profile', onPressed: () {}),
                   ],
                 ),
 
