@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/controllers/market_controller.dart';
 import 'package:mahsoul_dz/widgets/Cards/product_card.dart';
 import 'package:mahsoul_dz/pages/main_navigation.dart';
 
@@ -10,11 +11,16 @@ class Market extends StatefulWidget {
 }
 
 class _MarketState extends State<Market> {
-  List<String> categories = ['Vegetables', 'Fruits', 'Grains', 'Others'];
+  final MarketController controller = MarketController();
+  
+  List<String> categories = ['All', 'Vegetables', 'Fruits', 'Grains', 'Others']; // Add 'All'
   int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final selectedCategory = categories[selectedIndex];
+    final products = controller.getByCategory(selectedCategory);
+
     return Scaffold(
       bottomNavigationBar: const MainNavigation(),
       backgroundColor: const Color(0xFFF7F8FA),
@@ -29,21 +35,23 @@ class _MarketState extends State<Market> {
               const SizedBox(height: 20),
               _buildCategoryChips(),
               const SizedBox(height: 10),
-              const Text(
-                "Vegetables",
-                style: TextStyle(
+              Text(
+                selectedCategory,
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.green,
                 ),
               ),
               const SizedBox(height: 4),
-              const Text(
-                "Discover Fresh Vegetables from different farms",
-                style: TextStyle(color: Colors.grey),
+              Text(
+                "Discover Fresh $selectedCategory from different farms",
+                style: const TextStyle(color: Colors.grey),
               ),
               const SizedBox(height: 16),
-              Expanded(child: _buildProductGrid()),
+              Expanded(
+                child: _buildProductGrid(products),
+              ),
             ],
           ),
         ),
@@ -92,7 +100,7 @@ class _MarketState extends State<Market> {
     );
   }
 
-  Widget _buildProductGrid() {
+  Widget _buildProductGrid(List products) {
     return GridView.builder(
       padding: const EdgeInsets.only(bottom: 16),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -101,14 +109,10 @@ class _MarketState extends State<Market> {
         mainAxisSpacing: 16,
         crossAxisSpacing: 16,
       ),
-      itemCount: 6,
+      itemCount: products.length,
       itemBuilder: (context, index) {
-        return const ProductCard(
-          name: 'Tomatoes',
-          imageUrl: 'assets/images/tomate.png',
-          farmName: 'Kalim Farm',
-          price: '250DA / Kg',
-        );
+        final crop = products[index];
+         return ProductCard(product: product);
       },
     );
   }
