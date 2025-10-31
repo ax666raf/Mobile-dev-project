@@ -8,6 +8,10 @@ import 'package:mahsoul_dz/pages/menu_page.dart';
 import 'package:mahsoul_dz/pages/main_navigation.dart';
 import 'package:mahsoul_dz/pages/FarmerSide/MainDahboard.dart';
 import 'package:mahsoul_dz/pages/FarmerSide/FarmerNavigation.dart';
+import 'package:mahsoul_dz/pages/signup.dart';
+import 'package:mahsoul_dz/pages/product_detail.dart';
+import 'package:mahsoul_dz/pages/customer_form.dart';
+import 'package:mahsoul_dz/pages/items.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,6 +35,13 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const MainNavigation(),
         '/MainDashboard': (context) => MainDashboard(),
         '/FarmerNavigation': (context) => Farmernavigation(),
+        '/signup': (context) => SignUpScreen(),
+        '/customer': (context) => CustomerFormScreen(),
+        '/product': (context) => ProductDetailsScreen(productId: '1'),
+        '/tomato': (context) => TomatoProductScreen(),
+        
+
+        
 
       },
     );
