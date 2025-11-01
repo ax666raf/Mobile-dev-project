@@ -112,7 +112,7 @@ class _MarketState extends State<Market> {
       itemCount: products.length,
       itemBuilder: (context, index) {
         final crop = products[index];
-         return ProductCard(product: product);
+         return ProductCard(product: crop);
       },
     );
   }
