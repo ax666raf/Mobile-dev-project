@@ -11,8 +11,8 @@ import 'package:mahsoul_dz/pages/FarmerSide/FarmerNavigation.dart';
 import 'package:mahsoul_dz/pages/signup.dart';
 import 'package:mahsoul_dz/pages/product_detail.dart';
 import 'package:mahsoul_dz/pages/customer_form.dart';
-import 'package:mahsoul_dz/pages/items.dart';
-
+import 'package:mahsoul_dz/pages/market.dart';
+//import 'package:mahsoul_dz/pages/cart_page.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mahsoul',
       theme: AppTheme.lightTheme,
-      home: const SystemUIOverlayWrapper(child: IntroPage()),
+      home: ProductDetailsScreen(productId: '1'),
       routes: {
         '/intro': (context) => const IntroPage(),
         '/home': (context) => const UserMode(),
@@ -38,8 +38,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUpScreen(),
         '/customer': (context) => CustomerFormScreen(),
         '/product': (context) => ProductDetailsScreen(productId: '1'),
-        '/tomato': (context) => TomatoProductScreen(),
-        
+        '/markett': (context) => Market(),
+        //'/cart': (context) => CheckoutScreen(),
 
         
 
