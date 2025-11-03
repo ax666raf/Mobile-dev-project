@@ -1,71 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:mahsoul_dz/models/product_model.dart';
+import 'package:mahsoul_dz/widgets/button.dart';
+import 'package:mahsoul_dz/models/product.dart';
 
 class ProductCard extends StatelessWidget {
-  final ProductModel product; // Change from 'crop' to 'product'
+  final Product product;
+  final VoidCallback? onPressed;
 
   const ProductCard({
     super.key,
     required this.product,
+    this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.all(8),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Replace crop.imageUrl with product image handling
+            // Product Image
             Container(
-              height: 120,
+              height: 100,
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: AssetImage(product.imagePath),
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: const Icon(Icons.shopping_bag, color: Colors.grey),
             ),
             const SizedBox(height: 8),
+            
+            // Product Name
             Text(
               product.name,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 4),
+            
+            // Product Description
             Text(
               product.description,
               style: TextStyle(
-                color: Colors.grey.shade600,
                 fontSize: 12,
+                color: Colors.grey.shade600,
               ),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 8),
-            Row(
-              children: [
-                const Icon(Icons.star, color: Colors.amber, size: 16),
-                const SizedBox(width: 4),
-                Text('${product.rating}'),
-                const SizedBox(width: 8),
-                Text('(${product.reviews})'),
-              ],
-            ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 4),
+            
+            // Farm Name
             Text(
-              '${product.currency}${product.price} • ${product.deliveryFee}', // Fixed the typo
+              product.farmName,
               style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 12,
                 color: Colors.green,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 8),
+            
+            // Discover More Button
+            SizedBox(
+              height: 38,
+              width: double.infinity,
+              child: MyButton(
+                text: "Discover More",
+                onPressed: onPressed,
+                backgroundColor: Colors.green,
+                borderColor: Colors.green,
+                textColor: Colors.white,
               ),
             ),
           ],

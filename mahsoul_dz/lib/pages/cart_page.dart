@@ -1,368 +1,288 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:mahsoul_dz/controllers/checkout_controller.dart';
-import 'package:mahsoul_dz/models/customer.dart';
-import 'package:mahsoul_dz/models/cart_model.dart';
 
-class CheckoutScreen extends StatefulWidget {
-  final Customer customer;
-  
-  const CheckoutScreen({
-    super.key,
-    required this.customer,
-  });
-
-  @override
-  State<CheckoutScreen> createState() => _CheckoutScreenState();
-}
-
-class _CheckoutScreenState extends State<CheckoutScreen> {
-  final CheckoutController _controller = CheckoutController();
-
+class MahsoulOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text(
-          'Mahasol',
+        title: Text(
+          'Mahsoul',
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 20, // Slightly smaller
             fontWeight: FontWeight.bold,
-            color: Colors.black,
           ),
         ),
         backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+        foregroundColor: Colors.black,
+        elevation: 1,
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Organic Tomatoes Section
+              _buildProductSection(
+                'Organic Tomatoes',
+                'Green Valley Farm',
+                '\$28.80', // Fixed price to match design
+                'lib/assets/carrot.png',
+              ),
+              
+              SizedBox(height: 12), // Reduced spacing
+              
+              // Organic Carrots Section
+              _buildProductSection(
+                'Organic Carrots',
+                'Green Valley Farm',
+                '\$27.00',
+                'lib/assets/carrot.png',
+              ),
+              
+              SizedBox(height: 20), // Reduced spacing
+              
+              // Divider
+              Divider(thickness: 1),
+              
+              SizedBox(height: 20), // Reduced spacing
+              
+              // Order Summary
+              _buildOrderSummary(),
+              
+              SizedBox(height: 20), // Reduced spacing
+              
+              // Divider
+              Divider(thickness: 1),
+              
+              SizedBox(height: 20), // Reduced spacing
+              
+              // Payment in delivery
+              Center(
+                child: Text(
+                  'Requested as Delivery', // Updated text to match design
+                  style: TextStyle(
+                    fontSize: 14, // Smaller font
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey[700],
+                  ),
+                ),
+              ),
+              
+              SizedBox(height: 24), // Reduced spacing
+              
+              // Buttons Section
+              _buildButtonSection(context),
+            ],
+          ),
         ),
       ),
-      body: _buildBody(),
     );
   }
 
-  Widget _buildBody() {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Products List
-          _buildProductsList(),
-          
-          const SizedBox(height: 32),
-          
-          // Order Summary Section
-          _buildOrderSummarySection(),
-          
-          const SizedBox(height: 32),
-          
-          // Process to Checkout Section
-          _buildCheckoutProcessSection(),
-          
-          const SizedBox(height: 24),
-          
-          // Action Buttons
-          _buildActionButtons(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildProductsList() {
-    if (_controller.cart.items.isEmpty) {
-      return const Center(
-        child: Text('Your cart is empty'),
-      );
-    }
-    
-    return Column(
-      children: List.generate(_controller.cart.items.length, (index) {
-        final cartItem = _controller.cart.items[index];
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
-          child: _buildCartItem(cartItem, index),
-        );
-      }),
-    );
-  }
-
-  Widget _buildCartItem(CartItem cartItem, int index) {
-    final product = cartItem.product;
-    
+  Widget _buildProductSection(String title, String farm, String price, String imagePath) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(12), // Reduced padding
       decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8), // Smaller radius
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 2, // Reduced blur
+            offset: Offset(0, 1), // Smaller offset
+          ),
+        ],
       ),
       child: Row(
         children: [
-          // Placeholder for product image
+          // Product Image - Smaller
           Container(
-            width: 80,
-            height: 80,
+            width: 60, // Smaller image
+            height: 60,
             decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(8),
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(6),
             ),
-            child: const Icon(
-              Icons.image,
-              color: Colors.grey,
-              size: 40,
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Icon(
+                  Icons.shopping_bag,
+                  color: Colors.grey[400],
+                  size: 30, // Smaller icon
+                );
+              },
             ),
           ),
           
-          const SizedBox(width: 16),
+          SizedBox(width: 12), // Reduced spacing
           
+          // Product Details
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  product.name,
-                  style: const TextStyle(
-                    fontSize: 18,
+                  title,
+                  style: TextStyle(
+                    fontSize: 16, // Smaller font
                     fontWeight: FontWeight.bold,
-                    color: Colors.black,
+                    color: Colors.black87,
                   ),
                 ),
-                
-                const SizedBox(height: 4),
-                
+                SizedBox(height: 2), // Reduced spacing
                 Text(
-                  cartItem.selectedWeight,
+                  farm,
                   style: TextStyle(
-                    fontSize: 14,
+                    fontSize: 12, // Smaller font
                     color: Colors.grey[600],
                   ),
                 ),
-                
-                const SizedBox(height: 4),
-                
+                SizedBox(height: 4), // Reduced spacing
                 Text(
-                  '${product.currency}${(product.price / 100).toStringAsFixed(2)}',
-                  style: const TextStyle(
-                    fontSize: 18,
+                  price,
+                  style: TextStyle(
+                    fontSize: 16, // Smaller font
                     fontWeight: FontWeight.bold,
-                    color: Colors.green,
+                    color: Colors.green[700],
                   ),
                 ),
               ],
             ),
           ),
-          
-          // Quantity selector
-          _buildQuantitySelector(cartItem, index),
         ],
       ),
     );
   }
 
-  Widget _buildQuantitySelector(CartItem cartItem, int index) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey[300]!),
-      ),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _controller.decreaseQuantity(index);
-              });
-            },
-            child: Icon(Icons.remove, size: 16, color: Colors.grey[600]),
-          ),
-          const SizedBox(width: 8),
-          Text('${cartItem.quantity}', style: const TextStyle(fontSize: 14)),
-          const SizedBox(width: 8),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _controller.increaseQuantity(index);
-              });
-            },
-            child: Icon(Icons.add, size: 16, color: Colors.grey[600]),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildOrderSummarySection() {
-    final cart = _controller.cart;
-    
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Order Summary',
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _buildSummaryRow('Subtotal', '\$${cart.subtotal.toStringAsFixed(2)}'),
-          
-          const SizedBox(height: 8),
-          
-          _buildSummaryRow('Delivery Fee', 'FREE', isFree: true),
-          
-          const SizedBox(height: 16),
-          
-          Container(
-            height: 1,
-            color: Colors.grey[300],
-          ),
-          
-          const SizedBox(height: 16),
-          
-          _buildSummaryRow('Total', '\$${cart.total.toStringAsFixed(2)}', isTotal: true),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSummaryRow(String label, String value, {bool isFree = false, bool isTotal = false}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: isTotal ? 18 : 16,
-            fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
-            color: Colors.black,
-          ),
-        ),
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: isTotal ? 18 : 16,
-            fontWeight: isTotal ? FontWeight.bold : FontWeight.normal,
-            color: isFree ? Colors.green : (isTotal ? Colors.green : Colors.black),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildCheckoutProcessSection() {
+  Widget _buildOrderSummary() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Process to Checkout',
+        Text(
+          'Order Summary',
           style: TextStyle(
-            fontSize: 20,
+            fontSize: 18, // Slightly smaller
             fontWeight: FontWeight.bold,
-            color: Colors.black,
           ),
         ),
         
-        const SizedBox(height: 16),
+        SizedBox(height: 12), // Reduced spacing
         
-        // Placeholder for checkout process animation/illustration
+        _buildSummaryRow('Subtotal', '\$55.50'),
+        _buildSummaryRow('Delivery Fee', 'FREE', isFree: true),
+        
+        SizedBox(height: 12), // Reduced spacing
+        
+        // Total
         Container(
-          width: double.infinity,
-          height: 120,
-          decoration: BoxDecoration(
-            color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.grey[300]!),
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.animation,
-              size: 40,
-              color: Colors.grey,
-            ),
+          padding: EdgeInsets.symmetric(vertical: 6), // Reduced padding
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Total',
+                style: TextStyle(
+                  fontSize: 16, // Smaller font
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              Text(
+                '\$55.50',
+                style: TextStyle(
+                  fontSize: 18, // Smaller font
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green[700],
+                ),
+              ),
+            ],
           ),
         ),
       ],
     );
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildSummaryRow(String label, String value, {bool isFree = false}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2), // Reduced padding
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 14, // Smaller font
+              color: Colors.grey[700],
+            ),
+          ),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 14, // Smaller font
+              fontWeight: FontWeight.w600,
+              color: isFree ? Colors.green : Colors.grey[700],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildButtonSection(BuildContext context) {
     return Column(
       children: [
-        // Continue Shopping Button
+        // Proceed to Checkout Button
         SizedBox(
           width: double.infinity,
+          height: 45, // Slightly smaller button
           child: ElevatedButton(
             onPressed: () {
-              _controller.continueShopping();
-              Navigator.pop(context); // Go back to products screen
+              // Proceed to Checkout action
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8), // Smaller radius
               ),
-              elevation: 0,
             ),
-            child: const Text(
-              'Continue Shopping',
+            child: Text(
+              'Proceed to Checkout',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14, // Smaller font
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
           ),
         ),
         
-        const SizedBox(height: 12),
+        SizedBox(height: 10), // Reduced spacing
         
-        // Proceed to Checkout Button
+        // Continue Shopping Button
         SizedBox(
           width: double.infinity,
+          height: 45, // Slightly smaller button
           child: OutlinedButton(
             onPressed: () {
-              final order = _controller.createOrder(widget.customer, 'Organic Farms');
-              _controller.proceedToCheckout();
-              // Navigate to payment screen with the order
-              // Navigator.push(context, MaterialPageRoute(
-              //   builder: (context) => PaymentScreen(order: order),
-              // ));
+              // Continue Shopping action
             },
             style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.green,
-              side: const BorderSide(color: Colors.green),
-              padding: const EdgeInsets.symmetric(vertical: 16),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(8), // Smaller radius
               ),
+              side: BorderSide(color: Colors.green),
             ),
-            child: const Text(
-              'Proceed to Checkout',
+            child: Text(
+              'Continue Shopping',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14, // Smaller font
                 fontWeight: FontWeight.bold,
+                color: Colors.green,
               ),
             ),
           ),
