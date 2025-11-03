@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/themes/colors.dart';
 import 'package:mahsoul_dz/pages/menu_page.dart';
-import 'package:mahsoul_dz/pages/market_page.dart';
+import 'package:mahsoul_dz/pages/market.dart';
 import 'package:mahsoul_dz/pages/profile_page.dart';
 
 

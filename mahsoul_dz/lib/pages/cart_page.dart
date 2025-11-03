@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:mahsoul_dz/pages/cart-proceed.dart';
+import 'package:mahsoul_dz/pages/market.dart';
 class MahsoulOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -98,24 +99,27 @@ class MahsoulOrderScreen extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Product Image - Smaller
+          // Product Image - Exactly 60x60
           Container(
-            width: 60, // Smaller image
-            height: 60,
+            width: 80, // Fixed width
+            height: 80, // Fixed height
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: Colors.white,
               borderRadius: BorderRadius.circular(6),
             ),
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return Icon(
-                  Icons.shopping_bag,
-                  color: Colors.grey[400],
-                  size: 30, // Smaller icon
-                );
-              },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6),
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover, // Ensures image fits the entire container
+                errorBuilder: (context, error, stackTrace) {
+                  return Icon(
+                    Icons.shopping_bag,
+                    color: Colors.grey[400],
+                    size: 24, // Smaller icon to fit container
+                  );
+                },
+              ),
             ),
           ),
           
@@ -242,7 +246,10 @@ class MahsoulOrderScreen extends StatelessWidget {
           height: 45, // Slightly smaller button
           child: ElevatedButton(
             onPressed: () {
-              // Proceed to Checkout action
+              Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => OrderConfirmationPage()),
+    );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.green,
@@ -269,7 +276,10 @@ class MahsoulOrderScreen extends StatelessWidget {
           height: 45, // Slightly smaller button
           child: OutlinedButton(
             onPressed: () {
-              // Continue Shopping action
+              Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Market()),
+    );
             },
             style: OutlinedButton.styleFrom(
               shape: RoundedRectangleBorder(

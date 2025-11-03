@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/widgets/Cards/product_card.dart';
 import 'package:mahsoul_dz/pages/main_navigation.dart';
+import 'package:mahsoul_dz/pages/product_detail.dart';
 import 'package:mahsoul_dz/models/product.dart';
 class Market extends StatefulWidget {
   const Market({super.key});
@@ -94,10 +95,14 @@ class _MarketState extends State<Market> {
     reviewCount: 150,
   ),
   onPressed: () {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Tomatoes selected')),
-    );
-  },
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => const ProductPage(),
+    ),
+  );
+},
+
 );
                   },
                 ),
