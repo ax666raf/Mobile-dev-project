@@ -1,55 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:mahsoul_dz/controllers/signup_controll.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
+import 'package:mahsoul_dz/pages/login_page.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (context) => SignUpController(),
+      child: const SignUpView(),
+    );
+  }
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  final _formKey = GlobalKey<FormState>();
-  final _fullNameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-
-  bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
-  bool _agreeToTerms = false;
-  bool _subscribeToUpdates = false;
-
-  @override
-  void dispose() {
-    _fullNameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
-    _confirmPasswordController.dispose();
-    super.dispose();
-  }
+class SignUpView extends StatelessWidget {
+  const SignUpView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controller = Provider.of<SignUpController>(context);
+    
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Form(
-              key: _formKey,
+              key: controller.formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 20),
-                  Image.asset(
-                    'lib/assets/logo.svg',
-                    width: 24,
-                    height: 24,
-                    errorBuilder: (context, error, stackTrace) {
-                      return const Text('🌱', style: TextStyle(fontSize: 20));
-                    },
-                  ),
+                   Center(child:Image.asset(
+  'lib/assets/logoo.png',
+  width: 120, 
+  height: 30, 
+  errorBuilder: (context, error, stackTrace) {
+    return const Text(
+      '🌱', 
+      style: TextStyle(fontSize: 80), 
+    );
+  },
+),),
+                  
 
                   const SizedBox(height: 32),
 
@@ -68,7 +64,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         Text(
                           'Join Mahsoul to connect with local farmers and enjoy fresh produce',
-                          style: TextStyle(fontSize: 14, color: Colors.black54),
+                          style: TextStyle(
+                            fontSize: 14, 
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ],
                     ),
@@ -80,16 +80,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const Text(
                     'Full Name',
                     style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
-                    controller: _fullNameController,
+                    onChanged: controller.setFullName,
                     decoration: InputDecoration(
                       hintText: 'Enter your full name',
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       prefixIcon: const Icon(Icons.person_outline, size: 20),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -117,17 +118,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const Text(
                     'Email Address',
                     style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
-                    controller: _emailController,
+                    onChanged: controller.setEmail,
                     keyboardType: TextInputType.emailAddress,
+                    validator: controller.validateEmail,
                     decoration: InputDecoration(
                       hintText: 'Enter your email',
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
@@ -154,31 +157,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const Text(
                     'Password',
                     style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
+                    onChanged: controller.setPassword,
+                    obscureText: true,
+                    validator: controller.validatePassword,
                     decoration: InputDecoration(
                       hintText: 'Enter your password',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscurePassword
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          color: const Color(0xFF4CAF50),
-                          size: 20,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscurePassword = !_obscurePassword;
-                          });
-                        },
-                      ),
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
@@ -205,31 +196,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   const Text(
                     'Confirm Password',
                     style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
                       color: Colors.black87,
                     ),
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
-                    controller: _confirmPasswordController,
-                    obscureText: _obscureConfirmPassword,
+                    onChanged: controller.setConfirmPassword,
+                    obscureText: true,
+                    validator: controller.validateConfirmPassword,
                     decoration: InputDecoration(
                       hintText: 'Confirm your password',
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _obscureConfirmPassword
-                              ? Icons.visibility_outlined
-                              : Icons.visibility_off_outlined,
-                          color: const Color(0xFF4CAF50),
-                          size: 20,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _obscureConfirmPassword = !_obscureConfirmPassword;
-                          });
-                        },
-                      ),
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
@@ -260,11 +239,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 20,
                         width: 20,
                         child: Checkbox(
-                          value: _agreeToTerms,
+                          value: controller.agreeToTerms,
                           onChanged: (value) {
-                            setState(() {
-                              _agreeToTerms = value ?? false;
-                            });
+                            controller.setAgreeToTerms(value ?? false);
                           },
                           activeColor: const Color(0xFF4CAF50),
                           shape: RoundedRectangleBorder(
@@ -276,15 +253,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            setState(() {
-                              _agreeToTerms = !_agreeToTerms;
-                            });
+                            controller.setAgreeToTerms(!controller.agreeToTerms);
                           },
                           child: RichText(
                             text: const TextSpan(
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 14,
                                 color: Colors.black87,
+                                fontWeight: FontWeight.w500,
                               ),
                               children: [
                                 TextSpan(text: 'I agree to the '),
@@ -292,7 +268,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   text: 'Terms & Conditions',
                                   style: TextStyle(
                                     color: Color(0xFF4CAF50),
-                                    fontWeight: FontWeight.w500,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ],
@@ -312,11 +288,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 20,
                         width: 20,
                         child: Checkbox(
-                          value: _subscribeToUpdates,
+                          value: controller.subscribeToUpdates,
                           onChanged: (value) {
-                            setState(() {
-                              _subscribeToUpdates = value ?? false;
-                            });
+                            controller.setSubscribeToUpdates(value ?? false);
                           },
                           activeColor: const Color(0xFF4CAF50),
                           shape: RoundedRectangleBorder(
@@ -328,15 +302,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Expanded(
                         child: GestureDetector(
                           onTap: () {
-                            setState(() {
-                              _subscribeToUpdates = !_subscribeToUpdates;
-                            });
+                            controller.setSubscribeToUpdates(!controller.subscribeToUpdates);
                           },
                           child: const Text(
                             'Subscribe to updates and newsletters (optional)',
                             style: TextStyle(
-                              fontSize: 13,
+                              fontSize: 14,
                               color: Colors.black87,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
@@ -349,49 +322,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   SizedBox(
                     width: double.infinity,
                     height: 60,
-
                     child: MyButton(
                       text: "sign up",
-                      onTap: () {
-                        if (_agreeToTerms) {
-                          // Handle sign up
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Sign up successful!'),
-                            ),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text(
-                                'Please agree to Terms & Conditions',
-                              ),
-                            ),
-                          );
-                        }
-                      },
+                      onPressed: () => controller.signUp(context),
                     ),
                   ),
                   const SizedBox(height: 20),
 
                   // Login Link
                   Center(
-                    child: RichText(
-                      text: const TextSpan(
-                        style: TextStyle(fontSize: 14, color: Colors.black87),
-                        children: [
-                          TextSpan(text: 'Already have an account? '),
-                          TextSpan(
-                            text: 'Login',
-                            style: TextStyle(
-                              color: Color(0xFF4CAF50),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+  child: Wrap(
+  children: [
+    const Text(
+      'Already have an account? ',
+      style: TextStyle(
+        fontSize: 14,
+        color: Colors.black87,
+        fontWeight: FontWeight.w500,
+      ),
+    ),
+    MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => LoginPage()),
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: const Text(
+            'Login',
+            style: TextStyle(
+              fontSize: 14,
+              color: Color(0xFF4CAF50),
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    ),
+  ],
+),
+),
                   const SizedBox(height: 20),
                 ],
               ),

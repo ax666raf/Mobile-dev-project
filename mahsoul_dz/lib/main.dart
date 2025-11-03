@@ -8,6 +8,12 @@ import 'package:mahsoul_dz/pages/menu_page.dart';
 import 'package:mahsoul_dz/pages/main_navigation.dart';
 import 'package:mahsoul_dz/pages/FarmerSide/MainDahboard.dart';
 import 'package:mahsoul_dz/pages/FarmerSide/FarmerNavigation.dart';
+import 'package:mahsoul_dz/pages/signup.dart';
+import 'package:mahsoul_dz/pages/product_detail.dart';
+import 'package:mahsoul_dz/pages/customer_form.dart';
+import 'package:mahsoul_dz/pages/market.dart';
+import 'package:mahsoul_dz/pages/cart_page.dart';
+import 'package:mahsoul_dz/pages/cart-proceed.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +28,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mahsoul',
       theme: AppTheme.lightTheme,
-      home: const SystemUIOverlayWrapper(child: IntroPage()),
+      home: SystemUIOverlayWrapper(child: IntroPage()),
       routes: {
         '/intro': (context) => const IntroPage(),
         '/home': (context) => const UserMode(),
@@ -31,6 +37,15 @@ class MyApp extends StatelessWidget {
         '/main': (context) => const MainNavigation(),
         '/MainDashboard': (context) => MainDashboard(),
         '/FarmerNavigation': (context) => Farmernavigation(),
+        '/signup': (context) => SignUpScreen(),
+        '/customer': (context) => CustomerFormScreen(),
+        '/product': (context) => ProductPage(),
+        '/market': (context) => Market(),
+        '/cart': (context) => MahsoulOrderScreen(),
+        '/cart-proceed': (context) => OrderConfirmationPage(),
+
+
+        
 
       },
     );

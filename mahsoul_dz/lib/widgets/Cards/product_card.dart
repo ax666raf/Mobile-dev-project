@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/widgets/button.dart';
+import 'package:mahsoul_dz/models/product.dart';
 
 class ProductCard extends StatelessWidget {
-  final String name;
-  final String imageUrl;
-  final String farmName;
-  final String price;
+  final Product product;
+  final VoidCallback? onPressed;
 
   const ProductCard({
     super.key,
-    required this.name,
-    required this.imageUrl,
-    required this.farmName,
-    required this.price,
+    required this.product,
+    this.onPressed,
   });
 
   @override
@@ -19,44 +17,75 @@ class ProductCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black12,
-            blurRadius: 6,
-            offset: const Offset(0, 3),
+            color: Colors.grey.shade200,
+            blurRadius: 8,
+            offset: const Offset(0, 2),
           ),
         ],
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset(imageUrl, height: 80),
-            const SizedBox(height: 10),
-            Text(
-              name,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              '$farmName • $price',
-              style: TextStyle(color: Colors.grey[600], fontSize: 13),
-              textAlign: TextAlign.center,
+            // Product Image
+            Container(
+              height: 100,
+              width: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: AssetImage(product.imagePath),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
             const SizedBox(height: 8),
+            
+            // Product Name
+            Text(
+              product.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(height: 4),
+            
+            // Product Description
+            Text(
+              product.description,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey.shade600,
+              ),
+            ),
+            const SizedBox(height: 4),
+            
+            // Farm Name
+            Text(
+              product.farmName,
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.green,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 8),
+            
+            // Discover More Button
             SizedBox(
+              height: 38,
               width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: const Text("Discover More"),
+              child: MyButton(
+                text: "Discover More",
+                onPressed: onPressed,
+                backgroundColor: Colors.green,
+                borderColor: Colors.green,
+                textColor: Colors.white,
               ),
             ),
           ],

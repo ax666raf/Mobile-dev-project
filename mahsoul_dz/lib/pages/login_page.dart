@@ -4,6 +4,7 @@ import 'package:mahsoul_dz/utils/extensions.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/widgets/CustomFormField.dart';
 import 'package:mahsoul_dz/widgets/Logo.dart';
+import 'package:mahsoul_dz/pages/signup.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -159,26 +160,46 @@ class _LoginPageState extends State<LoginPage> {
                 // dont have account & sign up
                 Center(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't have an account?",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey.shade600,
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        'Sign Up',
-                        style: TextStyle(
-                          color: primaryColor,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: [
+    Text(
+      "Don't have an account?",
+      style: TextStyle(
+        fontSize: 14,
+        color: Colors.grey.shade600,
+      ),
+    ),
+    SizedBox(width: 5),
+    StatefulBuilder(
+  builder: (context, setState) {
+    bool isHovered = false;
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => isHovered = true),
+      onExit: (_) => setState(() => isHovered = false),
+      child: GestureDetector(
+        onTap: () {
+          // Navigate to sign up page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SignUpScreen()),
+          );
+        },
+        child: Text(
+          'Sign Up',
+          style: TextStyle(
+            color: isHovered ? primaryColor.withOpacity(0.8) : primaryColor,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            decoration: isHovered ? TextDecoration.underline : TextDecoration.none,
+          ),
+        ),
+      ),
+    );
+  },
+),
+  ],
+),
                 ),
               ],
             ),
