@@ -155,7 +155,7 @@ class OrderConfirmationPage extends StatelessWidget {
             width: 60,
             height: 60,
             decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(8),
             ),
             child:  Center(
@@ -165,7 +165,7 @@ class OrderConfirmationPage extends StatelessWidget {
               errorBuilder: (context, error, stackTrace) {
                 return Icon(
                   Icons.shopping_bag,
-                  color: Colors.grey[400],
+                  color: Colors.white,
                   size: 30, // Smaller icon
                 );
               },

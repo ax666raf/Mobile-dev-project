@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/pages/main_navigation.dart'; 
 
 class CustomerFormController extends ChangeNotifier {
   final formKey = GlobalKey<FormState>();
@@ -34,13 +35,20 @@ class CustomerFormController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void submitForm(BuildContext context) {
+  Future<void> submitForm(BuildContext context) async {
     if (formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Profile Completed Successfully!"),
           backgroundColor: Color(0xFF4CAF50),
         ),
+      );
+
+      await Future.delayed(const Duration(milliseconds: 300));
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MainNavigation()),
       );
     }
   }

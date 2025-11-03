@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:mahsoul_dz/controllers/signup_controll.dart';
 import 'package:mahsoul_dz/widgets/button.dart';
 import 'package:mahsoul_dz/pages/login_page.dart';
+
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 

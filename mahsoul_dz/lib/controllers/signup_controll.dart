@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/models/user_model.dart';
+import 'package:mahsoul_dz/pages/customer_form.dart'; // 👈 Import your target page
 
 class SignUpController with ChangeNotifier {
   final User _user = User();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  
+
   // Getters
   User get user => _user;
   bool get agreeToTerms => _user.agreeToTerms;
@@ -53,20 +54,26 @@ class SignUpController with ChangeNotifier {
     }
 
     if (formKey.currentState!.validate()) {
-      // Here you would typically call your API service
       try {
         // Simulate API call
         await Future.delayed(const Duration(seconds: 1));
-        
+
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Sign up successful!'),
+            content: Text('Sign up successful! Redirecting...'),
           ),
         );
-        
-        // Navigate to next screen
-        // Navigator.pushReplacement(...);
-        
+
+        // Wait briefly before navigating (optional)
+        await Future.delayed(const Duration(milliseconds: 500));
+
+        // 👇 Navigate to the Customer Form Page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const CustomerFormScreen(),
+          ),
+        );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
