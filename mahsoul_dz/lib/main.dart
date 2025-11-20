@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mahsoul_dz/pages/intro_page.dart';
-import 'package:mahsoul_dz/pages/login_page.dart';
-import 'package:mahsoul_dz/pages/user_mode.dart';
-import 'package:mahsoul_dz/themes/app_theme.dart';
-import 'package:mahsoul_dz/pages/menu_page.dart';
-import 'package:mahsoul_dz/pages/main_navigation.dart';
-import 'package:mahsoul_dz/pages/FarmerSide/MainDahboard.dart';
-import 'package:mahsoul_dz/pages/FarmerSide/FarmerNavigation.dart';
-import 'package:mahsoul_dz/pages/signup.dart';
-import 'package:mahsoul_dz/pages/product_detail.dart';
-import 'package:mahsoul_dz/pages/customer_form.dart';
-import 'package:mahsoul_dz/pages/market.dart';
-import 'package:mahsoul_dz/pages/cart_page.dart';
-import 'package:mahsoul_dz/pages/cart-proceed.dart';
+import 'package:mahsoul_dz/views/screens/homescreen/intro_page.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/login_page.dart';
+import 'package:mahsoul_dz/views/screens/homescreen/user_mode.dart';
+import 'package:mahsoul_dz/views/themes/app_theme.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/menu_page.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/main_navigation.dart';
+import 'package:mahsoul_dz/views/screens/FarmerSide/MainDahboard.dart';
+import 'package:mahsoul_dz/views/screens/FarmerSide/FarmerNavigation.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/signup.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/product_detail.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/customer_form.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/market.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/cart_page.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/cart-proceed.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,10 +43,6 @@ class MyApp extends StatelessWidget {
         '/market': (context) => Market(),
         '/cart': (context) => MahsoulOrderScreen(),
         '/cart-proceed': (context) => OrderConfirmationPage(),
-
-
-        
-
       },
     );
   }
