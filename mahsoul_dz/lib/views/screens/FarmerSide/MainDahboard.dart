@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/views/widgets/farmerSide/bar_graph.dart';
 import 'package:mahsoul_dz/views/widgets/farmerSide/farmer_card.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
-import 'package:mahsoul_dz/views/screens/FarmerSide/Products.dart';
 import 'package:mahsoul_dz/views/widgets/farmerSide/order.dart';
 import 'package:mahsoul_dz/views/models/farmerSide/order.dart';
 import 'package:mahsoul_dz/views/models/customerSide/customer.dart';
@@ -19,6 +19,10 @@ class MainDashboard extends StatefulWidget {
       weight: 10,
       totalPrice: 100,
       status: OrderStatus.pending,
+      deliveryMethod: 'Home Delivery',
+      address: '123 Main St, Anytown, USA',
+      paymentMethod: 'Cash',
+      paymentStatus: 'Pending',
     ),
     Order(
       customer: Customer(id: '2', fullName: 'Jane Doe'),
@@ -26,6 +30,10 @@ class MainDashboard extends StatefulWidget {
       weight: 20,
       totalPrice: 200,
       status: OrderStatus.confirmed,
+      deliveryMethod: 'Home Delivery',
+      address: '123 Main St, Anytown, USA',
+      paymentMethod: 'Cash',
+      paymentStatus: 'Pending',
     ),
     Order(
       customer: Customer(id: '3', fullName: 'Jim Doe'),
@@ -33,8 +41,14 @@ class MainDashboard extends StatefulWidget {
       weight: 30,
       totalPrice: 300,
       status: OrderStatus.processing,
+      deliveryMethod: 'Home Delivery',
+      address: '123 Main St, Anytown, USA',
+      paymentMethod: 'Cash',
+      paymentStatus: 'Pending',
     ),
   ];
+
+  final List weeklySummary = [4.40, 20.0, 42.0, 10.5, 100.0, 88.0, 90.5];
 
   MainDashboard({super.key});
 
@@ -134,15 +148,14 @@ class _MainDashboardState extends State<MainDashboard> {
                 SizedBox(height: 20),
 
                 // cards
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 50),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          MyButton(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyButton(
                             backgroundColor: Colors.transparent,
                             textColor: primaryColor,
                             borderColor: primaryColor,
@@ -150,8 +163,10 @@ class _MainDashboardState extends State<MainDashboard> {
                             text: 'Add product',
                             onPressed: () {},
                           ),
-                          SizedBox(width: 10),
-                          MyButton(
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: MyButton(
                             backgroundColor: Colors.transparent,
                             textColor: primaryColor,
                             borderColor: primaryColor,
@@ -161,12 +176,14 @@ class _MainDashboardState extends State<MainDashboard> {
                               Navigator.pushNamed(context, '/ProductsPage');
                             },
                           ),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      Row(
-                        children: [
-                          MyButton(
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: MyButton(
                             backgroundColor: Colors.transparent,
                             textColor: primaryColor,
                             borderColor: primaryColor,
@@ -176,8 +193,10 @@ class _MainDashboardState extends State<MainDashboard> {
                               Navigator.pushNamed(context, '/OrdersPage');
                             },
                           ),
-                          SizedBox(width: 10),
-                          MyButton(
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: MyButton(
                             backgroundColor: Colors.transparent,
                             textColor: primaryColor,
                             borderColor: primaryColor,
@@ -187,10 +206,10 @@ class _MainDashboardState extends State<MainDashboard> {
                               Navigator.pushNamed(context, '/ProductsPage');
                             },
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
 
                 SizedBox(height: 20),
@@ -216,7 +235,24 @@ class _MainDashboardState extends State<MainDashboard> {
                           ],
                         )
                         .toList()
-                      ..removeLast(), // Remove trailing SizedBox
+                      ..removeLast(),
+
+                    SizedBox(height: 30),
+                    Text(
+                      'Your farm weekly summary',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Center(
+                      child: SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: MyBarGraph(weeklySummary: widget.weeklySummary),
+                      ),
+                    ),
                   ],
                 ),
 

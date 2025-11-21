@@ -220,7 +220,7 @@ class _buildTotalRow extends StatelessWidget {
   final bool isFree;
 
   const _buildTotalRow(this.label, this.value,
-      {this.isBold = false, this.isFree = false, super.key});
+      {this.isBold = false, this.isFree = false});
 
   @override
   Widget build(BuildContext context) {

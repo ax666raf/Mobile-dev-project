@@ -117,6 +117,10 @@ class CheckoutController {
       weight: totalWeight,
       totalPrice: _cart.total,
       status: OrderStatus.pending,
+      deliveryMethod: 'Home Delivery',
+      address: '123 Main St, Anytown, USA',
+      paymentMethod: 'Cash',
+      paymentStatus: 'Pending',
     );
   }
 

@@ -5,7 +5,7 @@ import 'package:mahsoul_dz/views/screens/customerSide/market.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/cart_page.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+  const ProductPage({super.key});
 
   @override
   State<ProductPage> createState() => _ProductPageState();

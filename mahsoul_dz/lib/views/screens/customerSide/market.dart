@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/product_card.dart';
-import 'package:mahsoul_dz/views/screens/customerSide/main_navigation.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/product_detail.dart';
 import 'package:mahsoul_dz/views/models/customerSide/product.dart';
 

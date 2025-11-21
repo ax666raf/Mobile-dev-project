@@ -101,7 +101,7 @@ class CustomerFormView extends StatelessWidget {
     Expanded(
       flex: 1, 
       child: DropdownButtonFormField<String>(
-        value: controller.city,
+        initialValue: controller.city,
         items: const [
           DropdownMenuItem(value: 'Algiers', child: Text('Algiers')),
           DropdownMenuItem(value: 'Oran', child: Text('Oran')),

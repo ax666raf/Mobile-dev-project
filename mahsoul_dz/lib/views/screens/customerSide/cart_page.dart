@@ -3,6 +3,8 @@ import 'package:mahsoul_dz/views/screens/customerSide/cart-proceed.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/market.dart';
 
 class MahsoulOrderScreen extends StatelessWidget {
+  const MahsoulOrderScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,7 +14,6 @@ class MahsoulOrderScreen extends StatelessWidget {
           'Mahsoul',
           style: TextStyle(
             fontSize: 20, // Slightly smaller
-            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.white,

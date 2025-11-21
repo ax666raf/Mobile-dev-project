@@ -1,6 +1,7 @@
 class Customer {
   final String id;
   final String fullName;
+  
 
   const Customer({required this.id, required this.fullName});
 
