@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/cart-proceed.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/market.dart';
+import 'package:mahsoul_dz/views/widgets/common/page_with_nav.dart';
 
 class MahsoulOrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PageWithNav(
+      currentIndex: 0, // Home tab
+      child: Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
@@ -74,6 +77,7 @@ class MahsoulOrderScreen extends StatelessWidget {
           ),
         ),
       ),
+      ), // PageWithNav
     );
   }
 

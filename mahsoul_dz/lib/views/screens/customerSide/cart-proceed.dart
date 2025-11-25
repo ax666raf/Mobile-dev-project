@@ -1,22 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/order_confirmation_dialog.dart';
+import 'package:mahsoul_dz/views/widgets/common/page_with_nav.dart';
 
+/// Order Proceed Page - Shows customer information and order summary before confirmation
 class OrderConfirmationPage extends StatelessWidget {
   const OrderConfirmationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FA),
+    return PageWithNav(
+      currentIndex: 0, // Home tab
+      child: Scaffold(
+        backgroundColor: const Color(0xFFF8F9FA),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () {},
+          icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A1A)),
+          onPressed: () => Navigator.pop(context),
         ),
         title: const Text(
           "Proceed with Your Order",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Color(0xFF1A1A1A),
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
         ),
         centerTitle: false,
       ),
@@ -58,49 +67,77 @@ class OrderConfirmationPage extends StatelessWidget {
             // Confirm Order Button
             SizedBox(
               width: double.infinity,
-              height: 50,
+              height: 54,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  // Show order confirmation dialog
+                  OrderConfirmationDialog.show(context);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4CAF50),
+                  elevation: 0,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 child: const Text(
                   "Confirm Order",
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
           ],
         ),
       ),
+      ), // PageWithNav
     );
   }
 
   Widget _buildCustomerInfoCard() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Customer Information",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold, color: Colors.black87)),
+          const Text(
+            "Customer Information",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Color(0xFF1A1A1A),
+            ),
+          ),
           const SizedBox(height: 20),
-          _buildInfoRow(Icons.person, "Full Name", "Sarah Johnson"),
-          const SizedBox(height: 20),
-          _buildInfoRow(Icons.phone, "Phone Number", "+1 (555) 123-4567"),
-          const SizedBox(height: 20),
-          _buildInfoRow(Icons.location_on, "Delivery Address",
-              "1234 Oak Street, Apt 2B\nGreenville, CA 90210"),
-          const SizedBox(height: 20),
-          _buildInfoRow(Icons.note, "Additional Notes (Optional)",
-              "e.g., leave at the gate"),
+          _buildInfoRow(Icons.person_outline, "Full Name", "Sarah Johnson"),
+          const SizedBox(height: 18),
+          _buildInfoRow(Icons.phone_outlined, "Phone Number", "+1 (555) 123-4567"),
+          const SizedBox(height: 18),
+          _buildInfoRow(
+            Icons.location_on_outlined,
+            "Delivery Address",
+            "1234 Oak Street, Apt 2B\nGreenville, CA 90210",
+          ),
+          const SizedBox(height: 18),
+          _buildInfoRow(
+            Icons.note_outlined,
+            "Additional Notes (Optional)",
+            "e.g., leave at the gate",
+          ),
         ],
       ),
     );
@@ -110,29 +147,42 @@ class OrderConfirmationPage extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: Colors.green, size: 20),
-        const SizedBox(width: 12),
+        Icon(icon, color: const Color(0xFF4CAF50), size: 22),
+        const SizedBox(width: 14),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title,
-                  style: const TextStyle(
-                      fontSize: 12, color: Colors.black54, height: 1.5)),
-              Text(value,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: Colors.black87,
-                      height: 1.3)),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Color(0xFF757575),
+                  height: 1.5,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  color: Color(0xFF1A1A1A),
+                  height: 1.4,
+                ),
+              ),
             ],
           ),
         ),
-        Text("Edit",
-            style: TextStyle(
-                color: Colors.green.shade700,
-                fontWeight: FontWeight.w500,
-                fontSize: 13)),
+        Text(
+          "Edit",
+          style: TextStyle(
+            color: const Color(0xFF4CAF50),
+            fontWeight: FontWeight.w600,
+            fontSize: 13,
+          ),
+        ),
       ],
     );
   }
@@ -197,15 +247,26 @@ class OrderConfirmationPage extends StatelessWidget {
 
   Widget _buildTotalSection() {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(16)),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
       child: Column(
         children: const [
           _buildTotalRow("Subtotal", "\$55.50"),
-          SizedBox(height: 8),
+          SizedBox(height: 12),
           _buildTotalRow("Delivery Fee", "FREE", isFree: true),
-          Divider(),
+          SizedBox(height: 12),
+          Divider(thickness: 1),
+          SizedBox(height: 12),
           _buildTotalRow("Total", "\$55.50", isBold: true),
         ],
       ),

@@ -3,6 +3,8 @@ import 'package:mahsoul_dz/views/themes/colors.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/serviceTile.dart';
 import 'package:mahsoul_dz/views/widgets/common/Logo.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/my_orders_page.dart';
+import 'package:mahsoul_dz/views/screens/customerSide/delivery_address_dialog.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -65,7 +67,14 @@ class ProfilePage extends StatelessWidget {
                       iconPath: 'lib/assets/orders.png',
                       title: 'My Orders',
                       description: 'view order history & track delivery',
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const MyOrdersPage(),
+                          ),
+                        );
+                      },
                     ),
                     ServiceTile(
                       iconPath: 'lib/assets/saved.png',
@@ -77,7 +86,9 @@ class ProfilePage extends StatelessWidget {
                       iconPath: 'lib/assets/delivery.png',
                       title: 'Delivery address',
                       description: 'Manage saved delivery locations',
-                      onTap: () {},
+                      onTap: () {
+                        DeliveryAddressDialog.show(context);
+                      },
                     ),
                     ServiceTile(
                       iconPath: 'lib/assets/rewards.png',
