@@ -4,6 +4,8 @@ import 'package:mahsoul_dz/views/screens/customerSide/market.dart';
 import 'package:mahsoul_dz/views/widgets/common/page_with_nav.dart';
 
 class MahsoulOrderScreen extends StatelessWidget {
+  const MahsoulOrderScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return PageWithNav(
@@ -15,7 +17,6 @@ class MahsoulOrderScreen extends StatelessWidget {
           'Mahsoul',
           style: TextStyle(
             fontSize: 20, // Slightly smaller
-            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: Colors.white,

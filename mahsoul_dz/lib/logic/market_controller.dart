@@ -1,6 +1,5 @@
 import 'package:mahsoul_dz/views/models/customerSide/product_model.dart';
 
-import 'package:mahsoul_dz/views/models/customerSide/product_model.dart';
 
 class MarketController {
   final List<ProductModel> _products = [

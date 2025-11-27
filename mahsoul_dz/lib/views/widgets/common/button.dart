@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mahsoul_dz/views/themes/colors.dart';
 
 class MyButton extends StatelessWidget {
   final IconData? icon;
@@ -50,12 +49,17 @@ class MyButton extends StatelessWidget {
                   Icon(icon, color: textColor, size: 20),
                   SizedBox(width: 8),
                 ],
-                Text(
-                  text,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                Flexible(
+                  child: Text(
+                    text,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: TextStyle(
+                      color: textColor,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],

@@ -105,6 +105,7 @@ class SignUpController with ChangeNotifier {
   }
 
   // Cleanup
+  @override
   void dispose() {
     // Dispose any resources if needed
   }
