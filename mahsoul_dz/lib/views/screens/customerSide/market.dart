@@ -3,6 +3,9 @@ import 'package:mahsoul_dz/views/widgets/customerSide/product_card.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/product_detail.dart';
 import 'package:mahsoul_dz/views/models/customerSide/product.dart';
 import 'package:mahsoul_dz/logic/market_controller.dart';
+import 'package:mahsoul_dz/views/widgets/customerSide/market_search_bar.dart';
+import 'package:mahsoul_dz/views/widgets/customerSide/category_chips.dart';
+import 'package:mahsoul_dz/views/widgets/customerSide/category_header.dart';
 
 /// Market Screen - View Layer (MVC Pattern)
 /// Displays products organized by categories with search functionality
@@ -120,122 +123,29 @@ class _MarketState extends State<Market> {
 
   /// Search Bar Widget
   Widget _buildSearchBar() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
-      child: TextField(
-        controller: _searchController,
-        onChanged: _onSearchChanged,
-        decoration: InputDecoration(
-          hintText: 'Search for products or farmers...',
-          hintStyle: TextStyle(
-            color: Colors.grey[400],
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-          prefixIcon: Icon(Icons.search, color: Colors.grey[600], size: 22),
-          suffixIcon: _searchController.text.isNotEmpty
-              ? IconButton(
-                  icon: Icon(Icons.clear, color: Colors.grey[600], size: 20),
-                  onPressed: () {
-                    _searchController.clear();
-                    _onSearchChanged('');
-                  },
-                )
-              : null,
-          border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
-        ),
-      ),
+    return MarketSearchBar(
+      controller: _searchController,
+      onChanged: _onSearchChanged,
+      onClear: () {
+        _searchController.clear();
+        _onSearchChanged('');
+      },
+      showClearButton: _searchController.text.isNotEmpty,
     );
   }
 
   /// Category Chips Row
   Widget _buildCategoryChips() {
-    return SizedBox(
-      height: 40,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: _categories.length,
-        separatorBuilder: (context, index) => const SizedBox(width: _categorySpacing),
-        itemBuilder: (context, index) {
-          final category = _categories[index];
-          return _buildCategoryChip(category);
-        },
-      ),
-    );
-  }
-
-  /// Individual Category Chip
-  Widget _buildCategoryChip(String label) {
-    final isSelected = _selectedCategory == label;
-    return GestureDetector(
-      onTap: () => _onCategorySelected(label),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF4CAF50) : Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: isSelected
-              ? [
-                  BoxShadow(
-                    color: const Color(0xFF4CAF50).withOpacity(0.3),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
-                  ),
-                ]
-              : [],
-        ),
-        child: Text(
-          label,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.grey.shade700,
-            fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-            fontSize: 14,
-          ),
-        ),
-      ),
+    return CategoryChips(
+      categories: _categories,
+      selectedCategory: _selectedCategory,
+      onCategorySelected: _onCategorySelected,
     );
   }
 
   /// Category Header with Title and Description
   Widget _buildCategoryHeader() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          _selectedCategory,
-          style: const TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            color: Color(0xFF2D5F3F),
-            letterSpacing: -0.5,
-          ),
-        ),
-        const SizedBox(height: 6),
-        Text(
-          "Discover Fresh $_selectedCategory from different farms",
-          style: TextStyle(
-            color: Colors.grey.shade600,
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-      ],
-    );
+    return CategoryHeader(categoryName: _selectedCategory);
   }
 
   /// Products Grid

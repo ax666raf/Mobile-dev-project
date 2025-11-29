@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
-import 'package:mahsoul_dz/views/widgets/common/button.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/serviceTile.dart';
 import 'package:mahsoul_dz/views/widgets/common/Logo.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/my_orders_page.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/delivery_address_dialog.dart';
+import 'package:mahsoul_dz/logic/customer_profile_controller.dart';
+import 'package:mahsoul_dz/views/models/customerSide/customer_profile_model.dart';
+import 'package:mahsoul_dz/views/widgets/customerSide/profile_header.dart';
 
-class ProfilePage extends StatelessWidget {
+/// Customer Profile Page - View Layer (MVC Pattern)
+/// Displays customer profile information and menu options
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  // Controller instance
+  final CustomerProfileController _controller = CustomerProfileController();
+  late CustomerProfileModel _profile;
+
+  @override
+  void initState() {
+    super.initState();
+    _profile = _controller.getCustomerProfile();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,36 +44,12 @@ class ProfilePage extends StatelessWidget {
                 // header
                 Logo(),
 
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // profile picture
-                    Image.asset('lib/assets/PFP.png'),
-
-                    // name
-                    Text(
-                      'Ali Morad',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-
-                    // user mode
-                    Text(
-                      'Regular Customer',
-                      style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-                    ),
-
-                    SizedBox(height: 20),
-
-                    // edit profile button
-                    MyButton(text: 'Edit Profile', onPressed: () {}),
-                  ],
+                ProfileHeader(
+                  profile: _profile,
+                  onEditProfile: _controller.editProfile,
                 ),
 
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // divider
                 Divider(color: primaryColor, thickness: 1),
 
@@ -77,24 +72,12 @@ class ProfilePage extends StatelessWidget {
                       },
                     ),
                     ServiceTile(
-                      iconPath: 'lib/assets/saved.png',
-                      title: 'Saved Farms',
-                      description: 'Your favorite local farmers',
-                      onTap: () {},
-                    ),
-                    ServiceTile(
                       iconPath: 'lib/assets/delivery.png',
                       title: 'Delivery address',
                       description: 'Manage saved delivery locations',
                       onTap: () {
                         DeliveryAddressDialog.show(context);
                       },
-                    ),
-                    ServiceTile(
-                      iconPath: 'lib/assets/rewards.png',
-                      title: 'Rewards & Points',
-                      description: 'Loyalty program & earned rewards',
-                      onTap: () {},
                     ),
                   ],
                 ),

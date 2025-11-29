@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/views/models/farmerSide/product.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
+import 'package:mahsoul_dz/views/widgets/farmerSide/edit_product.dart';
 
 class ProductTile extends StatelessWidget {
   // require the image to be displayed
@@ -80,7 +81,26 @@ class ProductTile extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        IconButton(onPressed: () {}, icon: Icon(Icons.edit)),
+                        IconButton(
+                          onPressed: () {
+                            // Show edit product modal
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (context) => Container(
+                                height: MediaQuery.of(context).size.height * 0.9,
+                                margin: const EdgeInsets.symmetric(horizontal: 20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(40),
+                                ),
+                                child: EditProductWidget(product: product),
+                              ),
+                            );
+                          },
+                          icon: const Icon(Icons.edit),
+                        ),
                         IconButton(
                           onPressed: () {
                             // Show a confirmation dialog
