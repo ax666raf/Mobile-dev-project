@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/screens/homescreen/intro_page.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/login_page.dart';
 import 'package:mahsoul_dz/views/screens/homescreen/user_mode.dart';
@@ -19,8 +22,43 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+/// Global key to access locale change from anywhere
+class LocaleManager extends ChangeNotifier {
+  static final LocaleManager _instance = LocaleManager._internal();
+  factory LocaleManager() => _instance;
+  LocaleManager._internal();
+  
+  Locale _locale = const Locale('en');
+  
+  Locale get locale => _locale;
+  
+  void setLocale(Locale locale) {
+    _locale = locale;
+    notifyListeners();
+  }
+}
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  
+  // Static method to change locale from anywhere
+  static void setLocale(BuildContext context, Locale locale) {
+    final state = context.findAncestorStateOfType<_MyAppState>();
+    state?.setLocale(locale);
+  }
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Locale _locale = const Locale('en');
+  
+  void setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +66,39 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Mahsoul',
       theme: AppTheme.lightTheme,
+      builder: (context, child) {
+        // Update theme based on locale
+        final locale = _locale;
+        final isArabic = locale.languageCode == 'ar';
+        final baseTheme = Theme.of(context);
+        final textTheme = isArabic
+            ? GoogleFonts.cairoTextTheme(baseTheme.textTheme)
+            : GoogleFonts.leagueSpartanTextTheme(baseTheme.textTheme);
+        
+        return Theme(
+          data: baseTheme.copyWith(
+            textTheme: textTheme,
+          ),
+          child: child!,
+        );
+      },
+      
+      // Current locale
+      locale: _locale,
+      
+      // Localization Configuration
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),      // English
+        Locale('ar'),      // Arabic
+        Locale('fr'),      // French
+      ],
+      
       home: SystemUIOverlayWrapper(child: IntroPage()),
       routes: {
         '/intro': (context) => const IntroPage(),

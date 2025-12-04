@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
-/// Product Details Card Widget
-/// Displays detailed product information in a card
 class ProductDetailsCard extends StatelessWidget {
   final String origin;
   final String harvestDate;
@@ -18,6 +17,8 @@ class ProductDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -34,31 +35,35 @@ class ProductDetailsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Product Details',
-            style: TextStyle(
+          Text(
+            l10n.productDetails,
+            style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 16),
           _detailRow(
-            'Origin:',
+            context,
+            l10n.originLabel,
             origin,
             Icons.location_on_outlined,
           ),
           _detailRow(
-            'Harvest Date:',
+            context,
+            l10n.harvestDateLabel,
             harvestDate,
             Icons.calendar_today_outlined,
           ),
           _detailRow(
-            'Organic:',
-            isOrganic ? 'Yes, Certified' : 'No',
+            context,
+            l10n.organicLabel,
+            isOrganic ? l10n.yesCertified : l10n.no,
             Icons.eco_outlined,
           ),
           _detailRow(
-            'Storage:',
+            context,
+            l10n.storageLabel,
             storage,
             Icons.thermostat_outlined,
           ),
@@ -67,7 +72,7 @@ class ProductDetailsCard extends StatelessWidget {
     );
   }
 
-  Widget _detailRow(String label, String value, IconData icon) {
+  Widget _detailRow(BuildContext context, String label, String value, IconData icon) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(

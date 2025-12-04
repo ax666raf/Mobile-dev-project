@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/models/customerSide/product.dart';
 
-/// Product Card Widget - Reusable component for displaying product information
-/// Follows the design with image, title, description, farm name, and action button
 class ProductCard extends StatelessWidget {
   final Product product;
   final VoidCallback? onPressed;
@@ -44,7 +43,7 @@ class ProductCard extends StatelessWidget {
               children: [
                 _buildProductInfo(),
                 const SizedBox(height: 12),
-                _buildDiscoverButton(),
+                _buildDiscoverButton(context),
               ],
             ),
           ),
@@ -53,7 +52,6 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  /// Product Image with rounded corners - centered and contained
   Widget _buildProductImage() {
     return Container(
       width: double.infinity,
@@ -84,7 +82,6 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  /// Product Information (Name, Description, Farm)
   Widget _buildProductInfo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,8 +146,9 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  /// Discover More Button
-  Widget _buildDiscoverButton() {
+  Widget _buildDiscoverButton(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return SizedBox(
       width: double.infinity,
       height: 42,
@@ -166,9 +164,9 @@ class ProductCard extends StatelessWidget {
           ),
           padding: const EdgeInsets.symmetric(vertical: 12),
         ),
-        child: const Text(
-          'Discover More',
-          style: TextStyle(
+        child: Text(
+          l10n.discoverMore,
+          style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.3,

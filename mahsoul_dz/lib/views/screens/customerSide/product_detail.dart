@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/cart_page.dart';
 import 'package:mahsoul_dz/views/widgets/common/page_with_nav.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/product_hero_image.dart';
@@ -22,6 +23,8 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return PageWithNav(
       currentIndex: 1, // Market tab
       child: Scaffold(
@@ -33,9 +36,8 @@ class _ProductPageState extends State<ProductPage> {
               // Hero Image Section
               ProductHeroImage(
                 imagePath: 'lib/assets/tomato_bg.png',
-                title: 'Tomatoes',
-                description:
-                    'Organic tomatoes grown with sustainable farming practices (Blida, Algeria, family-owned farm)',
+                title: l10n.vegetables,
+                description: l10n.organic,
                 onBackPressed: () => Navigator.pop(context),
               ),
 
@@ -79,9 +81,9 @@ class _ProductPageState extends State<ProductPage> {
                     const SizedBox(height: 24),
 
                     // Price and Delivery
-                    const PriceSummaryCard(
-                      subtotal: '100 DA',
-                      deliveryFee: 'FREE',
+                    PriceSummaryCard(
+                      subtotal: '100 ${l10n.da}',
+                      deliveryFee: l10n.free,
                     ),
                     const SizedBox(height: 20),
 
@@ -105,8 +107,8 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                           elevation: 0,
                         ),
-                        child: const Text(
-                          'Add to Cart',
+                        child: Text(
+                          l10n.addToCart,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -118,8 +120,8 @@ class _ProductPageState extends State<ProductPage> {
                     const SizedBox(height: 24),
 
                     // Seller Info
-                    const SellerInfoCard(
-                      farmName: "Adam's Organic Farm",
+                    SellerInfoCard(
+                      farmName: l10n.farmName,
                       initials: 'AF',
                       rating: 4.9,
                       reviewCount: 234,
@@ -128,11 +130,11 @@ class _ProductPageState extends State<ProductPage> {
                     const SizedBox(height: 24),
 
                     // Product Details Section
-                    const ProductDetailsCard(
-                      origin: 'Blida, Algeria',
-                      harvestDate: '25th October',
+                    ProductDetailsCard(
+                      origin: l10n.blida,
+                      harvestDate: l10n.october25th,
                       isOrganic: true,
-                      storage: 'Room Temperature',
+                      storage: l10n.storageInstructions,
                     ),
                     const SizedBox(height: 16),
 
@@ -143,11 +145,10 @@ class _ProductPageState extends State<ProductPage> {
                       totalRatings: 234,
                       reviews: [
                         ReviewItem(
-                          name: 'Sarah Ahmed',
+                          name: l10n.sarahAhmed,
                           rating: 5,
-                          time: '2 days ago',
-                          comment:
-                              'Amazing quality vegetables! Fresh and organic as promised. The delivery was quick and the packaging was perfect.',
+                          time: l10n.daysAgo(2),
+                          comment: l10n.reviews,
                         ),
                       ],
                     ),

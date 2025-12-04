@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/widgets/farmerSide/bar_graph.dart';
 import 'package:mahsoul_dz/views/widgets/farmerSide/farmer_card.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
@@ -59,6 +60,8 @@ class MainDashboard extends StatefulWidget {
 class _MainDashboardState extends State<MainDashboard> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -86,14 +89,14 @@ class _MainDashboardState extends State<MainDashboard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Good Morning,',
+                          l10n.goodMorning,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
                         Text(
-                          "Here's how your farm is doing today.",
+                          l10n.farmStatus,
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey[600],
@@ -110,10 +113,10 @@ class _MainDashboardState extends State<MainDashboard> {
                   children: [
                     FarmerCard(
                       image: 'lib/assets/groceryCart.png',
-                      title: 'Orders Today',
+                      title: l10n.ordersToday,
                     ),
 
-                    FarmerCard(image: totalEarnings, title: 'Total Earnings'),
+                    FarmerCard(image: totalEarnings, title: l10n.totalEarnings),
                   ],
                 ),
 
@@ -134,7 +137,7 @@ class _MainDashboardState extends State<MainDashboard> {
                         Image.asset(deliveryMan, width: 40, height: 40),
                         SizedBox(width: 10),
                         Text(
-                          'Pending Deliveries',
+                          l10n.pendingDeliveries,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -160,7 +163,7 @@ class _MainDashboardState extends State<MainDashboard> {
                             textColor: primaryColor,
                             borderColor: primaryColor,
                             icon: Icons.add,
-                            text: 'Add product',
+                            text: l10n.addProduct,
                             onPressed: () {},
                           ),
                         ),
@@ -171,7 +174,7 @@ class _MainDashboardState extends State<MainDashboard> {
                             textColor: primaryColor,
                             borderColor: primaryColor,
                             icon: Icons.store,
-                            text: 'My Products',
+                            text: l10n.myProducts,
                             onPressed: () {
                               Navigator.pushNamed(context, '/ProductsPage');
                             },
@@ -188,7 +191,7 @@ class _MainDashboardState extends State<MainDashboard> {
                             textColor: primaryColor,
                             borderColor: primaryColor,
                             icon: Icons.shopping_bag,
-                            text: 'View Orders',
+                            text: l10n.viewOrders,
                             onPressed: () {
                               Navigator.pushNamed(context, '/OrdersPage');
                             },
@@ -201,7 +204,7 @@ class _MainDashboardState extends State<MainDashboard> {
                             textColor: primaryColor,
                             borderColor: primaryColor,
                             icon: Icons.message,
-                            text: 'My Messages',
+                            text: l10n.myMessages,
                             onPressed: () {
                               Navigator.pushNamed(context, '/ProductsPage');
                             },
@@ -220,7 +223,7 @@ class _MainDashboardState extends State<MainDashboard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Recent Orders',
+                      l10n.recentOrders,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -239,7 +242,7 @@ class _MainDashboardState extends State<MainDashboard> {
 
                     SizedBox(height: 30),
                     Text(
-                      'Your farm weekly summary',
+                      l10n.weeklySummary,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 
 class GalleryPickerField extends StatefulWidget {
@@ -24,6 +25,8 @@ class _GalleryPickerFieldState extends State<GalleryPickerField> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -35,10 +38,10 @@ class _GalleryPickerFieldState extends State<GalleryPickerField> {
             ElevatedButton(
               onPressed: _pick,
               style: ElevatedButton.styleFrom(backgroundColor: primaryColor),
-              child: const Text('Choose Photo', 
-            style: TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold),)),
+              child: Text(l10n.choosePhoto, 
+            style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold))),
             const SizedBox(width: 12),
-            if (_picked != null) TextButton(onPressed: _clear, child: const Text('Remove')),
+            if (_picked != null) TextButton(onPressed: _clear, child: Text(l10n.remove)),
           ]),
           const SizedBox(height: 12),
           if (_picked == null)
@@ -48,7 +51,7 @@ class _GalleryPickerFieldState extends State<GalleryPickerField> {
                 border: Border.all(color: Colors.grey.shade300),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Text('No image selected'),
+              child: Text(l10n.noImageSelected),
             )
           else
             ClipRRect(

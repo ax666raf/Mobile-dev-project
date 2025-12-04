@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/product_card.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/product_detail.dart';
 import 'package:mahsoul_dz/views/models/customerSide/product.dart';
-import 'package:mahsoul_dz/logic/market_controller.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/market_search_bar.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/category_chips.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/category_header.dart';
 
-/// Market Screen - View Layer (MVC Pattern)
-/// Displays products organized by categories with search functionality
 class Market extends StatefulWidget {
   const Market({super.key});
 
@@ -17,23 +15,23 @@ class Market extends StatefulWidget {
 }
 
 class _MarketState extends State<Market> {
-  // Controller instance
-  final MarketController _controller = MarketController();
-  
   // UI State
-  String _selectedCategory = "Vegetables";
+  String _selectedCategory = "";
   final TextEditingController _searchController = TextEditingController();
   List<Product> _displayedProducts = [];
   
-  // Constants for UI
-  static const List<String> _categories = ['Vegetables', 'Fruits', 'Grains', 'Others'];
+  static const List<String> _categoryKeys = ['Vegetables', 'Fruits', 'Grains', 'Others'];
   static const EdgeInsets _screenPadding = EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0);
-  static const double _categorySpacing = 8.0;
 
   @override
   void initState() {
     super.initState();
-    _loadProducts();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _selectedCategory = 'Vegetables'; // Default to first category
+        _loadProducts();
+      });
+    });
   }
 
   @override
@@ -44,8 +42,9 @@ class _MarketState extends State<Market> {
 
   /// Load products from controller based on selected category
   void _loadProducts() {
+    final l10n = AppLocalizations.of(context)!;
     setState(() {
-      _displayedProducts = _getMockProductsByCategory(_selectedCategory);
+      _displayedProducts = _getMockProductsByCategory(_selectedCategory, l10n);
     });
   }
 
@@ -75,6 +74,8 @@ class _MarketState extends State<Market> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
       body: SafeArea(
@@ -84,7 +85,7 @@ class _MarketState extends State<Market> {
             SliverToBoxAdapter(
               child: Padding(
                 padding: _screenPadding,
-                child: _buildSearchBar(),
+                child: _buildSearchBar(l10n),
               ),
             ),
 
@@ -92,7 +93,7 @@ class _MarketState extends State<Market> {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: _buildCategoryChips(),
+                child: _buildCategoryChips(l10n),
               ),
             ),
 
@@ -102,7 +103,7 @@ class _MarketState extends State<Market> {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: _buildCategoryHeader(),
+                child: _buildCategoryHeader(l10n),
               ),
             ),
 
@@ -111,7 +112,7 @@ class _MarketState extends State<Market> {
             // Products Grid
             SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              sliver: _buildProductsGrid(),
+              sliver: _buildProductsGrid(l10n),
             ),
 
             const SliverToBoxAdapter(child: SizedBox(height: 20)),
@@ -121,8 +122,7 @@ class _MarketState extends State<Market> {
     );
   }
 
-  /// Search Bar Widget
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(AppLocalizations l10n) {
     return MarketSearchBar(
       controller: _searchController,
       onChanged: _onSearchChanged,
@@ -134,22 +134,38 @@ class _MarketState extends State<Market> {
     );
   }
 
-  /// Category Chips Row
-  Widget _buildCategoryChips() {
+  Widget _buildCategoryChips(AppLocalizations l10n) {
+    final categoryMap = {
+      'Vegetables': l10n.vegetables,
+      'Fruits': l10n.fruits,
+      'Grains': l10n.grains,
+      'Others': l10n.others,
+    };
+    
     return CategoryChips(
-      categories: _categories,
+      categories: _categoryKeys,
       selectedCategory: _selectedCategory,
       onCategorySelected: _onCategorySelected,
+      categoryMap: categoryMap,
     );
   }
 
-  /// Category Header with Title and Description
-  Widget _buildCategoryHeader() {
-    return CategoryHeader(categoryName: _selectedCategory);
+  Widget _buildCategoryHeader(AppLocalizations l10n) {
+    final categoryMap = {
+      'Vegetables': l10n.vegetables,
+      'Fruits': l10n.fruits,
+      'Grains': l10n.grains,
+      'Others': l10n.others,
+    };
+    final localizedCategoryName = categoryMap[_selectedCategory] ?? _selectedCategory;
+    
+    return CategoryHeader(
+      categoryName: localizedCategoryName,
+      l10n: l10n,
+    );
   }
 
-  /// Products Grid
-  Widget _buildProductsGrid() {
+  Widget _buildProductsGrid(AppLocalizations l10n) {
     if (_displayedProducts.isEmpty) {
       return SliverToBoxAdapter(
         child: Center(
@@ -160,7 +176,7 @@ class _MarketState extends State<Market> {
                 Icon(Icons.inventory_2_outlined, size: 64, color: Colors.grey.shade300),
                 const SizedBox(height: 16),
                 Text(
-                  'No products found',
+                  l10n.noProductsFound,
                   style: TextStyle(
                     color: Colors.grey.shade600,
                     fontSize: 16,
@@ -194,7 +210,6 @@ class _MarketState extends State<Market> {
     );
   }
 
-  /// Navigate to Product Detail Page
   void _navigateToProductDetail(Product product) {
     Navigator.push(
       context,
@@ -204,18 +219,15 @@ class _MarketState extends State<Market> {
     );
   }
 
-  /// Mock data generator - Replace with actual controller data
-  List<Product> _getMockProductsByCategory(String category) {
-    // This should ideally come from the controller
-    // For now, generating mock data
+  List<Product> _getMockProductsByCategory(String category, AppLocalizations l10n) {
     return List.generate(
       6,
       (index) => Product(
         id: '${category}_$index',
-        name: 'Tomatoes',
-        description: 'Fresh tomatoes starting from 10kg',
+        name: l10n.tomatoes,
+        description: l10n.freshTomatoesStartingFrom('10kg'),
         imagePath: 'lib/assets/tomate.png',
-        farmName: 'Adam Farm',
+        farmName: l10n.adamFarm,
         price: 250.0,
         category: category,
         rating: 4.5,

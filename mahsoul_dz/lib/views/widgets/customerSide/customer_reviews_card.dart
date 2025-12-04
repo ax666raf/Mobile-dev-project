@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
-/// Customer Reviews Card Widget
-/// Displays customer reviews with ratings
 class CustomerReviewsCard extends StatelessWidget {
   final int reviewCount;
   final double averageRating;
@@ -18,6 +17,8 @@ class CustomerReviewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -38,7 +39,7 @@ class CustomerReviewsCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Customer Reviews ($reviewCount)',
+                '${l10n.customerReviews} ($reviewCount)',
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -61,7 +62,7 @@ class CustomerReviewsCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    '($totalRatings ratings)',
+                    '($totalRatings ${l10n.ratings})',
                     style: TextStyle(
                       fontSize: 12,
                       color: Colors.grey[600],
@@ -77,6 +78,7 @@ class CustomerReviewsCard extends StatelessWidget {
           ...reviews.map((review) => Padding(
                 padding: const EdgeInsets.only(bottom: 12),
                 child: _reviewCard(
+                  context,
                   review.name,
                   review.rating,
                   review.time,
@@ -88,7 +90,7 @@ class CustomerReviewsCard extends StatelessWidget {
     );
   }
 
-  Widget _reviewCard(String name, int rating, String time, String review) {
+  Widget _reviewCard(BuildContext context, String name, int rating, String time, String review) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(

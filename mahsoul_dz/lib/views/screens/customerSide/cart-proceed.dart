@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/order_confirmation_dialog.dart';
 import 'package:mahsoul_dz/views/widgets/common/page_with_nav.dart';
 
@@ -8,6 +9,8 @@ class OrderConfirmationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return PageWithNav(
       currentIndex: 0, // Home tab
       child: Scaffold(
@@ -19,8 +22,8 @@ class OrderConfirmationPage extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Color(0xFF1A1A1A)),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          "Proceed with Your Order",
+        title: Text(
+          l10n.checkout,
           style: TextStyle(
             color: Color(0xFF1A1A1A),
             fontWeight: FontWeight.bold,
@@ -35,12 +38,12 @@ class OrderConfirmationPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Customer Information Card
-            _buildCustomerInfoCard(),
+            _buildCustomerInfoCard(context, l10n),
             const SizedBox(height: 20),
 
             // Order Summary
-            const Text(
-              "Order Summary",
+            Text(
+              l10n.orderSummary,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
@@ -60,7 +63,7 @@ class OrderConfirmationPage extends StatelessWidget {
             const SizedBox(height: 20),
 
             // Totals
-            _buildTotalSection(),
+            _buildTotalSection(l10n),
 
             const SizedBox(height: 30),
 
@@ -80,8 +83,8 @@ class OrderConfirmationPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  "Confirm Order",
+                child: Text(
+                  l10n.confirmOrder,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -97,7 +100,7 @@ class OrderConfirmationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCustomerInfoCard() {
+  Widget _buildCustomerInfoCard(BuildContext context, AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -114,8 +117,8 @@ class OrderConfirmationPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Customer Information",
+          Text(
+            l10n.personalInfo,
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
@@ -123,27 +126,29 @@ class OrderConfirmationPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          _buildInfoRow(Icons.person_outline, "Full Name", "Sarah Johnson"),
+          _buildInfoRow(Icons.person_outline, l10n.fullName, "Sarah Johnson", l10n),
           const SizedBox(height: 18),
-          _buildInfoRow(Icons.phone_outlined, "Phone Number", "+1 (555) 123-4567"),
+          _buildInfoRow(Icons.phone_outlined, l10n.phoneNumber, "+1 (555) 123-4567", l10n),
           const SizedBox(height: 18),
           _buildInfoRow(
             Icons.location_on_outlined,
-            "Delivery Address",
+            l10n.deliveryAddress,
             "1234 Oak Street, Apt 2B\nGreenville, CA 90210",
+            l10n,
           ),
           const SizedBox(height: 18),
           _buildInfoRow(
             Icons.note_outlined,
-            "Additional Notes (Optional)",
-            "e.g., leave at the gate",
+            l10n.orderNotes,
+            l10n.addNotes,
+            l10n,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String title, String value) {
+  Widget _buildInfoRow(IconData icon, String title, String value, AppLocalizations l10n) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -176,7 +181,7 @@ class OrderConfirmationPage extends StatelessWidget {
           ),
         ),
         Text(
-          "Edit",
+          l10n.edit,
           style: TextStyle(
             color: const Color(0xFF4CAF50),
             fontWeight: FontWeight.w600,
@@ -245,7 +250,7 @@ class OrderConfirmationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTotalSection() {
+  Widget _buildTotalSection(AppLocalizations l10n) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
@@ -260,27 +265,27 @@ class OrderConfirmationPage extends StatelessWidget {
         ],
       ),
       child: Column(
-        children: const [
-          _buildTotalRow("Subtotal", "\$55.50"),
+        children: [
+          _TotalRow(l10n.subtotal, "\$55.50"),
           SizedBox(height: 12),
-          _buildTotalRow("Delivery Fee", "FREE", isFree: true),
+          _TotalRow(l10n.deliveryFee, l10n.free, isFree: true),
           SizedBox(height: 12),
           Divider(thickness: 1),
           SizedBox(height: 12),
-          _buildTotalRow("Total", "\$55.50", isBold: true),
+          _TotalRow(l10n.total, "\$55.50", isBold: true),
         ],
       ),
     );
   }
 }
 
-class _buildTotalRow extends StatelessWidget {
+class _TotalRow extends StatelessWidget {
   final String label;
   final String value;
   final bool isBold;
   final bool isFree;
 
-  const _buildTotalRow(this.label, this.value,
+  const _TotalRow(this.label, this.value,
       {this.isBold = false, this.isFree = false});
 
   @override

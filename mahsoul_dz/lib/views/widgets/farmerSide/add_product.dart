@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/widgets/common/CustomFormField.dart';
 import 'package:mahsoul_dz/utils/FarmerExtensions/validators.dart';
 
@@ -19,6 +20,8 @@ class _AddProductWidgetState extends State<AddProductWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
@@ -36,7 +39,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'Add New Product',
+                  l10n.addProduct,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -46,14 +49,14 @@ class _AddProductWidgetState extends State<AddProductWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'Product Name',
+                  l10n.productName,
                   style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                 ),
               ),
               SizedBox(height: 5),
               CustomFormField(
                 controller: _nameController,
-                hintText: 'Enter the product name',
+                hintText: l10n.enterProductName,
                 validator: ProductValidators().validateName,
               ),
 
@@ -64,15 +67,15 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: DropdownButtonFormField<String>(
                   decoration: InputDecoration(
-                    hintText: 'Select the product category',
+                    hintText: l10n.selectProductCategory,
                   ),
                   items: [
-                    DropdownMenuItem(value: 'Fruits', child: Text('Fruits')),
+                    DropdownMenuItem(value: 'Fruits', child: Text(l10n.fruits)),
                     DropdownMenuItem(
                       value: 'Vegetables',
-                      child: Text('Vegetables'),
+                      child: Text(l10n.vegetables),
                     ),
-                    DropdownMenuItem(value: 'Grains', child: Text('Grains')),
+                    DropdownMenuItem(value: 'Grains', child: Text(l10n.grains)),
                   ],
                   onChanged: (value) {
                     setState(() {
@@ -87,14 +90,14 @@ class _AddProductWidgetState extends State<AddProductWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'Product Weight',
+                  l10n.productWeight,
                   style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                 ),
               ),
               SizedBox(height: 5),
               CustomFormField(
                 controller: _weightController,
-                hintText: 'Enter the product weight',
+                hintText: l10n.enterProductWeight,
                 validator: ProductValidators().validateWeight,
               ),
               SizedBox(height: 15),
@@ -103,14 +106,14 @@ class _AddProductWidgetState extends State<AddProductWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'Product Price',
+                  l10n.productPrice,
                   style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                 ),
               ),
               SizedBox(height: 5),
               CustomFormField(
                 controller: _priceController,
-                hintText: 'Enter the product price',
+                hintText: l10n.enterProductWeight,
                 validator: ProductValidators().validatePrice,
               ),
               SizedBox(height: 15),
@@ -119,14 +122,14 @@ class _AddProductWidgetState extends State<AddProductWidget> {
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: Text(
-                  'Product Location',
+                  l10n.productLocation,
                   style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                 ),
               ),
               SizedBox(height: 5),
               CustomFormField(
                 controller: _locationController,
-                hintText: 'Enter the product location',
+                hintText: l10n.enterProductLocation,
                 validator: ProductValidators().validateLocation,
               ),
               SizedBox(height: 15),
@@ -135,20 +138,19 @@ class _AddProductWidgetState extends State<AddProductWidget> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: DropdownButtonFormField<String>(
-                  decoration: InputDecoration(hintText: 'Availability'),
+                  decoration: InputDecoration(hintText: l10n.availability),
                   items: [
                     DropdownMenuItem(
                       value: 'Available',
-                      child: Text('Available'),
+                      child: Text(l10n.available),
                     ),
                     DropdownMenuItem(
                       value: 'Out of stock',
-                      child: Text('Out of stock'),
+                      child: Text(l10n.outOfStock),
                     ),
                   ],
                   onChanged: (value) {
                     setState(() {
-                      // later change to status
                       selectedCategory = value;
                     });
                   },
@@ -173,7 +175,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                         ),
                       ),
                       child: Text(
-                        'Cancel',
+                        l10n.cancel,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
@@ -198,7 +200,7 @@ class _AddProductWidgetState extends State<AddProductWidget> {
                         ),
                       ),
                       child: Text(
-                        'Add Product',
+                        l10n.addProduct,
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,

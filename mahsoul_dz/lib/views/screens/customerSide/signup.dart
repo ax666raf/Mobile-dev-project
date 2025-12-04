@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/logic/signup_controll.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/login_page.dart';
@@ -22,6 +23,7 @@ class SignUpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<SignUpController>(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: SafeArea(
@@ -47,11 +49,11 @@ class SignUpView extends StatelessWidget {
 
                   const SizedBox(height: 32),
 
-                  const Center(
+                  Center(
                     child: Column(
                       children: [
                         Text(
-                          'Create Your Account',
+                          l10n.createAccount,
                           style: TextStyle(
                             fontSize: 28,
                             fontWeight: FontWeight.bold,
@@ -61,7 +63,7 @@ class SignUpView extends StatelessWidget {
                         SizedBox(height: 8),
 
                         Text(
-                          'Join Mahsoul to connect with local farmers and enjoy fresh produce',
+                          l10n.joinMahsoul,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.black54,
@@ -75,8 +77,8 @@ class SignUpView extends StatelessWidget {
                   const SizedBox(height: 32),
 
                   // Full Name
-                  const Text(
-                    'Full Name',
+                  Text(
+                    l10n.fullName,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -87,7 +89,7 @@ class SignUpView extends StatelessWidget {
                   TextFormField(
                     onChanged: controller.setFullName,
                     decoration: InputDecoration(
-                      hintText: 'Enter your full name',
+                      hintText: l10n.enterFullName,
                       hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       prefixIcon: const Icon(Icons.person_outline, size: 20),
                       border: OutlineInputBorder(
@@ -113,8 +115,8 @@ class SignUpView extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Email Address
-                  const Text(
-                    'Email Address',
+                  Text(
+                    l10n.emailAddress,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -127,7 +129,7 @@ class SignUpView extends StatelessWidget {
                     keyboardType: TextInputType.emailAddress,
                     validator: controller.validateEmail,
                     decoration: InputDecoration(
-                      hintText: 'Enter your email',
+                      hintText: l10n.enterEmail,
                       hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -152,8 +154,8 @@ class SignUpView extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Password
-                  const Text(
-                    'Password',
+                  Text(
+                    l10n.password,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -166,7 +168,7 @@ class SignUpView extends StatelessWidget {
                     obscureText: true,
                     validator: controller.validatePassword,
                     decoration: InputDecoration(
-                      hintText: 'Enter your password',
+                      hintText: l10n.enterPassword,
                       hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -191,8 +193,8 @@ class SignUpView extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // Confirm Password
-                  const Text(
-                    'Confirm Password',
+                  Text(
+                    l10n.confirmPassword,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
@@ -205,7 +207,7 @@ class SignUpView extends StatelessWidget {
                     obscureText: true,
                     validator: controller.validateConfirmPassword,
                     decoration: InputDecoration(
-                      hintText: 'Confirm your password',
+                      hintText: l10n.confirmYourPassword,
                       hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
@@ -256,16 +258,16 @@ class SignUpView extends StatelessWidget {
                             );
                           },
                           child: RichText(
-                            text: const TextSpan(
+                            text: TextSpan(
                               style: TextStyle(
                                 fontSize: 14,
                                 color: Colors.black87,
                                 fontWeight: FontWeight.w500,
                               ),
                               children: [
-                                TextSpan(text: 'I agree to the '),
+                                TextSpan(text: l10n.agreeToThe),
                                 TextSpan(
-                                  text: 'Terms & Conditions',
+                                  text: l10n.termsConditions,
                                   style: TextStyle(
                                     color: Color(0xFF4CAF50),
                                     fontWeight: FontWeight.w600,
@@ -306,8 +308,8 @@ class SignUpView extends StatelessWidget {
                               !controller.subscribeToUpdates,
                             );
                           },
-                          child: const Text(
-                            'Subscribe to updates and newsletters (optional)',
+                          child: Text(
+                            l10n.subscribeNewsletter,
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.black87,
@@ -325,7 +327,7 @@ class SignUpView extends StatelessWidget {
                     width: double.infinity,
                     height: 60,
                     child: MyButton(
-                      text: "sign up",
+                      text: l10n.signUp,
                       onPressed: () => controller.signUp(context),
                     ),
                   ),
@@ -335,8 +337,8 @@ class SignUpView extends StatelessWidget {
                   Center(
                     child: Wrap(
                       children: [
-                        const Text(
-                          'Already have an account? ',
+                        Text(
+                          l10n.alreadyHaveAccount,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.black87,
@@ -362,8 +364,8 @@ class SignUpView extends StatelessWidget {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              child: const Text(
-                                'Login',
+                              child: Text(
+                                l10n.login,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Color(0xFF4CAF50),

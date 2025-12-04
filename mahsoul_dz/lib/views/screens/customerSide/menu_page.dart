@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 import 'dart:ui';
 import 'package:mahsoul_dz/views/widgets/customerSide/categories.dart';
@@ -16,6 +17,8 @@ class MenuPage extends StatefulWidget {
 class _MenuPageState extends State<MenuPage> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -34,135 +37,139 @@ class _MenuPageState extends State<MenuPage> {
                 SizedBox(height: 35),
 
                 // discount panel
-                SizedBox(
-                  height: 180, // Fixed height to contain the image
-                  child: Stack(
-                    clipBehavior: Clip.none, // Allow overflow
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              primaryColor,
-                              primaryColor.withOpacity(0.8),
-                              primaryColor.withOpacity(0.9),
-                            ],
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: primaryColor.withOpacity(0.3),
-                              offset: const Offset(4, 4),
-                              blurRadius: 8,
-                              spreadRadius: 0,
+                Builder(
+                  builder: (context) {
+                    final isRTL = Directionality.of(context) == TextDirection.rtl;
+                    
+                    return SizedBox(
+                      height: 180, // Fixed height to contain the image
+                      child: Stack(
+                        clipBehavior: Clip.none, // Allow overflow
+                        children: [
+                          // Full width container
+                          Container(
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  primaryColor,
+                                  primaryColor.withOpacity(0.8),
+                                  primaryColor.withOpacity(0.9),
+                                ],
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: primaryColor.withOpacity(0.3),
+                                  offset: const Offset(4, 4),
+                                  blurRadius: 8,
+                                  spreadRadius: 0,
+                                ),
+                                BoxShadow(
+                                  color: primaryColor.withOpacity(0.2),
+                                  offset: const Offset(2, 2),
+                                  blurRadius: 4,
+                                  spreadRadius: 0,
+                                ),
+                              ],
                             ),
-                            BoxShadow(
-                              color: primaryColor.withOpacity(0.2),
-                              offset: const Offset(2, 2),
-                              blurRadius: 4,
-                              spreadRadius: 0,
+                            padding: const EdgeInsets.only(
+                              left: 15, // Reduced left padding to move text more to the left
+                              right: 200, // Fixed right padding to make room for image
+                              top: 20,
+                              bottom: 20,
                             ),
-                          ],
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 20,
-                        ),
-                        child: Row(
-                          children: [
-                            // title and button
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Shop Smarter',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  l10n.shopSmarter,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                  Text(
-                                    'Save More!',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 30,
-                                    ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                Text(
+                                  l10n.saveMore,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                    fontSize: 30,
                                   ),
-                                  const SizedBox(height: 10),
-                                  GestureDetector(
+                                  textAlign: TextAlign.left,
+                                ),
+                                const SizedBox(height: 10),
+                                GestureDetector(
                                     onTap: () {
-                                      // TODO: Implement the discount code
+                                      // Handle discount code
                                     },
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: BackdropFilter(
-                                        filter: ImageFilter.blur(
-                                          sigmaX: 10,
-                                          sigmaY: 10,
-                                        ),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: BackdropFilter(
+                                      filter: ImageFilter.blur(
+                                        sigmaX: 10,
+                                        sigmaY: 10,
+                                      ),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                          color: Colors.white.withOpacity(
+                                            0.3,
+                                          ),
+                                          border: Border.all(
                                             color: Colors.white.withOpacity(
-                                              0.3,
+                                              0.2,
                                             ),
-                                            border: Border.all(
-                                              color: Colors.white.withOpacity(
-                                                0.2,
-                                              ),
-                                              width: 1,
-                                            ),
+                                            width: 1,
                                           ),
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 10,
-                                            vertical: 5,
-                                          ),
-                                          child: Text(
-                                            'Get 30% off ✨',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 12,
-                                            ),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 5,
+                                        ),
+                                        child: Text(
+                                          l10n.getDiscount,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            // Spacer to push image to the right
-                            const SizedBox(width: 20),
-                          ],
-                        ),
+                          ),
+                          // Discount image positioned on the right side for both RTL and LTR
+                          Positioned(
+                            right: -60, // Position on right side, further out to avoid text overlap
+                            top: -47, // Head and hat extend above
+                            child: Image.asset(
+                              'lib/assets/discountImage.png',
+                              width: 260,
+                              height: 260,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ],
                       ),
-                      // Discount image positioned to extend beyond container
-                      Positioned(
-                        right: -30,
-                        top: -47, // Head and hat extend above
-                        child: Image.asset(
-                          'lib/assets/discountImage.png',
-                          width: 260,
-                          height: 260,
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
                 ),
 
                 SizedBox(height: 20),
                 Row(
                   children: [
                     Text(
-                      "Categories",
+                      l10n.categories,
                       style: TextStyle(
                         color: primaryColor,
                         fontSize: 26,
@@ -186,23 +193,23 @@ class _MenuPageState extends State<MenuPage> {
                   children: [
                     CategoriesCard(
                       imagePath: 'lib/assets/vegetables.png',
-                      title: 'Vegetables',
-                      count: '120+ farmers',
+                      title: l10n.vegetables,
+                      count: l10n.farmersCount('120'),
                     ),
                     CategoriesCard(
                       imagePath: 'lib/assets/fruits.png',
-                      title: 'Fruits',
-                      count: '85+ farmers',
+                      title: l10n.fruits,
+                      count: l10n.farmersCount('85'),
                     ),
                     CategoriesCard(
                       imagePath: 'lib/assets/wheat-sack.png',
-                      title: 'Cereals',
-                      count: '120+ farmers',
+                      title: l10n.cereals,
+                      count: l10n.farmersCount('120'),
                     ),
                     CategoriesCard(
                       imagePath: 'lib/assets/cotton.png',
-                      title: 'Cotton',
-                      count: '85+ farmers',
+                      title: l10n.cotton,
+                      count: l10n.farmersCount('85'),
                     ),
                   ],
                 ),
@@ -210,16 +217,16 @@ class _MenuPageState extends State<MenuPage> {
                 // discover the market button
                 SizedBox(height: 20),
                 MyButton(
-                  text: 'Discover The Market',
+                  text: l10n.discoverMarket,
                   onPressed: () {
-                    // TODO: Implement the discover the market button
+                    Navigator.pushNamed(context, '/market');
                   },
                 ),
 
                 // featured farmers
                 SizedBox(height: 20),
                 Text(
-                  'Featured Farmers',
+                  l10n.featuredFarmers,
                   style: TextStyle(
                     color: primaryColor,
                     fontSize: 26,
@@ -231,9 +238,9 @@ class _MenuPageState extends State<MenuPage> {
                   profileImage: 'lib/assets/farmerpfp.png',
                   name: 'John Doe',
                   rating: '4.5',
-                  availability: 'Available',
-                  location: '2.5 km away',
-                  products: '100+ products',
+                  availability: l10n.available,
+                  location: l10n.distanceAway('2.5'),
+                  products: l10n.productsCount('100'),
                 )
 
                 

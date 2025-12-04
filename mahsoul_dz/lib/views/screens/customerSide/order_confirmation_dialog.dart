@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/my_orders_page.dart';
 
 /// Order Confirmation Dialog
@@ -8,6 +9,8 @@ class OrderConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -42,9 +45,9 @@ class OrderConfirmationDialog extends StatelessWidget {
             const SizedBox(height: 24),
 
             // Title
-            const Text(
-              'Order Confirmed!',
-              style: TextStyle(
+            Text(
+              l10n.orderConfirmed,
+              style: const TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1A1A1A),
@@ -53,30 +56,30 @@ class OrderConfirmationDialog extends StatelessWidget {
             const SizedBox(height: 12),
 
             // Message
-            const Text(
-              'Thank you for shopping with Mahsoul 🌱',
+            Text(
+              l10n.thankYouShopping,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: Color(0xFF666666),
                 fontWeight: FontWeight.w400,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'Your farmer will contact you shortly',
+            Text(
+              l10n.farmerWillContact,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: Color(0xFF666666),
                 fontWeight: FontWeight.w400,
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              'to confirm your order.',
+            Text(
+              l10n.toConfirmOrder,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: Color(0xFF666666),
                 fontWeight: FontWeight.w400,
@@ -107,9 +110,9 @@ class OrderConfirmationDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'View My Orders',
-                  style: TextStyle(
+                child: Text(
+                  l10n.viewMyOrders,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
@@ -139,9 +142,9 @@ class OrderConfirmationDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Text(
-                  'Go Home',
-                  style: TextStyle(
+                child: Text(
+                  l10n.goHome,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),

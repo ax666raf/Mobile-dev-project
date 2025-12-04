@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
+import 'package:mahsoul_dz/main.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/serviceTile.dart';
 import 'package:mahsoul_dz/views/widgets/common/Logo.dart';
@@ -8,8 +10,6 @@ import 'package:mahsoul_dz/logic/customer_profile_controller.dart';
 import 'package:mahsoul_dz/views/models/customerSide/customer_profile_model.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/profile_header.dart';
 
-/// Customer Profile Page - View Layer (MVC Pattern)
-/// Displays customer profile information and menu options
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -30,6 +30,8 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Colors.grey[200],
       body: SafeArea(
@@ -60,8 +62,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   children: [
                     ServiceTile(
                       iconPath: 'lib/assets/orders.png',
-                      title: 'My Orders',
-                      description: 'view order history & track delivery',
+                      title: l10n.myOrders,
+                      description: l10n.viewOrderHistory,
                       onTap: () {
                         Navigator.push(
                           context,
@@ -73,11 +75,19 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     ServiceTile(
                       iconPath: 'lib/assets/delivery.png',
-                      title: 'Delivery address',
-                      description: 'Manage saved delivery locations',
+                      title: l10n.deliveryAddress,
+                      description: l10n.manageSavedLocations,
                       onTap: () {
                         DeliveryAddressDialog.show(context);
                       },
+                    ),
+                    
+                    // Language Selection
+                    ServiceTile(
+                      iconPath: 'lib/assets/delivery.png', // You can change this icon
+                      title: l10n.selectLanguage,
+                      description: l10n.chooseLanguage,
+                      onTap: () => _showLanguageDialog(context, l10n),
                     ),
                   ],
                 ),
@@ -86,6 +96,68 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
       ),
+    );
+  }
+  
+  void _showLanguageDialog(BuildContext context, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          l10n.selectLanguage,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: primaryColor,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildLanguageTile(
+              context,
+              flag: '🇬🇧',
+              name: 'English',
+              locale: const Locale('en'),
+            ),
+            const Divider(),
+            _buildLanguageTile(
+              context,
+              flag: '🇩🇿',
+              name: 'العربية',
+              locale: const Locale('ar'),
+            ),
+            const Divider(),
+            _buildLanguageTile(
+              context,
+              flag: '🇫🇷',
+              name: 'Français',
+              locale: const Locale('fr'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLanguageTile(
+    BuildContext context, {
+    required String flag,
+    required String name,
+    required Locale locale,
+  }) {
+    return ListTile(
+      leading: Text(flag, style: const TextStyle(fontSize: 28)),
+      title: Text(
+        name,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      onTap: () {
+        MyApp.setLocale(context, locale);
+        Navigator.pop(context);
+      },
     );
   }
 }

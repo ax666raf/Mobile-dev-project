@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/cart-proceed.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/market.dart';
 import 'package:mahsoul_dz/views/widgets/common/page_with_nav.dart';
@@ -44,6 +45,8 @@ class _MahsoulOrderScreenState extends State<MahsoulOrderScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return PageWithNav(
       currentIndex: 0, // Home tab
       child: Scaffold(
@@ -53,7 +56,7 @@ class _MahsoulOrderScreenState extends State<MahsoulOrderScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Mahsoul',
+                l10n.appName,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -109,7 +112,7 @@ class _MahsoulOrderScreenState extends State<MahsoulOrderScreen> {
               // Payment in delivery
               Center(
                 child: Text(
-                  'Payment in Delivery',
+                  l10n.paymentInDelivery,
                   style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,

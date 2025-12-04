@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
-/// Market Search Bar Widget
-/// Search input field for filtering products
 class MarketSearchBar extends StatelessWidget {
   final TextEditingController controller;
   final Function(String) onChanged;
@@ -18,6 +17,8 @@ class MarketSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -34,7 +35,7 @@ class MarketSearchBar extends StatelessWidget {
         controller: controller,
         onChanged: onChanged,
         decoration: InputDecoration(
-          hintText: 'Search for products or farmers...',
+          hintText: l10n.searchForProductsOrFarmers,
           hintStyle: TextStyle(
             color: Colors.grey[400],
             fontSize: 14,

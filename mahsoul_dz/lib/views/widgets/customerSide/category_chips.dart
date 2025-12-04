@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-/// Category Chips Widget
-/// Horizontal scrollable list of category chips
 class CategoryChips extends StatelessWidget {
   final List<String> categories;
   final String selectedCategory;
   final Function(String) onCategorySelected;
+  final Map<String, String>? categoryMap;
 
   const CategoryChips({
     super.key,
     required this.categories,
     required this.selectedCategory,
     required this.onCategorySelected,
+    this.categoryMap,
   });
 
   @override
@@ -23,11 +23,12 @@ class CategoryChips extends StatelessWidget {
         itemCount: categories.length,
         separatorBuilder: (context, index) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
-          final category = categories[index];
-          final isSelected = selectedCategory == category;
+          final categoryKey = categories[index];
+          final categoryDisplayName = categoryMap?[categoryKey] ?? categoryKey;
+          final isSelected = selectedCategory == categoryKey;
           
           return GestureDetector(
-            onTap: () => onCategorySelected(category),
+            onTap: () => onCategorySelected(categoryKey),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 200),
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -45,7 +46,7 @@ class CategoryChips extends StatelessWidget {
                     : [],
               ),
               child: Text(
-                category,
+                categoryDisplayName,
                 style: TextStyle(
                   color: isSelected ? Colors.white : Colors.grey.shade700,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,

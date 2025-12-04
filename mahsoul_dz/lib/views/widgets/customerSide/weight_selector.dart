@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Weight Selector Widget
 /// Displays available weight options as selectable buttons
 class WeightSelector extends StatelessWidget {
   final String selectedWeight;

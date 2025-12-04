@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 import 'package:mahsoul_dz/views/screens/FarmerSide/MainDahboard.dart';
 import 'package:mahsoul_dz/views/screens/FarmerSide/Products.dart';
@@ -25,6 +26,8 @@ class _FarmernavigationState extends State<Farmernavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -46,22 +49,22 @@ class _FarmernavigationState extends State<Farmernavigation> {
           fontWeight: FontWeight.normal,
           fontSize: 12,
         ),
-        items: const [
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Dashboard',
+            icon: const Icon(Icons.home),
+            label: l10n.dashboard,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.store),
-            label: 'Products',
+            icon: const Icon(Icons.store),
+            label: l10n.products,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Orders',
+            icon: const Icon(Icons.shopping_bag),
+            label: l10n.orders,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
+            icon: const Icon(Icons.person),
+            label: l10n.profile,
           ),
         ],
       ),

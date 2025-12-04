@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/logic/customer_form.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
 
@@ -21,6 +22,7 @@ class CustomerFormView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Provider.of<CustomerFormController>(context);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -46,19 +48,19 @@ class CustomerFormView extends StatelessWidget {
                 ),
                 const SizedBox(height: 24),
 
-                const Text(
-                  'Complete Your Profile',
-                  style: TextStyle(
+                Text(
+                  l10n.completeYourProfile,
+                  style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF4CAF50),
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Tell us a bit more so we can personalize your Mahsoul experience.',
+                Text(
+                  l10n.tellUsMore,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black54,
                     fontSize: 14,
                   ),
@@ -67,32 +69,32 @@ class CustomerFormView extends StatelessWidget {
 
                 _buildTextField(
                   icon: Icons.person_outline,
-                  label: 'Full Name',
-                  hint: 'Enter your full name',
+                  label: l10n.fullName,
+                  hint: l10n.enterFullName,
                   onChanged: controller.setFullName,
                   validator: (v) =>
-                      v!.isEmpty ? 'Please enter your name' : null,
+                      v!.isEmpty ? l10n.requiredField : null,
                 ),
                 const SizedBox(height: 16),
 
                 _buildTextField(
                   icon: Icons.phone_outlined,
-                  label: 'Phone Number',
-                  hint: 'Enter your phone number',
+                  label: l10n.phoneNumber,
+                  hint: l10n.enterPhoneNumber,
                   keyboard: TextInputType.phone,
                   onChanged: controller.setPhoneNumber,
                   validator: (v) =>
-                      v!.isEmpty ? 'Please enter your phone number' : null,
+                      v!.isEmpty ? l10n.requiredField : null,
                 ),
                 const SizedBox(height: 16),
 
                 _buildTextField(
                   icon: Icons.location_on_outlined,
-                  label: 'Delivery Address',
-                  hint: 'Enter your address',
+                  label: l10n.deliveryAddress,
+                  hint: l10n.enterAddress,
                   onChanged: controller.setAddress,
                   validator: (v) =>
-                      v!.isEmpty ? 'Please enter your address' : null,
+                      v!.isEmpty ? l10n.requiredField : null,
                 ),
                 const SizedBox(height: 16),
 
@@ -102,14 +104,14 @@ class CustomerFormView extends StatelessWidget {
       flex: 1, 
       child: DropdownButtonFormField<String>(
         initialValue: controller.city,
-        items: const [
-          DropdownMenuItem(value: 'Algiers', child: Text('Algiers')),
-          DropdownMenuItem(value: 'Oran', child: Text('Oran')),
-          DropdownMenuItem(value: 'Constantine', child: Text('Constantine')),
+        items: [
+          DropdownMenuItem(value: 'Algiers', child: Text(l10n.algiers)),
+          DropdownMenuItem(value: 'Oran', child: Text(l10n.oran)),
+          DropdownMenuItem(value: 'Constantine', child: Text(l10n.constantine)),
         ],
         onChanged: (value) => controller.setCity(value ?? ''),
-        decoration: _inputDecoration(label: 'City'),
-        validator: (v) => v == null || v.isEmpty ? 'Select a city' : null,
+        decoration: _inputDecoration(label: l10n.city),
+        validator: (v) => v == null || v.isEmpty ? l10n.selectCity : null,
       ),
     ),
     const SizedBox(width: 12),
@@ -118,7 +120,7 @@ class CustomerFormView extends StatelessWidget {
       child: TextFormField(
         keyboardType: TextInputType.number,
         onChanged: controller.setPostalCode,
-        decoration: _inputDecoration(label: 'Postal Code (Optional)'),
+        decoration: _inputDecoration(label: l10n.postalCodeOptional),
       ),
     ),
   ],
@@ -130,7 +132,7 @@ class CustomerFormView extends StatelessWidget {
                   width: double.infinity,
                   height: 56,
                   child: MyButton(
-                    text: "Save & Continue",
+                    text: l10n.saveContinue,
                     onPressed: () => controller.submitForm(context),
                   ),
                 ),

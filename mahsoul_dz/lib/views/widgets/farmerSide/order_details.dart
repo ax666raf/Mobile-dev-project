@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/models/farmerSide/order.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 
@@ -14,6 +15,8 @@ class OrderDetailsWidget extends StatefulWidget {
 class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.only(
@@ -26,7 +29,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
           children: [
             Center(
               child: Text(
-                'Order Details',
+                l10n.orderDetails,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
             ),
@@ -122,13 +125,13 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                 spacing: 10,
                 children: [
                   Text(
-                    'Delivery Details',
+                    l10n.deliveryDetails,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
-                  Text('Address: ${widget.order.address}'),
+                  Text('${l10n.address}: ${widget.order.address}'),
                   SizedBox(height: 10),
                   Text(
-                    'Contact',
+                    l10n.contact,
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                   GestureDetector(
@@ -154,7 +157,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             SizedBox(width: 5),
                             Center(
                               child: Text(
-                                'call',
+                                l10n.call,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey[600],
@@ -185,11 +188,11 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     spacing: 10,
                     children: [
                       Text(
-                        'Payment Details',
+                        l10n.paymentDetails,
                         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        'Payment Method ',
+                        '${l10n.paymentMethod} ',
                          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                       ),
                       Text('${widget.order.paymentMethod}'),
@@ -202,7 +205,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     spacing: 10,
                     children: [
                       Text(
-                        'Payment Status',
+                        l10n.paymentStatus,
                         style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                       ),
                       Text('${widget.order.paymentStatus}'),

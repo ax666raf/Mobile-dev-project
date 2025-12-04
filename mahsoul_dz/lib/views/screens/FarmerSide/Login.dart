@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 import 'package:mahsoul_dz/utils/extensions.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
@@ -23,6 +24,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -42,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // TITLE
                 Text(
-                  'Complete Your Profile',
+                  l10n.setupFarmProfile,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w900,
@@ -51,9 +54,9 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.center,
                 ),
 
-                // descritption
+                // description
                 Text(
-                  'Tell us more so we can personalize your Mahsoul experience',
+                  l10n.connectWithFarmers,
                   style: TextStyle(fontSize: 12, color: Colors.grey[900]),
                   textAlign: TextAlign.center,
                 ),
@@ -69,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
-                          'Full Name / Farm Name',
+                          l10n.farmName,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -78,10 +81,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       CustomFormField(
                         controller: _nameController,
-                        hintText: 'Enter your name or farm name',
+                        hintText: l10n.enterFullName,
                         validator: (value) {
                           if (!value!.isValidName) {
-                            return 'Invalid Name Format';
+                            return l10n.requiredField;
                           }
                           return null;
                         },
@@ -93,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
-                          'Phone Number',
+                          l10n.phoneNumber,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -102,10 +105,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       CustomFormField(
                         controller: _phoneController,
-                        hintText: 'Enter your phone number',
+                        hintText: l10n.enterPhoneNumber,
                         validator: (value) {
                           if (!value!.isValidPhone) {
-                            return 'Invalid phone number';
+                            return l10n.invalidPhoneNumber;
                           }
                           return null;
                         },
@@ -116,7 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
-                          'Farm Description',
+                          l10n.farmDescription,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -129,7 +132,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: TextFormField(
                           controller: _descriptionController,
                           decoration: InputDecoration(
-                            labelText: 'Farm Description',
+                            labelText: l10n.farmDescription,
                             border: OutlineInputBorder(),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -141,18 +144,17 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.grey.shade600,
                               ),
                             ),
-                            hintText:
-                                'Describe your crop from quality, harvest date, and more',
+                            hintText: l10n.description,
                           ),
                           keyboardType: TextInputType.multiline,
                           maxLines: 5,
                           maxLength: 500,
                           validator: (value) {
                             if (value == null || value.trim().isEmpty) {
-                              return 'Please enter a description';
+                              return l10n.requiredField;
                             }
                             if (value.length < 20) {
-                              return 'Description must be at least 20 characters long';
+                              return l10n.requiredField;
                             }
                             return null;
                           },
@@ -165,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
-                          'Years of Experience',
+                          l10n.yearsExperience,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -174,10 +176,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       CustomFormField(
                         controller: _experienceController,
-                        hintText: 'Enter your years of experience',
+                        hintText: l10n.yearsExperience,
                         validator: (value) {
                           if (!value!.isValidExperience) {
-                            return 'Enter a valid number';
+                            return l10n.requiredField;
                           }
                           return null;
                         },
@@ -190,14 +192,14 @@ class _LoginPageState extends State<LoginPage> {
 
                       const SizedBox(height: 20),
 
-                      // login buttonr
+                      // login button
                       MyButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             Navigator.pushNamed(context, '/FarmerNavigation');
                           }
                         },
-                        text: 'Save & Continue',
+                        text: l10n.save,
                       ),
                     ],
                   ),

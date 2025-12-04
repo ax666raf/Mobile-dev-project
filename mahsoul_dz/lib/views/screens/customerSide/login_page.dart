@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 import 'package:mahsoul_dz/utils/extensions.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
@@ -21,6 +22,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -40,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
 
                 // TITLE
                 Text(
-                  'Mahsoul Portal',
+                  l10n.mahsoulPortal,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.w900,
@@ -49,9 +52,9 @@ class _LoginPageState extends State<LoginPage> {
                   textAlign: TextAlign.center,
                 ),
 
-                // descritption
+                // description
                 Text(
-                  'Connect with local farmers and discover fresh produce',
+                  l10n.connectWithFarmers,
                   style: TextStyle(fontSize: 12, color: Colors.grey[900]),
                   textAlign: TextAlign.center,
                 ),
@@ -71,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
-                          'Email Address',
+                          l10n.emailAddress,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -80,10 +83,10 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       CustomFormField(
                         controller: _emailController,
-                        hintText: 'Enter you email address',
+                        hintText: l10n.enterEmail,
                         validator: (value) {
                           if (!value!.isValidEmail) {
-                            return 'Invalid email adress';
+                            return l10n.invalidEmail;
                           }
                           return null;
                         },
@@ -92,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 10.0),
                         child: Text(
-                          'Password',
+                          l10n.password,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -101,11 +104,11 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       CustomFormField(
                         controller: _passwordController,
-                        hintText: 'Enter your password',
+                        hintText: l10n.enterPassword,
                         obscureText: true,
                         validator: (value) {
                           if (!value!.isValidPassword) {
-                            return 'Invalid password';
+                            return l10n.invalidPassword;
                           }
                           return null;
                         },
@@ -120,14 +123,14 @@ class _LoginPageState extends State<LoginPage> {
                             onChanged: (value) =>
                                 setState(() => rememberMe = value ?? false),
                           ),
-                          const Text('Remember me'),
+                          Text(l10n.rememberMe),
                           const Spacer(),
                           TextButton(
                             onPressed: () {
                               // Navigate to forgot password
                             },
                             child: Text(
-                              'Forgot password?',
+                              l10n.forgotPassword,
                               style: TextStyle(
                                 fontSize: 14,
                                 color: primaryColor,
@@ -140,14 +143,14 @@ class _LoginPageState extends State<LoginPage> {
 
                       const SizedBox(height: 20),
 
-                      // login buttonr
+                      // login button
                       MyButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             Navigator.pushNamed(context, '/main');
                           }
                         },
-                        text: 'Login',
+                        text: l10n.login,
                       ),
                     ],
                   ),
@@ -163,7 +166,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account?",
+                        l10n.dontHaveAccount,
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey.shade600,
@@ -188,7 +191,7 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               },
                               child: Text(
-                                'Sign Up',
+                                l10n.signUp,
                                 style: TextStyle(
                                   color: isHovered
                                       ? primaryColor.withOpacity(0.8)

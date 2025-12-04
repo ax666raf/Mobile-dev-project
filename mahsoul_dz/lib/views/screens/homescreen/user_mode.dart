@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 import 'package:mahsoul_dz/views/widgets/common/user_card.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
@@ -15,8 +16,11 @@ class UserMode extends StatefulWidget {
 
 class _UserModeState extends State<UserMode> {
   int? _selectedIndex; // 0: Farmer, 1: Consumer
+  
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -36,7 +40,7 @@ class _UserModeState extends State<UserMode> {
 
                 // title
                 Text(
-                  'Welcome back to Mahsoul',
+                  l10n.welcomeBack,  // 🌍 Localized!
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.w900,
@@ -47,7 +51,7 @@ class _UserModeState extends State<UserMode> {
 
                 // little text
                 Text(
-                  'Choose the mode that best suits your needs',
+                  l10n.selectMode,  // 🌍 Localized!
                   style: TextStyle(fontSize: 13, color: Colors.grey[900]),
                   textAlign: TextAlign.center,
                 ),
@@ -59,18 +63,16 @@ class _UserModeState extends State<UserMode> {
                   children: [
                     UserCard(
                       iconPath: 'lib/assets/farmer.png',
-                      title: "I'm a Farmer",
-                      description:
-                          'showcase your harvest and connect with buyers',
+                      title: l10n.imFarmer,  // 🌍 Localized!
+                      description: l10n.farmerDescription,  // 🌍 Localized!
                       selected: _selectedIndex == 0,
                       onTap: () => setState(() => _selectedIndex = 0),
                     ),
                     SizedBox(height: 50),
                     UserCard(
                       iconPath: 'lib/assets/consumer.png',
-                      title: "I'm a Consumer",
-                      description:
-                          'Discover fresh local goods directly from farmers',
+                      title: l10n.imConsumer,  // 🌍 Localized!
+                      description: l10n.consumerDescription,  // 🌍 Localized!
                       selected: _selectedIndex == 1,
                       onTap: () => setState(() => _selectedIndex = 1),
                     ),
@@ -79,11 +81,11 @@ class _UserModeState extends State<UserMode> {
                 SizedBox(height: 75),
                 // next button
                 MyButton(
-                  text: 'Next',
+                  text: l10n.next,  // 🌍 Localized!
                   onPressed: () {
                     if (_selectedIndex == null) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please select a mode')),
+                        SnackBar(content: Text(l10n.pleaseSelectMode)),  // 🌍 Localized!
                       );
                       return;
                     }

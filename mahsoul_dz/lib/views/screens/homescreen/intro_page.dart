@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
+import 'package:mahsoul_dz/main.dart';
 import 'package:mahsoul_dz/views/widgets/common/button.dart';
 
 class IntroPage extends StatelessWidget {
@@ -7,8 +9,9 @@ class IntroPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Hide system UI
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+    
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
       body: Container(
@@ -24,27 +27,33 @@ class IntroPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Top section: Title and Description
+              // Top section: Language selector + Title and Description
               Padding(
-                padding: const EdgeInsets.only(top: 80.0),
+                padding: const EdgeInsets.only(top: 40.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // toggle of language
+                    // Language selector button
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: _buildLanguageButton(context),
+                    ),
+                    
+                    const SizedBox(height: 20),
 
                     // title
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Welcome To',
+                          l10n.welcomeTo,
                           style: TextStyle(color: Colors.white, fontSize: 48),
                           textAlign: TextAlign.left,
                         ),
                         Row(
                           children: [
                             Text(
-                              'Mahsoul',
+                              l10n.appName,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 48,
@@ -63,19 +72,10 @@ class IntroPage extends StatelessWidget {
                     ),
                     SizedBox(height: 10),
                     // description
-                    Column(
-                      children: [
-                        Text(
-                          'Discover the freshest produce directly',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                          textAlign: TextAlign.center,
-                        ),
-                        Text(
-                          'from local farmers in your area.',
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                    Text(
+                      l10n.welcomeDescription,
+                      style: TextStyle(color: Colors.white, fontSize: 15),
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
@@ -85,7 +85,7 @@ class IntroPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 100.0),
                 child: MyButton(
-                  text: 'Get started',
+                  text: l10n.getStarted,
                   onPressed: () {
                     Navigator.pushNamed(context, '/home');
                   },
@@ -95,6 +95,67 @@ class IntroPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+  
+  Widget _buildLanguageButton(BuildContext context) {
+    return PopupMenuButton<Locale>(
+      icon: Container(
+        padding: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.2),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.white.withOpacity(0.3)),
+        ),
+        child: const Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.language, color: Colors.white, size: 20),
+            SizedBox(width: 6),
+            Icon(Icons.arrow_drop_down, color: Colors.white, size: 18),
+          ],
+        ),
+      ),
+      onSelected: (Locale locale) {
+        MyApp.setLocale(context, locale);
+      },
+      color: Colors.white,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      itemBuilder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        return [
+          PopupMenuItem(
+            value: const Locale('en'),
+            child: Row(
+              children: [
+                const Text('🇬🇧', style: TextStyle(fontSize: 22)),
+                const SizedBox(width: 12),
+                Text(l10n.english, style: const TextStyle(fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: const Locale('ar'),
+            child: Row(
+              children: [
+                const Text('🇩🇿', style: TextStyle(fontSize: 22)),
+                const SizedBox(width: 12),
+                Text(l10n.arabic, style: const TextStyle(fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: const Locale('fr'),
+            child: Row(
+              children: [
+                const Text('🇫🇷', style: TextStyle(fontSize: 22)),
+                const SizedBox(width: 12),
+                Text(l10n.french, style: const TextStyle(fontWeight: FontWeight.w500)),
+              ],
+            ),
+          ),
+        ];
+      },
     );
   }
 }

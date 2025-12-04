@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/themes/colors.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/menu_page.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/market.dart';
@@ -22,6 +23,8 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Scaffold(
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -43,10 +46,10 @@ class _MainNavigationState extends State<MainNavigation> {
           fontWeight: FontWeight.normal,
           fontSize: 12,
         ),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Market'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+        items: [
+          BottomNavigationBarItem(icon: const Icon(Icons.home), label: l10n.home),
+          BottomNavigationBarItem(icon: const Icon(Icons.store), label: l10n.market),
+          BottomNavigationBarItem(icon: const Icon(Icons.person), label: l10n.profile),
         ],
       ),
     );

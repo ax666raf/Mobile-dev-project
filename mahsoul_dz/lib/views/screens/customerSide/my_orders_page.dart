@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/views/widgets/common/page_with_nav.dart';
 import 'package:mahsoul_dz/logic/order_controller.dart';
 import 'package:mahsoul_dz/views/models/customerSide/order_model.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/order_filter_tabs.dart';
 import 'package:mahsoul_dz/views/widgets/customerSide/order_card.dart';
 
-/// My Orders Page - View Layer (MVC Pattern)
-/// Displays user's order history with status filters
-/// Clean UI design with bottom navigation
 class MyOrdersPage extends StatefulWidget {
   const MyOrdersPage({super.key});
 
@@ -20,13 +18,19 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
   final OrderController _controller = OrderController();
   
   // UI State
-  String _selectedFilter = 'All Orders';
+  String _selectedFilter = '';
   List<OrderModel> _displayedOrders = [];
 
   @override
   void initState() {
     super.initState();
-    _loadOrders();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final l10n = AppLocalizations.of(context)!;
+      setState(() {
+        _selectedFilter = l10n.allOrders;
+        _loadOrders();
+      });
+    });
   }
 
   /// Load orders from controller based on selected filter
@@ -72,6 +76,8 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
 
   /// Header with back button and title
   Widget _buildHeader() {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       color: Colors.white,
@@ -84,9 +90,9 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
             constraints: const BoxConstraints(),
           ),
           const SizedBox(width: 12),
-          const Text(
-            'My Orders',
-            style: TextStyle(
+          Text(
+            l10n.myOrders,
+            style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Color(0xFF1A1A1A),
@@ -99,7 +105,8 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
 
   /// Filter tabs for order status
   Widget _buildFilterTabs() {
-    final filters = ['All Orders', 'Ongoing', 'Delivered'];
+    final l10n = AppLocalizations.of(context)!;
+    final filters = [l10n.allOrders, l10n.ongoing, l10n.delivered];
     
     return OrderFilterTabs(
       filters: filters,

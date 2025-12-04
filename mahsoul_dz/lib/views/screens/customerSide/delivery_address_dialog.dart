@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 /// Delivery Address Dialog - Modal for managing delivery addresses
 class DeliveryAddressDialog extends StatefulWidget {
@@ -29,6 +30,8 @@ class _DeliveryAddressDialogState extends State<DeliveryAddressDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
@@ -41,9 +44,9 @@ class _DeliveryAddressDialogState extends State<DeliveryAddressDialog> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Title
-            const Text(
-              "Delivery Address",
-              style: TextStyle(
+            Text(
+              l10n.deliveryAddress,
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Color(0xFF1A1A1A),
@@ -52,9 +55,9 @@ class _DeliveryAddressDialogState extends State<DeliveryAddressDialog> {
             const SizedBox(height: 8),
 
             // Subtitle
-            const Text(
-              "Manage saved delivery locations",
-              style: TextStyle(
+            Text(
+              l10n.manageSavedLocations,
+              style: const TextStyle(
                 fontSize: 14,
                 color: Color(0xFF757575),
               ),
@@ -74,14 +77,14 @@ class _DeliveryAddressDialogState extends State<DeliveryAddressDialog> {
               child: TextField(
                 controller: _addressController,
                 maxLines: 5,
-                decoration: const InputDecoration(
-                  hintText: "Enter you Address here...",
-                  hintStyle: TextStyle(
+                decoration: InputDecoration(
+                  hintText: l10n.enterAddressHere,
+                  hintStyle: const TextStyle(
                     fontSize: 14,
                     color: Color(0xFF9E9E9E),
                   ),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(16),
+                  contentPadding: const EdgeInsets.all(16),
                 ),
                 style: const TextStyle(
                   fontSize: 14,
@@ -103,9 +106,9 @@ class _DeliveryAddressDialogState extends State<DeliveryAddressDialog> {
                     // TODO: Save address to backend/storage
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Address saved successfully!"),
-                        backgroundColor: Color(0xFF4CAF50),
+                      SnackBar(
+                        content: Text(l10n.addressSavedSuccessfully),
+                        backgroundColor: const Color(0xFF4CAF50),
                       ),
                     );
                   }
@@ -117,9 +120,9 @@ class _DeliveryAddressDialogState extends State<DeliveryAddressDialog> {
                     borderRadius: BorderRadius.circular(25),
                   ),
                 ),
-                child: const Text(
-                  "Save Address",
-                  style: TextStyle(
+                child: Text(
+                  l10n.saveAddress,
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                     color: Colors.white,

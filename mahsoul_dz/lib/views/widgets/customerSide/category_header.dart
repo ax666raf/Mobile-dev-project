@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
-/// Category Header Widget
-/// Displays category title and description
 class CategoryHeader extends StatelessWidget {
   final String categoryName;
+  final AppLocalizations? l10n;
 
   const CategoryHeader({
     super.key,
     required this.categoryName,
+    this.l10n,
   });
 
   @override
   Widget build(BuildContext context) {
+    final localizations = l10n ?? AppLocalizations.of(context)!;
+    
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -26,7 +29,7 @@ class CategoryHeader extends StatelessWidget {
         ),
         const SizedBox(height: 6),
         Text(
-          "Discover Fresh $categoryName from different farms",
+          localizations.discoverFreshFromFarms(categoryName),
           style: TextStyle(
             color: Colors.grey.shade600,
             fontSize: 14,
