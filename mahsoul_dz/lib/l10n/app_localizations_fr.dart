@@ -205,7 +205,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get others => 'Autres';
 
   @override
-  String get all => 'Tout';
+  String get all => 'Tous';
 
   @override
   String farmersCount(String count) {
@@ -752,7 +752,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get saveContinue => 'Enregistrer et continuer';
 
   @override
-  String get addressSavedSuccessfully => 'Adresse enregistrée avec succès!';
+  String get addressSavedSuccessfully => 'Adresse enregistrée avec succès';
 
   @override
   String get allOrders => 'Toutes les commandes';
@@ -866,4 +866,191 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get october25th => '25 octobre';
+
+  @override
+  String get pleaseLoginToViewProfile =>
+      'Veuillez vous connecter pour voir le profil';
+
+  @override
+  String get pleaseLoginToViewCart =>
+      'Veuillez vous connecter pour voir le panier';
+
+  @override
+  String get pleaseLoginToViewOrders =>
+      'Veuillez vous connecter pour voir les commandes';
+
+  @override
+  String get pleaseLoginToViewProducts =>
+      'Veuillez vous connecter pour voir les produits';
+
+  @override
+  String get pleaseLoginToViewDashboard =>
+      'Veuillez vous connecter pour voir le tableau de bord';
+
+  @override
+  String get pleaseLoginAsFarmer =>
+      'Veuillez vous connecter en tant qu\'agriculteur d\'abord';
+
+  @override
+  String get pleaseLoginToProceed => 'Veuillez vous connecter pour continuer';
+
+  @override
+  String get pleaseLoginToAddToCart =>
+      'Veuillez vous connecter pour ajouter des articles au panier';
+
+  @override
+  String get pleaseLoginToManageAddresses =>
+      'Veuillez vous connecter pour gérer les adresses';
+
+  @override
+  String get pleaseLoginToViewOrdersHistory =>
+      'Veuillez vous connecter pour voir les commandes';
+
+  @override
+  String get noProfileDataAvailable => 'Aucune donnée de profil disponible';
+
+  @override
+  String get noOrdersFound => 'Aucune commande trouvée';
+
+  @override
+  String get noOrdersAvailable => 'Aucune commande disponible';
+
+  @override
+  String get noProductsAvailable => 'Aucun produit disponible';
+
+  @override
+  String get noAddressesSaved => 'Aucune adresse enregistrée';
+
+  @override
+  String get unknownProduct => 'Produit inconnu';
+
+  @override
+  String get unknownFarm => 'Ferme inconnue';
+
+  @override
+  String get unknownCustomer => 'Client';
+
+  @override
+  String get nA => 'N/D';
+
+  @override
+  String get today => 'Aujourd\'hui';
+
+  @override
+  String get yesterday => 'Hier';
+
+  @override
+  String get anonymous => 'Anonyme';
+
+  @override
+  String get pleaseSelectWeight => 'Veuillez sélectionner un poids';
+
+  @override
+  String get productAddedToCart => 'Produit ajouté au panier!';
+
+  @override
+  String get failedToAddToCart => 'Échec de l\'ajout au panier';
+
+  @override
+  String get pleaseAddDeliveryAddress =>
+      'Veuillez ajouter une adresse de livraison';
+
+  @override
+  String get defaultAddressUpdated =>
+      'Adresse par défaut mise à jour avec succès';
+
+  @override
+  String get addressDeletedSuccessfully => 'Adresse supprimée avec succès';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profil mis à jour avec succès';
+
+  @override
+  String get profileNotLoadedYet =>
+      'Profil pas encore chargé. Veuillez patienter...';
+
+  @override
+  String get farmOverview => 'Aperçu de la ferme';
+
+  @override
+  String get ordersCompleted => 'Commandes terminées';
+
+  @override
+  String get activeProducts => 'Produits actifs';
+
+  @override
+  String get contactSupport => 'Contacter le support';
+
+  @override
+  String get getHelpOrReportIssue =>
+      'Obtenir de l\'aide ou signaler un problème';
+
+  @override
+  String get viewGeneralSettings => 'Voir les paramètres généraux';
+
+  @override
+  String get areYouSureLogout => 'Êtes-vous sûr de vouloir vous déconnecter?';
+
+  @override
+  String get deleteAddress => 'Supprimer l\'adresse';
+
+  @override
+  String get areYouSureDeleteAddress =>
+      'Êtes-vous sûr de vouloir supprimer cette adresse?';
+
+  @override
+  String get setAsDefault => 'Définir par défaut';
+
+  @override
+  String get addNewAddress => 'Ajouter une nouvelle adresse';
+
+  @override
+  String get enterStreetAddress => 'Entrez l\'adresse de la rue';
+
+  @override
+  String get enterCity => 'Entrez la ville';
+
+  @override
+  String get addressIsRequired => 'L\'adresse est requise';
+
+  @override
+  String get cityIsRequired => 'La ville est requise';
+
+  @override
+  String get enterPostalCode => 'Entrez le code postal';
+
+  @override
+  String get homeDelivery => 'Livraison à domicile';
+
+  @override
+  String get cash => 'Espèces';
+
+  @override
+  String get errorLoadingOrders => 'Erreur lors du chargement des commandes';
+
+  @override
+  String get noRecentOrders => 'Aucune commande récente';
+
+  @override
+  String get errorOpeningEditProfile =>
+      'Erreur lors de l\'ouverture de la modification du profil';
+
+  @override
+  String get saving => 'Enregistrement...';
+
+  @override
+  String get farmLocation => 'Emplacement de la ferme';
+
+  @override
+  String get enterFarmLocation => 'Entrez l\'emplacement de la ferme';
+
+  @override
+  String get descriptionMinLength =>
+      'La description doit contenir au moins 20 caractères';
+
+  @override
+  String get regularCustomer => 'Client régulier';
+
+  @override
+  String get defaultAddress => 'Adresse par défaut';
 }

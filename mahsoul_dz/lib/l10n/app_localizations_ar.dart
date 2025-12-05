@@ -702,7 +702,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get home => 'الرئيسية';
 
   @override
-  String get outOfStock => 'غير متوفر';
+  String get outOfStock => 'نفد المخزون';
 
   @override
   String get enterProductName => 'أدخل اسم المنتج';
@@ -745,7 +745,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get saveContinue => 'حفظ ومتابعة';
 
   @override
-  String get addressSavedSuccessfully => 'تم حفظ العنوان بنجاح!';
+  String get addressSavedSuccessfully => 'تم حفظ العنوان بنجاح';
 
   @override
   String get allOrders => 'جميع الطلبات';
@@ -857,4 +857,182 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get october25th => '25 أكتوبر';
+
+  @override
+  String get pleaseLoginToViewProfile =>
+      'الرجاء تسجيل الدخول لعرض الملف الشخصي';
+
+  @override
+  String get pleaseLoginToViewCart => 'الرجاء تسجيل الدخول لعرض السلة';
+
+  @override
+  String get pleaseLoginToViewOrders => 'الرجاء تسجيل الدخول لعرض الطلبات';
+
+  @override
+  String get pleaseLoginToViewProducts => 'الرجاء تسجيل الدخول لعرض المنتجات';
+
+  @override
+  String get pleaseLoginToViewDashboard =>
+      'الرجاء تسجيل الدخول لعرض لوحة التحكم';
+
+  @override
+  String get pleaseLoginAsFarmer => 'الرجاء تسجيل الدخول كمزارع أولاً';
+
+  @override
+  String get pleaseLoginToProceed => 'الرجاء تسجيل الدخول للمتابعة';
+
+  @override
+  String get pleaseLoginToAddToCart =>
+      'الرجاء تسجيل الدخول لإضافة العناصر إلى السلة';
+
+  @override
+  String get pleaseLoginToManageAddresses =>
+      'الرجاء تسجيل الدخول لإدارة العناوين';
+
+  @override
+  String get pleaseLoginToViewOrdersHistory =>
+      'الرجاء تسجيل الدخول لعرض الطلبات';
+
+  @override
+  String get noProfileDataAvailable => 'لا توجد بيانات الملف الشخصي متاحة';
+
+  @override
+  String get noOrdersFound => 'لم يتم العثور على طلبات';
+
+  @override
+  String get noOrdersAvailable => 'لا توجد طلبات متاحة';
+
+  @override
+  String get noProductsAvailable => 'لا توجد منتجات متاحة';
+
+  @override
+  String get noAddressesSaved => 'لا توجد عناوين محفوظة';
+
+  @override
+  String get unknownProduct => 'منتج غير معروف';
+
+  @override
+  String get unknownFarm => 'مزرعة غير معروفة';
+
+  @override
+  String get unknownCustomer => 'عميل';
+
+  @override
+  String get nA => 'غير متاح';
+
+  @override
+  String get today => 'اليوم';
+
+  @override
+  String get yesterday => 'أمس';
+
+  @override
+  String get anonymous => 'مجهول';
+
+  @override
+  String get pleaseSelectWeight => 'الرجاء اختيار الوزن';
+
+  @override
+  String get productAddedToCart => 'تمت إضافة المنتج إلى السلة!';
+
+  @override
+  String get failedToAddToCart => 'فشل إضافة المنتج إلى السلة';
+
+  @override
+  String get pleaseAddDeliveryAddress => 'الرجاء إضافة عنوان التوصيل';
+
+  @override
+  String get defaultAddressUpdated => 'تم تحديث العنوان الافتراضي بنجاح';
+
+  @override
+  String get addressDeletedSuccessfully => 'تم حذف العنوان بنجاح';
+
+  @override
+  String get profileUpdatedSuccessfully => 'تم تحديث الملف الشخصي بنجاح';
+
+  @override
+  String get profileNotLoadedYet =>
+      'لم يتم تحميل الملف الشخصي بعد. الرجاء الانتظار...';
+
+  @override
+  String get farmOverview => 'نظرة عامة على المزرعة';
+
+  @override
+  String get ordersCompleted => 'الطلبات المكتملة';
+
+  @override
+  String get activeProducts => 'المنتجات النشطة';
+
+  @override
+  String get contactSupport => 'اتصل بالدعم';
+
+  @override
+  String get getHelpOrReportIssue => 'احصل على المساعدة أو أبلغ عن مشكلة';
+
+  @override
+  String get viewGeneralSettings => 'عرض الإعدادات العامة';
+
+  @override
+  String get areYouSureLogout => 'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get deleteAddress => 'حذف العنوان';
+
+  @override
+  String get areYouSureDeleteAddress =>
+      'هل أنت متأكد أنك تريد حذف هذا العنوان؟';
+
+  @override
+  String get setAsDefault => 'تعيين كافتراضي';
+
+  @override
+  String get addNewAddress => 'إضافة عنوان جديد';
+
+  @override
+  String get enterStreetAddress => 'أدخل عنوان الشارع';
+
+  @override
+  String get enterCity => 'أدخل المدينة';
+
+  @override
+  String get addressIsRequired => 'العنوان مطلوب';
+
+  @override
+  String get cityIsRequired => 'المدينة مطلوبة';
+
+  @override
+  String get enterPostalCode => 'أدخل الرمز البريدي';
+
+  @override
+  String get homeDelivery => 'التوصيل إلى المنزل';
+
+  @override
+  String get cash => 'نقد';
+
+  @override
+  String get errorLoadingOrders => 'خطأ في تحميل الطلبات';
+
+  @override
+  String get noRecentOrders => 'لا توجد طلبات حديثة';
+
+  @override
+  String get errorOpeningEditProfile => 'خطأ في فتح تعديل الملف الشخصي';
+
+  @override
+  String get saving => 'جاري الحفظ...';
+
+  @override
+  String get farmLocation => 'موقع المزرعة';
+
+  @override
+  String get enterFarmLocation => 'أدخل موقع المزرعة';
+
+  @override
+  String get descriptionMinLength => 'يجب أن يكون الوصف 20 حرفًا على الأقل';
+
+  @override
+  String get regularCustomer => 'عميل عادي';
+
+  @override
+  String get defaultAddress => 'العنوان الافتراضي';
 }

@@ -1543,7 +1543,7 @@ abstract class AppLocalizations {
   /// No description provided for @addressSavedSuccessfully.
   ///
   /// In en, this message translates to:
-  /// **'Address saved successfully!'**
+  /// **'Address saved successfully'**
   String get addressSavedSuccessfully;
 
   /// No description provided for @allOrders.
@@ -1755,6 +1755,348 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'25th October'**
   String get october25th;
+
+  /// No description provided for @pleaseLoginToViewProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to view profile'**
+  String get pleaseLoginToViewProfile;
+
+  /// No description provided for @pleaseLoginToViewCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to view cart'**
+  String get pleaseLoginToViewCart;
+
+  /// No description provided for @pleaseLoginToViewOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to view orders'**
+  String get pleaseLoginToViewOrders;
+
+  /// No description provided for @pleaseLoginToViewProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to view products'**
+  String get pleaseLoginToViewProducts;
+
+  /// No description provided for @pleaseLoginToViewDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to view dashboard'**
+  String get pleaseLoginToViewDashboard;
+
+  /// No description provided for @pleaseLoginAsFarmer.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login as farmer first'**
+  String get pleaseLoginAsFarmer;
+
+  /// No description provided for @pleaseLoginToProceed.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to proceed'**
+  String get pleaseLoginToProceed;
+
+  /// No description provided for @pleaseLoginToAddToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to add items to cart'**
+  String get pleaseLoginToAddToCart;
+
+  /// No description provided for @pleaseLoginToManageAddresses.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to manage addresses'**
+  String get pleaseLoginToManageAddresses;
+
+  /// No description provided for @pleaseLoginToViewOrdersHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to view orders'**
+  String get pleaseLoginToViewOrdersHistory;
+
+  /// No description provided for @noProfileDataAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No profile data available'**
+  String get noProfileDataAvailable;
+
+  /// No description provided for @noOrdersFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders found'**
+  String get noOrdersFound;
+
+  /// No description provided for @noOrdersAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders available'**
+  String get noOrdersAvailable;
+
+  /// No description provided for @noProductsAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No products available'**
+  String get noProductsAvailable;
+
+  /// No description provided for @noAddressesSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'No addresses saved'**
+  String get noAddressesSaved;
+
+  /// No description provided for @unknownProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Product'**
+  String get unknownProduct;
+
+  /// No description provided for @unknownFarm.
+  ///
+  /// In en, this message translates to:
+  /// **'Unknown Farm'**
+  String get unknownFarm;
+
+  /// No description provided for @unknownCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get unknownCustomer;
+
+  /// No description provided for @nA.
+  ///
+  /// In en, this message translates to:
+  /// **'N/A'**
+  String get nA;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @anonymous.
+  ///
+  /// In en, this message translates to:
+  /// **'Anonymous'**
+  String get anonymous;
+
+  /// No description provided for @pleaseSelectWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a weight'**
+  String get pleaseSelectWeight;
+
+  /// No description provided for @productAddedToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Product added to cart!'**
+  String get productAddedToCart;
+
+  /// No description provided for @failedToAddToCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Failed to add to cart'**
+  String get failedToAddToCart;
+
+  /// No description provided for @pleaseAddDeliveryAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add a delivery address'**
+  String get pleaseAddDeliveryAddress;
+
+  /// No description provided for @defaultAddressUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Default address updated successfully'**
+  String get defaultAddressUpdated;
+
+  /// No description provided for @addressDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Address deleted successfully'**
+  String get addressDeletedSuccessfully;
+
+  /// No description provided for @profileUpdatedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile updated successfully'**
+  String get profileUpdatedSuccessfully;
+
+  /// No description provided for @profileNotLoadedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile not loaded yet. Please wait...'**
+  String get profileNotLoadedYet;
+
+  /// No description provided for @farmOverview.
+  ///
+  /// In en, this message translates to:
+  /// **'Farm Overview'**
+  String get farmOverview;
+
+  /// No description provided for @ordersCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders Completed'**
+  String get ordersCompleted;
+
+  /// No description provided for @activeProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Active Products'**
+  String get activeProducts;
+
+  /// No description provided for @contactSupport.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Support'**
+  String get contactSupport;
+
+  /// No description provided for @getHelpOrReportIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Get help or report an issue'**
+  String get getHelpOrReportIssue;
+
+  /// No description provided for @viewGeneralSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'View General Settings'**
+  String get viewGeneralSettings;
+
+  /// No description provided for @areYouSureLogout.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to logout?'**
+  String get areYouSureLogout;
+
+  /// No description provided for @deleteAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Address'**
+  String get deleteAddress;
+
+  /// No description provided for @areYouSureDeleteAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this address?'**
+  String get areYouSureDeleteAddress;
+
+  /// No description provided for @setAsDefault.
+  ///
+  /// In en, this message translates to:
+  /// **'Set as Default'**
+  String get setAsDefault;
+
+  /// No description provided for @addNewAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Address'**
+  String get addNewAddress;
+
+  /// No description provided for @enterStreetAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter street address'**
+  String get enterStreetAddress;
+
+  /// No description provided for @enterCity.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter city'**
+  String get enterCity;
+
+  /// No description provided for @addressIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Address is required'**
+  String get addressIsRequired;
+
+  /// No description provided for @cityIsRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'City is required'**
+  String get cityIsRequired;
+
+  /// No description provided for @enterPostalCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter postal code'**
+  String get enterPostalCode;
+
+  /// No description provided for @homeDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Home Delivery'**
+  String get homeDelivery;
+
+  /// No description provided for @cash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get cash;
+
+  /// No description provided for @errorLoadingOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Error loading orders'**
+  String get errorLoadingOrders;
+
+  /// No description provided for @noRecentOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'No recent orders'**
+  String get noRecentOrders;
+
+  /// No description provided for @errorOpeningEditProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Error opening edit profile'**
+  String get errorOpeningEditProfile;
+
+  /// No description provided for @saving.
+  ///
+  /// In en, this message translates to:
+  /// **'Saving...'**
+  String get saving;
+
+  /// No description provided for @farmLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Farm Location'**
+  String get farmLocation;
+
+  /// No description provided for @enterFarmLocation.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter farm location'**
+  String get enterFarmLocation;
+
+  /// No description provided for @descriptionMinLength.
+  ///
+  /// In en, this message translates to:
+  /// **'Description must be at least 20 characters'**
+  String get descriptionMinLength;
+
+  /// No description provided for @regularCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular Customer'**
+  String get regularCustomer;
+
+  /// No description provided for @defaultAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Default Address'**
+  String get defaultAddress;
 }
 
 class _AppLocalizationsDelegate

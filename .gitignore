@@ -1,0 +1,110 @@
+# Root level ignores
+.DS_Store
+.vscode/
+.idea/
+*.log
+
+# ============================================
+# Environment files (all subdirectories)
+# ============================================
+.env
+.env.local
+.env.*.local
+*.env
+**/.env
+**/.env.local
+**/.env.*.local
+**/*.env
+
+# ============================================
+# Backend - Database files
+# ============================================
+mahsoul_backend/instance/
+mahsoul_backend/*.db
+mahsoul_backend/*.db-shm
+mahsoul_backend/*.db-wal
+mahsoul_backend/*.db.sqbpro
+mahsoul_backend/*.sqlite
+mahsoul_backend/*.sqlite3
+
+# ============================================
+# Backend - Python
+# ============================================
+mahsoul_backend/__pycache__/
+mahsoul_backend/**/__pycache__/
+mahsoul_backend/*.py[cod]
+mahsoul_backend/*$py.class
+mahsoul_backend/*.so
+mahsoul_backend/.Python
+mahsoul_backend/*.egg-info/
+mahsoul_backend/dist/
+mahsoul_backend/build/
+
+# ============================================
+# Backend - Virtual environments
+# ============================================
+mahsoul_backend/venv/
+mahsoul_backend/env/
+mahsoul_backend/ENV/
+mahsoul_backend/.venv/
+mahsoul_backend/virtualenv/
+
+# ============================================
+# Flutter App - Database files
+# ============================================
+mahsoul_dz/**/*.db
+mahsoul_dz/**/*.db-shm
+mahsoul_dz/**/*.db-wal
+mahsoul_dz/**/*.db.sqbpro
+mahsoul_dz/**/*.sqlite
+mahsoul_dz/**/*.sqlite3
+
+# ============================================
+# Flutter App - Build and dependencies
+# ============================================
+mahsoul_dz/.dart_tool/
+mahsoul_dz/.flutter-plugins
+mahsoul_dz/.flutter-plugins-dependencies
+mahsoul_dz/.packages
+mahsoul_dz/.pub-cache/
+mahsoul_dz/.pub/
+mahsoul_dz/build/
+mahsoul_dz/**/build/
+mahsoul_dz/*.iml
+
+# ============================================
+# Flutter App - Android
+# ============================================
+mahsoul_dz/android/local.properties
+mahsoul_dz/android/**/local.properties
+mahsoul_dz/**/*.apk
+mahsoul_dz/**/*.aab
+mahsoul_dz/android/app/debug/
+mahsoul_dz/android/app/profile/
+mahsoul_dz/android/app/release/
+
+# ============================================
+# Flutter App - iOS
+# ============================================
+mahsoul_dz/ios/**/*.pbxuser
+mahsoul_dz/ios/**/*.mode1v3
+mahsoul_dz/ios/**/*.mode2v3
+mahsoul_dz/ios/**/*.mode3v3
+mahsoul_dz/ios/**/*.perspectivev3
+mahsoul_dz/ios/**/*.xcuserstate
+mahsoul_dz/ios/**/project.xcworkspace/
+mahsoul_dz/ios/**/xcuserdata/
+mahsoul_dz/ios/**/*.moved-aside
+mahsoul_dz/ios/DerivedData/
+mahsoul_dz/ios/**/*.hmap
+mahsoul_dz/ios/**/*.ipa
+mahsoul_dz/ios/**/*.xcuserdatad
+
+# ============================================
+# IDE and Editor files
+# ============================================
+**/.idea/
+**/*.swp
+**/*.swo
+**/*~
+**/.vscode/

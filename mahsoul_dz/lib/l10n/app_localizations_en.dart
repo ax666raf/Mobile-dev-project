@@ -746,7 +746,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get saveContinue => 'Save & Continue';
 
   @override
-  String get addressSavedSuccessfully => 'Address saved successfully!';
+  String get addressSavedSuccessfully => 'Address saved successfully';
 
   @override
   String get allOrders => 'All Orders';
@@ -858,4 +858,177 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get october25th => '25th October';
+
+  @override
+  String get pleaseLoginToViewProfile => 'Please login to view profile';
+
+  @override
+  String get pleaseLoginToViewCart => 'Please login to view cart';
+
+  @override
+  String get pleaseLoginToViewOrders => 'Please login to view orders';
+
+  @override
+  String get pleaseLoginToViewProducts => 'Please login to view products';
+
+  @override
+  String get pleaseLoginToViewDashboard => 'Please login to view dashboard';
+
+  @override
+  String get pleaseLoginAsFarmer => 'Please login as farmer first';
+
+  @override
+  String get pleaseLoginToProceed => 'Please login to proceed';
+
+  @override
+  String get pleaseLoginToAddToCart => 'Please login to add items to cart';
+
+  @override
+  String get pleaseLoginToManageAddresses => 'Please login to manage addresses';
+
+  @override
+  String get pleaseLoginToViewOrdersHistory => 'Please login to view orders';
+
+  @override
+  String get noProfileDataAvailable => 'No profile data available';
+
+  @override
+  String get noOrdersFound => 'No orders found';
+
+  @override
+  String get noOrdersAvailable => 'No orders available';
+
+  @override
+  String get noProductsAvailable => 'No products available';
+
+  @override
+  String get noAddressesSaved => 'No addresses saved';
+
+  @override
+  String get unknownProduct => 'Unknown Product';
+
+  @override
+  String get unknownFarm => 'Unknown Farm';
+
+  @override
+  String get unknownCustomer => 'Customer';
+
+  @override
+  String get nA => 'N/A';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String get anonymous => 'Anonymous';
+
+  @override
+  String get pleaseSelectWeight => 'Please select a weight';
+
+  @override
+  String get productAddedToCart => 'Product added to cart!';
+
+  @override
+  String get failedToAddToCart => 'Failed to add to cart';
+
+  @override
+  String get pleaseAddDeliveryAddress => 'Please add a delivery address';
+
+  @override
+  String get defaultAddressUpdated => 'Default address updated successfully';
+
+  @override
+  String get addressDeletedSuccessfully => 'Address deleted successfully';
+
+  @override
+  String get profileUpdatedSuccessfully => 'Profile updated successfully';
+
+  @override
+  String get profileNotLoadedYet => 'Profile not loaded yet. Please wait...';
+
+  @override
+  String get farmOverview => 'Farm Overview';
+
+  @override
+  String get ordersCompleted => 'Orders Completed';
+
+  @override
+  String get activeProducts => 'Active Products';
+
+  @override
+  String get contactSupport => 'Contact Support';
+
+  @override
+  String get getHelpOrReportIssue => 'Get help or report an issue';
+
+  @override
+  String get viewGeneralSettings => 'View General Settings';
+
+  @override
+  String get areYouSureLogout => 'Are you sure you want to logout?';
+
+  @override
+  String get deleteAddress => 'Delete Address';
+
+  @override
+  String get areYouSureDeleteAddress =>
+      'Are you sure you want to delete this address?';
+
+  @override
+  String get setAsDefault => 'Set as Default';
+
+  @override
+  String get addNewAddress => 'Add New Address';
+
+  @override
+  String get enterStreetAddress => 'Enter street address';
+
+  @override
+  String get enterCity => 'Enter city';
+
+  @override
+  String get addressIsRequired => 'Address is required';
+
+  @override
+  String get cityIsRequired => 'City is required';
+
+  @override
+  String get enterPostalCode => 'Enter postal code';
+
+  @override
+  String get homeDelivery => 'Home Delivery';
+
+  @override
+  String get cash => 'Cash';
+
+  @override
+  String get errorLoadingOrders => 'Error loading orders';
+
+  @override
+  String get noRecentOrders => 'No recent orders';
+
+  @override
+  String get errorOpeningEditProfile => 'Error opening edit profile';
+
+  @override
+  String get saving => 'Saving...';
+
+  @override
+  String get farmLocation => 'Farm Location';
+
+  @override
+  String get enterFarmLocation => 'Enter farm location';
+
+  @override
+  String get descriptionMinLength =>
+      'Description must be at least 20 characters';
+
+  @override
+  String get regularCustomer => 'Regular Customer';
+
+  @override
+  String get defaultAddress => 'Default Address';
 }
