@@ -82,7 +82,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                           vertical: 5,
                         ),
                         child: Text(
-                          '${widget.order.statusString}',
+                          widget.order.statusString,
                           style: TextStyle(fontSize: 14, color: Colors.white),
                         ),
                       ),
@@ -98,7 +98,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                             ),
                           ),
                           Text(
-                            '${widget.order.deliveryMethod}',
+                            widget.order.deliveryMethod,
                             style: TextStyle(fontSize: 14, color: primaryColor),
                           ),
                         ],
@@ -192,7 +192,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         'Payment Method ',
                          style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                       ),
-                      Text('${widget.order.paymentMethod}'),
+                      Text(widget.order.paymentMethod),
                       
                     ],
                   ),
@@ -205,7 +205,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                         'Payment Status',
                         style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                       ),
-                      Text('${widget.order.paymentStatus}'),
+                      Text(widget.order.paymentStatus),
                     ],
                   ),
                 ],
