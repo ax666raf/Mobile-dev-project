@@ -673,7 +673,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get da => 'DA';
 
   @override
-  String get currency => 'DA';
+  String get currency => 'DZD';
 
   @override
   String get kg => 'kg';
@@ -837,6 +837,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get ratings => 'ratings';
+
+  @override
+  String get writeReview => 'Write a Review';
+
+  @override
+  String get yourRating => 'Your Rating';
+
+  @override
+  String get yourReview => 'Your Review';
+
+  @override
+  String get writeYourReviewHere =>
+      'Share your experience with this product...';
+
+  @override
+  String get submitReview => 'Submit Review';
+
+  @override
+  String get noReviewsYet => 'No reviews yet';
+
+  @override
+  String get beFirstToReview => 'Be the first to share your experience!';
+
+  @override
+  String get reviewSubmitted => 'Review submitted successfully';
+
+  @override
+  String get reviewUpdated => 'Review updated successfully';
 
   @override
   String get yesCertified => 'Yes, Certified';
@@ -1031,4 +1059,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get defaultAddress => 'Default Address';
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get noFavorites => 'No favorites yet';
+
+  @override
+  String get addFavoritesHint =>
+      'Tap the heart icon on products to add favorites';
+
+  @override
+  String get addedToFavorites => 'Added to favorites';
+
+  @override
+  String get removedFromFavorites => 'Removed from favorites';
+
+  @override
+  String get pleaseLogin => 'Please login to access this feature';
 }

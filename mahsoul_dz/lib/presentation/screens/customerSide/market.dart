@@ -12,8 +12,10 @@ import 'package:mahsoul_dz/presentation/cubits/customer/product_state.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/cart_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/auth/auth_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/auth/auth_state.dart';
+import 'package:mahsoul_dz/presentation/cubits/favorite/favorite_cubit.dart';
 import 'package:mahsoul_dz/core/di/dependency_injection.dart';
 import 'package:mahsoul_dz/presentation/themes/colors.dart';
+import 'package:mahsoul_dz/presentation/screens/customerSide/favorites_page.dart';
 
 class Market extends StatefulWidget {
   const Market({super.key});
@@ -144,6 +146,7 @@ class _MarketState extends State<Market> {
   // UI State
   String _selectedCategory = "";
   final TextEditingController _searchController = TextEditingController();
+  String? _customerId;
 
   static const List<String> _categoryKeys = [
     'Vegetables',
@@ -163,8 +166,17 @@ class _MarketState extends State<Market> {
       setState(() {
         _selectedCategory = 'Vegetables'; // Default to first category
         _loadProducts();
+        _loadFavorites();
       });
     });
+  }
+
+  void _loadFavorites() {
+    final authState = context.read<AuthCubit>().state;
+    if (authState is AuthAuthenticated && authState.userType == 'customer') {
+      _customerId = authState.userId;
+      context.read<FavoriteCubit>().loadFavoriteIds(_customerId!);
+    }
   }
 
   @override
@@ -211,11 +223,17 @@ class _MarketState extends State<Market> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            // Search Bar
+            // Search Bar with Favorites Icon
             SliverToBoxAdapter(
               child: Padding(
                 padding: _screenPadding,
-                child: _buildSearchBar(l10n),
+                child: Row(
+                  children: [
+                    Expanded(child: _buildSearchBar(l10n)),
+                    const SizedBox(width: 12),
+                    _buildFavoritesButton(context),
+                  ],
+                ),
               ),
             ),
 
@@ -261,6 +279,45 @@ class _MarketState extends State<Market> {
         _onSearchChanged('');
       },
       showClearButton: _searchController.text.isNotEmpty,
+    );
+  }
+
+  Widget _buildFavoritesButton(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(12),
+      elevation: 2,
+      child: InkWell(
+        onTap: () {
+          if (_customerId != null) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => FavoritesPage(customerId: _customerId!),
+              ),
+            );
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(AppLocalizations.of(context)!.pleaseLogin ?? 'Please login to view favorites'),
+                backgroundColor: Colors.orange,
+              ),
+            );
+          }
+        },
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Icon(
+            Icons.favorite,
+            color: Colors.red.shade400,
+            size: 24,
+          ),
+        ),
+      ),
     );
   }
 
@@ -396,6 +453,7 @@ class _MarketState extends State<Market> {
               return ProductCard(
                 product: product,
                 onPressed: () => _navigateToProductDetail(product.id),
+                customerId: _customerId,
               );
             }, childCount: productList.length),
           );

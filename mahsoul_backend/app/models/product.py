@@ -27,6 +27,7 @@ class Product(db.Model):
     reviews = db.relationship('Review', backref='product', cascade='all, delete-orphan')
     cart_items = db.relationship('CartItem', backref='product', cascade='all, delete-orphan')
     order_items = db.relationship('OrderItem', backref='product', cascade='all, delete-orphan')
+    favorites = db.relationship('Favorite', backref='product', cascade='all, delete-orphan')
     
     def to_dict(self, include_weights=True, include_reviews=False):
         """Convert product to dictionary"""

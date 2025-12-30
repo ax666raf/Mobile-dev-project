@@ -7,6 +7,8 @@ import 'package:mahsoul_dz/data/repositories/profile_repository.dart';
 import 'package:mahsoul_dz/data/repositories/delivery_address_repository.dart';
 import 'package:mahsoul_dz/data/repositories/farmer_repository.dart';
 import 'package:mahsoul_dz/data/repositories/notification_repository.dart';
+import 'package:mahsoul_dz/data/repositories/review_repository.dart';
+import 'package:mahsoul_dz/data/repositories/favorite_repository.dart';
 
 class DependencyInjection {
   // Singleton ApiClient
@@ -27,4 +29,6 @@ class DependencyInjection {
   static final FarmerRepository farmerRepository = FarmerRepository(_apiClient);
   static final NotificationRepository notificationRepository =
       NotificationRepository(_apiClient);
+  static final ReviewRepository reviewRepository = ReviewRepository(_apiClient);
+  static final FavoriteRepository favoriteRepository = FavoriteRepository(_apiClient);
 }

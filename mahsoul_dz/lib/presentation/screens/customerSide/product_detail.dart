@@ -13,6 +13,7 @@ import 'package:mahsoul_dz/presentation/cubits/customer/product_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/cart_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/auth/auth_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/auth/auth_state.dart';
+import 'package:mahsoul_dz/presentation/cubits/review/review_cubit.dart';
 import 'package:mahsoul_dz/core/di/dependency_injection.dart';
 
 class ProductPage extends StatefulWidget {
@@ -30,6 +31,7 @@ class _ProductPageState extends State<ProductPage> {
   Map<String, dynamic>? productData;
   List<Map<String, dynamic>> reviews = [];
   double basePrice = 0.0;
+  late ReviewCubit _reviewCubit;
 
   // Calculate price based on selected weight
   // Price doubles for each weight increment (500g = 1x, 1kg = 2x, 2kg = 4x, etc.)
@@ -65,6 +67,7 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
+    _reviewCubit = ReviewCubit(DependencyInjection.reviewRepository);
     _loadProductData();
   }
 
@@ -353,11 +356,59 @@ class _ProductPageState extends State<ProductPage> {
                   const SizedBox(height: 16),
 
                   // Customer Reviews Section
-                  CustomerReviewsCard(
-                    reviewCount: reviewItems.length,
-                    averageRating: rating,
-                    totalRatings: reviewCount,
-                    reviews: reviewItems,
+                  Builder(
+                    builder: (context) {
+                      final authState = context.read<AuthCubit>().state;
+                      final isCustomer = authState is AuthAuthenticated && 
+                                         authState.userType == 'customer';
+                      final customerId = isCustomer 
+                          ? (authState as AuthAuthenticated).userId 
+                          : null;
+                      
+                      // Check if user has already reviewed
+                      final hasReviewed = customerId != null && 
+                          reviews.any((r) => r['customer_id'] == customerId);
+                      
+                      return CustomerReviewsCard(
+                        reviewCount: reviewItems.length,
+                        averageRating: rating,
+                        totalRatings: reviewCount,
+                        reviews: reviewItems,
+                        canAddReview: isCustomer && !hasReviewed,
+                        customerId: customerId,
+                        onSubmitReview: isCustomer ? (reviewRating, comment) async {
+                          try {
+                            await _reviewCubit.submitReview(
+                              productId: widget.productId,
+                              customerId: customerId!,
+                              rating: reviewRating,
+                              comment: comment,
+                            );
+                            
+                            // Reload product data to refresh reviews
+                            await _loadProductData();
+                            
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(l10n.reviewSubmitted),
+                                  backgroundColor: Colors.green,
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            if (mounted) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('${l10n.error}: ${e.toString()}'),
+                                  backgroundColor: Colors.red,
+                                ),
+                              );
+                            }
+                          }
+                        } : null,
+                      );
+                    },
                   ),
                   const SizedBox(height: 40),
                 ],

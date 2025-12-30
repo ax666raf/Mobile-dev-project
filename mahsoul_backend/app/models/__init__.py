@@ -10,6 +10,7 @@ from app.models.order_item import OrderItem
 from app.models.review import Review
 from app.models.delivery_address import DeliveryAddress
 from app.models.notification import Notification
+from app.models.favorite import Favorite
 
 __all__ = [
     'User',
@@ -23,5 +24,6 @@ __all__ = [
     'Review',
     'DeliveryAddress',
     'Notification',
+    'Favorite',
 ]
 

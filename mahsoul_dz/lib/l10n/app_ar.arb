@@ -336,6 +336,15 @@
   "sarahAhmed": "سارة أحمد",
   "customerReviews": "مراجعات العملاء",
   "ratings": "تقييمات",
+  "writeReview": "اكتب مراجعة",
+  "yourRating": "تقييمك",
+  "yourReview": "مراجعتك",
+  "writeYourReviewHere": "شارك تجربتك مع هذا المنتج...",
+  "submitReview": "إرسال المراجعة",
+  "noReviewsYet": "لا توجد مراجعات بعد",
+  "beFirstToReview": "كن أول من يشارك تجربته!",
+  "reviewSubmitted": "تم إرسال المراجعة بنجاح",
+  "reviewUpdated": "تم تحديث المراجعة بنجاح",
   "yesCertified": "نعم، معتمد",
   "no": "لا",
   "originLabel": "المصدر:",
@@ -417,5 +426,13 @@
   "enterFarmLocation": "أدخل موقع المزرعة",
   "descriptionMinLength": "يجب أن يكون الوصف 20 حرفًا على الأقل",
   "regularCustomer": "عميل عادي",
-  "defaultAddress": "العنوان الافتراضي"
+  "defaultAddress": "العنوان الافتراضي",
+  
+  "favorites": "المفضلة",
+  "noFavorites": "لا توجد مفضلات بعد",
+  "addFavoritesHint": "اضغط على أيقونة القلب لإضافة المنتجات إلى المفضلة",
+  "addedToFavorites": "تمت الإضافة إلى المفضلة",
+  "removedFromFavorites": "تمت الإزالة من المفضلة",
+  "pleaseLogin": "يرجى تسجيل الدخول للوصول إلى هذه الميزة",
+  "currency": "دج"
 }

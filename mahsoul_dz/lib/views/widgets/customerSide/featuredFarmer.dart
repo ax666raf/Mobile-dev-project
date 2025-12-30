@@ -31,46 +31,60 @@ class FeaturedFarmer extends StatelessWidget {
         Image.asset(
           profileImage, 
           width: 60, 
-          height: 60),
+          height: 60,
+          fit: BoxFit.cover,
+        ),
         SizedBox(width: 10),
         // infor
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Name
-            Text(
-              name,
-              style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Name
+              Text(
+                name,
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
-            ),
-            
-            // info
-            Row(
-              children: [
-                Text(
-                  products,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
+              
+              // info
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      products,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-                SizedBox(width: 8),
-                Text(
-                  location,
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
+                  SizedBox(width: 8),
+                  Flexible(
+                    child: Text(
+                      location,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-              ],
+                ],
 
-            )
-          ],
+              )
+            ],
+          ),
         ),
 
-        SizedBox(width  : 20),
+        SizedBox(width: 10),
         // rating and availability
         Column(
           children: [

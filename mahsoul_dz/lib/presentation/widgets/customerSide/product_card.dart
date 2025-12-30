@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/data/models/customerSide/product.dart';
 import 'package:mahsoul_dz/core/utils/image_storage_helper.dart';
+import 'package:mahsoul_dz/presentation/cubits/favorite/favorite_cubit.dart';
+import 'package:mahsoul_dz/presentation/cubits/favorite/favorite_state.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
   final VoidCallback? onPressed;
+  final String? customerId;
 
-  const ProductCard({super.key, required this.product, this.onPressed});
+  const ProductCard({
+    super.key,
+    required this.product,
+    this.onPressed,
+    this.customerId,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +35,8 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Product Image Section
-          Expanded(flex: 3, child: _buildProductImage()),
+          // Product Image Section with Favorite Icon
+          Expanded(flex: 3, child: _buildProductImage(context)),
 
           // Product Info Section
           Padding(
@@ -46,27 +55,70 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProductImage() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
+  Widget _buildProductImage(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: BoxDecoration(
+            color: Colors.grey[50],
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+          ),
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+            child: ImageStorageHelper.getImageWidget(
+              product.imagePath,
+              fit: BoxFit.cover,
+            ),
+          ),
         ),
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(16),
-          topRight: Radius.circular(16),
-        ),
-        child: ImageStorageHelper.getImageWidget(
-          product.imagePath,
-          fit: BoxFit.cover,
-        ),
-      ),
+        // Favorite Button
+        if (customerId != null)
+          Positioned(
+            top: 8,
+            right: 8,
+            child: _buildFavoriteButton(context),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildFavoriteButton(BuildContext context) {
+    return BlocBuilder<FavoriteCubit, FavoriteState>(
+      builder: (context, state) {
+        final isFavorite = state.isFavorite(product.id);
+        return Material(
+          color: Colors.white.withOpacity(0.9),
+          shape: const CircleBorder(),
+          elevation: 2,
+          child: InkWell(
+            onTap: () {
+              if (customerId != null) {
+                context.read<FavoriteCubit>().toggleFavorite(
+                  customerId!,
+                  product.id,
+                );
+              }
+            },
+            customBorder: const CircleBorder(),
+            child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : Colors.grey[600],
+                size: 22,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

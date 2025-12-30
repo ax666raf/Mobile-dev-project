@@ -48,4 +48,14 @@ class ApiEndpoints {
 
   // notif endpoints
   static const String notifications = '/notifications';
+
+  // Favorites endpoints
+  static const String favorites = '/favorites';
+  static String customerFavorites(String customerId) => '/favorites/customer/$customerId';
+  static String customerFavoriteIds(String customerId) => '/favorites/customer/$customerId/ids';
+  static String favoriteById(String favoriteId) => '/favorites/$favoriteId';
+  static String removeFavoriteByProduct(String customerId, String productId) => 
+      '/favorites/customer/$customerId/product/$productId';
+  static String checkFavorite(String customerId, String productId) => 
+      '/favorites/customer/$customerId/product/$productId/check';
 }

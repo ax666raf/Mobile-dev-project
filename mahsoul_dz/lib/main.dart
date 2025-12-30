@@ -8,6 +8,7 @@ import 'package:mahsoul_dz/core/di/dependency_injection.dart';
 import 'package:mahsoul_dz/presentation/cubits/auth/auth_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/user/user_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/product_cubit.dart';
+import 'package:mahsoul_dz/presentation/cubits/favorite/favorite_cubit.dart';
 import 'package:mahsoul_dz/presentation/screens/homescreen/intro_page.dart';
 import 'package:mahsoul_dz/presentation/screens/homescreen/user_mode.dart';
 import 'package:mahsoul_dz/presentation/themes/app_theme.dart';
@@ -93,6 +94,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) =>
               ProductCubit(DependencyInjection.productRepository),
+        ),
+        BlocProvider(
+          create: (context) =>
+              FavoriteCubit(DependencyInjection.favoriteRepository),
         ),
       ],
       child: MaterialApp(

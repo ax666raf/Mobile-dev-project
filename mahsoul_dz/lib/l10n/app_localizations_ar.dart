@@ -838,6 +838,33 @@ class AppLocalizationsAr extends AppLocalizations {
   String get ratings => 'تقييمات';
 
   @override
+  String get writeReview => 'اكتب مراجعة';
+
+  @override
+  String get yourRating => 'تقييمك';
+
+  @override
+  String get yourReview => 'مراجعتك';
+
+  @override
+  String get writeYourReviewHere => 'شارك تجربتك مع هذا المنتج...';
+
+  @override
+  String get submitReview => 'إرسال المراجعة';
+
+  @override
+  String get noReviewsYet => 'لا توجد مراجعات بعد';
+
+  @override
+  String get beFirstToReview => 'كن أول من يشارك تجربته!';
+
+  @override
+  String get reviewSubmitted => 'تم إرسال المراجعة بنجاح';
+
+  @override
+  String get reviewUpdated => 'تم تحديث المراجعة بنجاح';
+
+  @override
   String get yesCertified => 'نعم، معتمد';
 
   @override
@@ -1035,4 +1062,23 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get defaultAddress => 'العنوان الافتراضي';
+
+  @override
+  String get favorites => 'المفضلة';
+
+  @override
+  String get noFavorites => 'لا توجد مفضلات بعد';
+
+  @override
+  String get addFavoritesHint =>
+      'اضغط على أيقونة القلب لإضافة المنتجات إلى المفضلة';
+
+  @override
+  String get addedToFavorites => 'تمت الإضافة إلى المفضلة';
+
+  @override
+  String get removedFromFavorites => 'تمت الإزالة من المفضلة';
+
+  @override
+  String get pleaseLogin => 'يرجى تسجيل الدخول للوصول إلى هذه الميزة';
 }

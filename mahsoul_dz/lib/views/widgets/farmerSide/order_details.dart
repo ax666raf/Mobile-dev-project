@@ -41,17 +41,20 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 10,
-                    children: [
-                      Text(
-                        'Customer: ${widget.order.customer.fullName}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 10,
+                      children: [
+                        Text(
+                          'Customer: ${widget.order.customer.fullName}',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                      ),
                       Text(
                         'Weight: ${widget.order.weight} kg',
                         style: TextStyle(fontSize: 14, color: Colors.grey[600]),
@@ -62,7 +65,8 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                       ),
                     ],
                   ),
-                  Spacer(),
+                ),
+                  SizedBox(width: 8),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [

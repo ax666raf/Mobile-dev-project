@@ -337,6 +337,15 @@
   "sarahAhmed": "Sarah Ahmed",
   "customerReviews": "Customer Reviews",
   "ratings": "ratings",
+  "writeReview": "Write a Review",
+  "yourRating": "Your Rating",
+  "yourReview": "Your Review",
+  "writeYourReviewHere": "Share your experience with this product...",
+  "submitReview": "Submit Review",
+  "noReviewsYet": "No reviews yet",
+  "beFirstToReview": "Be the first to share your experience!",
+  "reviewSubmitted": "Review submitted successfully",
+  "reviewUpdated": "Review updated successfully",
   "yesCertified": "Yes, Certified",
   "no": "No",
   "originLabel": "Origin:",
@@ -418,5 +427,13 @@
   "enterFarmLocation": "Enter farm location",
   "descriptionMinLength": "Description must be at least 20 characters",
   "regularCustomer": "Regular Customer",
-  "defaultAddress": "Default Address"
+  "defaultAddress": "Default Address",
+  
+  "favorites": "Favorites",
+  "noFavorites": "No favorites yet",
+  "addFavoritesHint": "Tap the heart icon on products to add favorites",
+  "addedToFavorites": "Added to favorites",
+  "removedFromFavorites": "Removed from favorites",
+  "pleaseLogin": "Please login to access this feature",
+  "currency": "DZD"
 }

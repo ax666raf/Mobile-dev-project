@@ -25,13 +25,16 @@ class OrderTile extends StatelessWidget {
       padding: EdgeInsets.all(10),
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Customer: ${order.customer.fullName}',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Customer: ${order.customer.fullName}',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               Text(
                 'Weight: ${order.weight} kg',
                 style: TextStyle(fontSize: 14, color: Colors.grey[600]),
@@ -111,7 +114,8 @@ class OrderTile extends StatelessWidget {
               ),
             ],
           ),
-          Spacer(),
+        ),
+          SizedBox(width: 8),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
 

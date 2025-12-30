@@ -17,11 +17,11 @@ def create_app(config_class=Config):
     # Import models to ensure they're registered with SQLAlchemy
     from app.models import (
         User, CustomerProfile, FarmerProfile, Product, ProductWeight,
-        CartItem, Order, OrderItem, Review, DeliveryAddress, Notification
+        CartItem, Order, OrderItem, Review, DeliveryAddress, Notification, Favorite
     )
     
     # Register blueprints
-    from app.routes import auth, products, cart, orders, profile, delivery_addresses, farmer, upload, notification
+    from app.routes import auth, products, cart, orders, profile, delivery_addresses, farmer, upload, notification, favorites
     
     app.register_blueprint(auth.bp, url_prefix='/api/auth')
     app.register_blueprint(products.bp, url_prefix='/api/products')
@@ -32,6 +32,7 @@ def create_app(config_class=Config):
     app.register_blueprint(farmer.bp, url_prefix='/api/farmer')
     app.register_blueprint(upload.bp, url_prefix='/api/upload')
     app.register_blueprint(notification.bp, url_prefix='/api/notifications')
+    app.register_blueprint(favorites.bp, url_prefix='/api/favorites')
     
     # Configure static file serving for uploads
     from pathlib import Path

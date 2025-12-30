@@ -24,6 +24,7 @@ class User(db.Model):
     orders_as_farmer = db.relationship('Order', foreign_keys='Order.farmer_id', backref='farmer_user', cascade='all, delete-orphan')
     reviews = db.relationship('Review', backref='customer', cascade='all, delete-orphan')
     delivery_addresses = db.relationship('DeliveryAddress', backref='customer', cascade='all, delete-orphan')
+    favorites = db.relationship('Favorite', backref='customer', cascade='all, delete-orphan')
     
     @staticmethod
     def hash_password(password):

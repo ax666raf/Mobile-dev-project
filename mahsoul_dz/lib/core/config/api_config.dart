@@ -14,7 +14,7 @@ class ApiConfig {
   
   // Set this to your computer's IP if using a physical Android device
   // Leave empty to use default (10.0.2.2 for emulator, localhost for iOS)
-  static const String manualIpOverride = '192.168.100.9'; // e.g., '192.168.1.100'
+  static const String manualIpOverride = '192.168.1.3'; // e.g., '192.168.1.100'
   
   static String get baseUrl {
     if (manualIpOverride != null && manualIpOverride!.isNotEmpty) {

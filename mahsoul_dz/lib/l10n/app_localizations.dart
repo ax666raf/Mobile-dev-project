@@ -1399,7 +1399,7 @@ abstract class AppLocalizations {
   /// No description provided for @currency.
   ///
   /// In en, this message translates to:
-  /// **'DA'**
+  /// **'DZD'**
   String get currency;
 
   /// No description provided for @kg.
@@ -1713,6 +1713,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'ratings'**
   String get ratings;
+
+  /// No description provided for @writeReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Write a Review'**
+  String get writeReview;
+
+  /// No description provided for @yourRating.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Rating'**
+  String get yourRating;
+
+  /// No description provided for @yourReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Review'**
+  String get yourReview;
+
+  /// No description provided for @writeYourReviewHere.
+  ///
+  /// In en, this message translates to:
+  /// **'Share your experience with this product...'**
+  String get writeYourReviewHere;
+
+  /// No description provided for @submitReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Submit Review'**
+  String get submitReview;
+
+  /// No description provided for @noReviewsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No reviews yet'**
+  String get noReviewsYet;
+
+  /// No description provided for @beFirstToReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Be the first to share your experience!'**
+  String get beFirstToReview;
+
+  /// No description provided for @reviewSubmitted.
+  ///
+  /// In en, this message translates to:
+  /// **'Review submitted successfully'**
+  String get reviewSubmitted;
+
+  /// No description provided for @reviewUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Review updated successfully'**
+  String get reviewUpdated;
 
   /// No description provided for @yesCertified.
   ///
@@ -2097,6 +2151,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Default Address'**
   String get defaultAddress;
+
+  /// No description provided for @favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// No description provided for @noFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'No favorites yet'**
+  String get noFavorites;
+
+  /// No description provided for @addFavoritesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the heart icon on products to add favorites'**
+  String get addFavoritesHint;
+
+  /// No description provided for @addedToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to favorites'**
+  String get addedToFavorites;
+
+  /// No description provided for @removedFromFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from favorites'**
+  String get removedFromFavorites;
+
+  /// No description provided for @pleaseLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Please login to access this feature'**
+  String get pleaseLogin;
 }
 
 class _AppLocalizationsDelegate
