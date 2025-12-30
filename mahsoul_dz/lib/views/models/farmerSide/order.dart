@@ -15,7 +15,11 @@ class Order {
   final double weight; // in kg
   final double totalPrice;
   final OrderStatus status;
-  final String? id;  // optional for now
+  final String deliveryMethod;
+  final String address;
+  final String paymentMethod;
+  final String paymentStatus;
+  final String? id; // optional for now
 
   const Order({
     required this.customer,
@@ -23,6 +27,10 @@ class Order {
     required this.weight,
     required this.totalPrice,
     required this.status,
+    required this.deliveryMethod,
+    required this.address,
+    required this.paymentMethod,
+    required this.paymentStatus,
     this.id,
   });
 
@@ -65,21 +73,28 @@ class Order {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'customer': customer.toJson(),
-        'farmer': farmer,
-        'weight': weight,
-        'totalPrice': totalPrice,
-        'status': statusString,
-      };
+    'id': id,
+    'customer': customer.toJson(),
+    'farmer': farmer,
+    'weight': weight,
+    'totalPrice': totalPrice,
+    'status': statusString,
+    'deliveryMethod': deliveryMethod,
+    'address': address,
+    'paymentMethod': paymentMethod,
+    'paymentStatus': paymentStatus,
+  };
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
-        id: json['id'] as String?,
-        customer: Customer.fromJson(json['customer'] as Map<String, dynamic>),
-        farmer: json['farmer'] as String,
-        weight: (json['weight'] as num).toDouble(),
-        totalPrice: (json['totalPrice'] as num).toDouble(),
-        status: statusFromString(json['status'] as String),
-      );
+    id: json['id'] as String?,
+    customer: Customer.fromJson(json['customer'] as Map<String, dynamic>),
+    farmer: json['farmer'] as String,
+    weight: (json['weight'] as num).toDouble(),
+    totalPrice: (json['totalPrice'] as num).toDouble(),
+    status: statusFromString(json['status'] as String),
+    deliveryMethod: json['deliveryMethod'] as String,
+    address: json['address'] as String,
+    paymentMethod: json['paymentMethod'] as String,
+    paymentStatus: json['paymentStatus'] as String,
+  );
 }
-

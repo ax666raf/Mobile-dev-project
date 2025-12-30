@@ -5,7 +5,7 @@ import 'package:mahsoul_dz/views/widgets/common/button.dart';
 import 'package:mahsoul_dz/views/screens/customerSide/login_page.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class SignUpScreen extends StatelessWidget {
 }
 
 class SignUpView extends StatelessWidget {
-  const SignUpView({Key? key}) : super(key: key);
+  const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
