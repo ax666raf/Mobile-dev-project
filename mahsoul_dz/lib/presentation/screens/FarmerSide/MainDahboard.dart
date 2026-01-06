@@ -56,15 +56,21 @@ class _MainDashboardState extends State<MainDashboard> {
     String customerName = l10n.unknownCustomer;
 
     // Get customer data from response (backend now includes it)
+    String? customerPhone;
     if (orderData.containsKey('customer')) {
       final customerData = orderData['customer'] as Map<String, dynamic>? ?? {};
       customerName =
           customerData['full_name'] as String? ??
           customerData['fullName'] as String? ??
           l10n.unknownCustomer;
+      customerPhone = customerData['phone_number'] as String?;
     }
 
-    final customer = Customer(id: customerId, fullName: customerName);
+    final customer = Customer(
+      id: customerId,
+      fullName: customerName,
+      phoneNumber: customerPhone,
+    );
 
     return Order(
       id: orderData['id'] as String?,
@@ -473,19 +479,6 @@ class _MainDashboardState extends State<MainDashboard> {
                                               context,
                                               '/OrdersPage',
                                             );
-                                          },
-                                        ),
-                                      ),
-                                      SizedBox(width: 10),
-                                      Expanded(
-                                        child: MyButton(
-                                          backgroundColor: Colors.transparent,
-                                          textColor: primaryColor,
-                                          borderColor: primaryColor,
-                                          icon: Icons.message,
-                                          text: l10n.myMessages,
-                                          onPressed: () {
-                                            // Non-functional for now
                                           },
                                         ),
                                       ),

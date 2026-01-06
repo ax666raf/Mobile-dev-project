@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mahsoul_dz/data/models/farmerSide/farmer_profile_model.dart';
 import 'package:mahsoul_dz/presentation/widgets/farmerSide/profile_card.dart';
 import 'package:mahsoul_dz/presentation/widgets/farmerSide/stat_card.dart';
@@ -13,7 +15,10 @@ import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_profile_state.dart'
 import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_dashboard_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_dashboard_state.dart';
 import 'package:mahsoul_dz/core/di/dependency_injection.dart';
+import 'package:mahsoul_dz/core/utils/image_storage_helper.dart';
 import 'package:mahsoul_dz/l10n/app_localizations.dart';
+import 'package:mahsoul_dz/presentation/themes/colors.dart';
+import 'package:mahsoul_dz/main.dart';
 import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -27,7 +32,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    // Load profile and dashboard when screen opens
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final authState = context.read<AuthCubit>().state;
       if (authState is AuthAuthenticated && authState.userType == 'farmer') {
@@ -56,7 +60,6 @@ class _ProfilePageState extends State<ProfilePage> {
           );
         }
         
-        // Provide cubits if not already provided
         return MultiBlocProvider(
           providers: [
             BlocProvider(
@@ -104,7 +107,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   if (profileState is FarmerProfileLoaded) {
                     final profileData = profileState.profile;
                     final farmerData = profileData['farmer'] as Map<String, dynamic>?;
-                    // Get established year from farmer profile or user created_at
                     final farmerEstablishedYear = farmerData?['established_year'] as String?;
                     String established = l10n.nA;
                     if (farmerEstablishedYear != null && farmerEstablishedYear.isNotEmpty) {
@@ -116,10 +118,12 @@ class _ProfilePageState extends State<ProfilePage> {
                       }
                     }
                     
+                    final imagePath = profileData['profile_image_path'] as String? ?? 'lib/assets/farmerpfp.png';
+                    print('🖼️ Farmer Profile Image Path: $imagePath');
                     profile = FarmerProfileModel(
                       farmName: farmerData?['farm_name'] as String? ?? '',
                       farmerName: profileData['full_name'] as String? ?? '',
-                      profileImageUrl: profileData['profile_image_path'] as String? ?? 'lib/assets/farmerpfp.png',
+                      profileImageUrl: imagePath,
                       isVerified: farmerData?['is_verified'] == 1 || farmerData?['is_verified'] == true,
                       farmLocation: farmerData?['farm_location'] as String? ?? '',
                       established: established,
@@ -161,11 +165,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     appBar: AppBar(
                       backgroundColor: Colors.white,
                       elevation: 0,
+                      automaticallyImplyLeading: false, // Remove back arrow
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            l10n.appName,
+                          const Text(
+                            'Mahsoul', // Keep in English only
                             style: TextStyle(
                               color: Colors.black87,
                               fontSize: 20,
@@ -190,6 +195,45 @@ class _ProfilePageState extends State<ProfilePage> {
                             // Profile Card
                             ProfileCard(
                               profile: profile,
+                              onEditImage: () async {
+                                // Show image picker dialog
+                                final ImagePicker picker = ImagePicker();
+                                final XFile? image = await picker.pickImage(
+                                  source: ImageSource.gallery,
+                                  imageQuality: 85,
+                                );
+                                
+                                if (image != null && mounted) {
+                                  try {
+                                    // Upload image to server
+                                    final imageFile = File(image.path);
+                                    final serverPath = await ImageStorageHelper.uploadImageToServer(
+                                      imageFile,
+                                      type: 'profile',
+                                    );
+                                    
+                                    if (serverPath != null && mounted) {
+                                      // Update profile image
+                                      await context.read<FarmerProfileCubit>().updateProfileImage(serverPath);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Profile image updated successfully'),
+                                          backgroundColor: Colors.green,
+                                        ),
+                                      );
+                                    }
+                                  } catch (e) {
+                                    if (mounted) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Text('Failed to upload image: ${e.toString()}'),
+                                          backgroundColor: Colors.red,
+                                        ),
+                                      );
+                                    }
+                                  }
+                                }
+                              },
                               onEditProfile: () {
                                 // Get current profile data
                                 final profileData = profileState is FarmerProfileLoaded 
@@ -246,32 +290,39 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                             const SizedBox(height: 24),
                             
-                            // Contact Support Option
-                            MenuOptionSvg(
-                              svgPath: 'lib/assets/call-svg.svg',
-                              title: l10n.contactSupport,
-                              subtitle: l10n.getHelpOrReportIssue,
-                              onTap: () {
-                                // TODO: Implement contact support with Cubit
-                              },
+                            // Language Change Button
+                            Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(color: Colors.grey[300]!),
+                              ),
+                              child: InkWell(
+                                onTap: () => _showLanguageDialog(context, l10n),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.language, color: primaryColor, size: 20),
+                                    const SizedBox(width: 12),
+                                    Text(
+                                      l10n.selectLanguage,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: primaryColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            const SizedBox(height: 12),
-                            
-                            // Settings Option
-                            MenuOption(
-                              icon: Icons.settings,
-                              title: l10n.settings,
-                              subtitle: l10n.viewGeneralSettings,
-                              onTap: () {
-                                // TODO: Implement settings with Cubit
-                              },
-                            ),
-                            const SizedBox(height: 24),
+                            const SizedBox(height: 16),
                             
                             // Logout Button
                             LogoutButton(
                               onTap: () {
-                                // Show confirmation dialog
                                 showDialog(
                                   context: context,
                                   builder: (dialogContext) => AlertDialog(
@@ -300,9 +351,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       TextButton(
                                         onPressed: () {
                                           Navigator.pop(dialogContext);
-                                          // Logout and navigate to login page
                                           context.read<AuthCubit>().logout();
-                                          // Navigate to user mode screen
                                           Navigator.of(context).pushNamedAndRemoveUntil(
                                             '/home',
                                             (route) => false,
@@ -344,6 +393,68 @@ class _ProfilePageState extends State<ProfilePage> {
           color: Colors.black87,
         ),
       ),
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(
+          l10n.selectLanguage,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: primaryColor,
+          ),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _buildLanguageTile(
+              context,
+              flag: '🇬🇧',
+              name: l10n.english,
+              locale: const Locale('en'),
+            ),
+            const Divider(),
+            _buildLanguageTile(
+              context,
+              flag: '🇩🇿',
+              name: l10n.arabic,
+              locale: const Locale('ar'),
+            ),
+            const Divider(),
+            _buildLanguageTile(
+              context,
+              flag: '🇫🇷',
+              name: l10n.french,
+              locale: const Locale('fr'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLanguageTile(
+    BuildContext context, {
+    required String flag,
+    required String name,
+    required Locale locale,
+  }) {
+    return ListTile(
+      leading: Text(flag, style: const TextStyle(fontSize: 28)),
+      title: Text(
+        name,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+      onTap: () {
+        MyApp.setLocale(context, locale);
+        Navigator.pop(context);
+      },
     );
   }
 }

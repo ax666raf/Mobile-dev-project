@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/presentation/widgets/common/button.dart';
+import 'package:mahsoul_dz/presentation/screens/customerSide/customer_side_screens.dart';
+import 'package:mahsoul_dz/presentation/cubits/auth/auth_cubit.dart';
+import 'package:mahsoul_dz/presentation/cubits/auth/auth_state.dart';
+import 'package:mahsoul_dz/presentation/cubits/customer/customer_profile_cubit.dart';
+import 'package:mahsoul_dz/presentation/cubits/customer/customer_profile_state.dart';
+import 'package:mahsoul_dz/core/di/dependency_injection.dart';
 
 class CustomerFormScreen extends StatelessWidget {
   const CustomerFormScreen({super.key});
@@ -19,25 +26,48 @@ class CustomerFormView extends StatefulWidget {
 }
 
 class _CustomerFormViewState extends State<CustomerFormView> {
-  // TODO: Replace with Cubit
   final _formKey = GlobalKey<FormState>();
+  final _postalCodeController = TextEditingController();
   String _selectedCity = '';
-  String _postalCode = '';
+
+  @override
+  void dispose() {
+    _postalCodeController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+    return BlocBuilder<AuthCubit, AuthState>(
+      builder: (context, authState) {
+        String? customerId;
+        if (authState is AuthAuthenticated && authState.userType == 'customer') {
+          customerId = authState.userId;
+        }
+
+        if (customerId == null) {
+          return Scaffold(
+            body: Center(child: Text(l10n.pleaseLoginToViewProfile)),
+          );
+        }
+
+        return BlocProvider(
+          create: (context) => CustomerProfileCubit(
+            DependencyInjection.profileRepository,
+            customerId!,
+          ),
+          child: Scaffold(
+            backgroundColor: Colors.white,
+            body: SafeArea(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
                 const SizedBox(height: 20),
                 Center(
                   child: Image.asset(
@@ -71,48 +101,16 @@ class _CustomerFormViewState extends State<CustomerFormView> {
                 ),
                 const SizedBox(height: 32),
 
-                _buildTextField(
-                  icon: Icons.person_outline,
-                  label: l10n.fullName,
-                  hint: l10n.enterFullName,
-                  onChanged: (v) {},
-                  validator: (v) =>
-                      v!.isEmpty ? l10n.requiredField : null,
-                ),
-                const SizedBox(height: 16),
-
-                _buildTextField(
-                  icon: Icons.phone_outlined,
-                  label: l10n.phoneNumber,
-                  hint: l10n.enterPhoneNumber,
-                  keyboard: TextInputType.phone,
-                  onChanged: (v) {},
-                  validator: (v) =>
-                      v!.isEmpty ? l10n.requiredField : null,
-                ),
-                const SizedBox(height: 16),
-
-                _buildTextField(
-                  icon: Icons.location_on_outlined,
-                  label: l10n.deliveryAddress,
-                  hint: l10n.enterAddress,
-                  onChanged: (v) {},
-                  validator: (v) =>
-                      v!.isEmpty ? l10n.requiredField : null,
-                ),
-                const SizedBox(height: 16),
+                // Note: Full Name and Phone Number are already collected during signup
+                // Only collecting additional profile information here (City and Postal Code)
 
                Row(
   children: [
     Expanded(
       flex: 1, 
       child: DropdownButtonFormField<String>(
-        initialValue: _selectedCity.isEmpty ? null : _selectedCity,
-        items: [
-          DropdownMenuItem(value: 'Algiers', child: Text(l10n.algiers)),
-          DropdownMenuItem(value: 'Oran', child: Text(l10n.oran)),
-          DropdownMenuItem(value: 'Constantine', child: Text(l10n.constantine)),
-        ],
+        value: _selectedCity.isEmpty ? null : _selectedCity,
+        items: _buildWilayaItems(l10n),
         onChanged: (value) => setState(() => _selectedCity = value ?? ''),
         decoration: _inputDecoration(label: l10n.city),
         validator: (v) => v == null || v.isEmpty ? l10n.selectCity : null,
@@ -122,8 +120,8 @@ class _CustomerFormViewState extends State<CustomerFormView> {
     Expanded(
       flex: 2,
       child: TextFormField(
+        controller: _postalCodeController,
         keyboardType: TextInputType.number,
-        onChanged: (v) => setState(() => _postalCode = v),
         decoration: _inputDecoration(label: l10n.postalCodeOptional),
       ),
     ),
@@ -132,25 +130,124 @@ class _CustomerFormViewState extends State<CustomerFormView> {
 
                 const SizedBox(height: 32),
 
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: MyButton(
-                    text: l10n.saveContinue,
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        // TODO: Submit with Cubit
-                        Navigator.pop(context);
-                      }
-                    },
+                BlocConsumer<CustomerProfileCubit, CustomerProfileState>(
+                  listener: (context, state) {
+                    if (state is CustomerProfileError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(state.message),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                  },
+                  builder: (context, state) {
+                    final isLoading = state is CustomerProfileLoading;
+                    
+                    return SizedBox(
+                      width: double.infinity,
+                      height: 56,
+                      child: MyButton(
+                        text: isLoading ? l10n.loading : l10n.saveContinue,
+                        onPressed: isLoading ? null : () async {
+                          if (_formKey.currentState!.validate()) {
+                            final cubit = context.read<CustomerProfileCubit>();
+                            try {
+                              // Update profile - this will reload profile on success
+                              await cubit.updateProfile({
+                                'city': _selectedCity,
+                                'postal_code': _postalCodeController.text.trim(),
+                              });
+                              // Wait a bit for state to update, then navigate
+                              await Future.delayed(const Duration(milliseconds: 300));
+                              // Navigate after successful update
+                              if (mounted) {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const MainNavigation(),
+                                  ),
+                                );
+                              }
+                            } catch (e) {
+                              // Error will be shown via BlocConsumer listener
+                              print('Error updating profile: $e');
+                            }
+                          }
+                        },
+                      ),
+                    );
+                  },
+                ),
+                    ],
                   ),
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
+  }
+
+  List<DropdownMenuItem<String>> _buildWilayaItems(AppLocalizations l10n) {
+    // Map of wilaya values to their localization keys
+    final wilayaMap = {
+      'Algiers': l10n.algiers,
+      'Oran': l10n.oran,
+      'Constantine': l10n.constantine,
+      'Blida': l10n.blida,
+      'Annaba': l10n.annaba,
+      'Batna': l10n.batna,
+      'Béjaïa': l10n.bejaia,
+      'Biskra': l10n.biskra,
+      'Boumerdès': l10n.boumerdes,
+      'Chlef': l10n.chlef,
+      'Djelfa': l10n.djelfa,
+      'Guelma': l10n.guelma,
+      'Jijel': l10n.jijel,
+      'Khenchela': l10n.khenchela,
+      'Laghouat': l10n.laghouat,
+      'Mascara': l10n.mascara,
+      'Médéa': l10n.medea,
+      'Mostaganem': l10n.mostaganem,
+      'M\'Sila': l10n.msila,
+      'Mila': l10n.mila,
+      'Ouargla': l10n.ouargla,
+      'Oued': l10n.oued,
+      'Relizane': l10n.relizane,
+      'Saïda': l10n.saida,
+      'Sétif': l10n.setif,
+      'Sidi Bel Abbès': l10n.sidiBelAbbes,
+      'Skikda': l10n.skikda,
+      'Souk Ahras': l10n.soukAhras,
+      'Tamanrasset': l10n.tamanrasset,
+      'Tébessa': l10n.tebessa,
+      'Tiaret': l10n.tiaret,
+      'Tindouf': l10n.tindouf,
+      'Tipaza': l10n.tipaza,
+      'Tissemsilt': l10n.tissemsilt,
+      'Tizi Ouzou': l10n.tiziOuzou,
+      'Tlemcen': l10n.tlemcen,
+      'Adrar': l10n.adrar,
+      'Aïn Defla': l10n.ainDefla,
+      'Aïn Témouchent': l10n.ainTemouchent,
+      'Bordj Bou Arréridj': l10n.bordjBouArreridj,
+      'Bouira': l10n.bouira,
+      'El Bayadh': l10n.elBayadh,
+      'El Oued': l10n.elOued,
+      'El Tarf': l10n.elTarf,
+      'Ghardaïa': l10n.ghardaia,
+      'Illizi': l10n.illizi,
+      'Naâma': l10n.naama,
+    };
+    
+    return wilayaMap.entries.map((entry) {
+      return DropdownMenuItem<String>(
+        value: entry.key,
+        child: Text(entry.value),
+      );
+    }).toList()..sort((a, b) => a.value!.compareTo(b.value!));
   }
 
   InputDecoration _inputDecoration({required String label}) {
@@ -177,51 +274,4 @@ class _CustomerFormViewState extends State<CustomerFormView> {
     );
   }
 
-  Widget _buildTextField({
-    required IconData icon,
-    required String label,
-    required String hint,
-    required Function(String) onChanged,
-    String? Function(String?)? validator,
-    TextInputType? keyboard,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label,
-            style: const TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
-              color: Colors.black87,
-            )),
-        const SizedBox(height: 8),
-        TextFormField(
-          keyboardType: keyboard,
-          onChanged: onChanged,
-          validator: validator,
-          decoration: InputDecoration(
-            hintText: hint,
-            prefixIcon: Icon(icon, size: 20),
-            hintStyle: const TextStyle(fontWeight: FontWeight.w500),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Color(0xFF4CAF50)),
-            ),
-            filled: true,
-            fillColor: const Color(0xFFFAFAFA),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          ),
-        ),
-      ],
-    );
-  }
 }

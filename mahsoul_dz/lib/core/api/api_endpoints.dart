@@ -58,4 +58,8 @@ class ApiEndpoints {
       '/favorites/customer/$customerId/product/$productId';
   static String checkFavorite(String customerId, String productId) => 
       '/favorites/customer/$customerId/product/$productId/check';
+
+  // FCM Token endpoints
+  static const String fcmTokens = '/fcm-tokens';
+  static String userFcmTokens(String userId) => '/fcm-tokens/user/$userId';
 }

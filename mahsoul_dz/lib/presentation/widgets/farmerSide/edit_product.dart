@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahsoul_dz/data/models/farmerSide/product.dart';
 import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_product_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_product_state.dart';
+import 'package:mahsoul_dz/presentation/widgets/common/multiple_image_picker.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 class EditProductWidget extends StatefulWidget {
   final Product product;
@@ -24,10 +26,13 @@ class _EditProductWidgetState extends State<EditProductWidget> {
   late TextEditingController weightController;
   late TextEditingController priceController;
   late TextEditingController locationController;
+  late TextEditingController harvestDateController;
+  late TextEditingController storageController;
   
   String selectedCategory = 'Vegetables';
   String selectedAvailability = 'available';
   bool isOrganic = false;
+  List<String> _productImages = []; // List of uploaded image paths
 
   @override
   void initState() {
@@ -48,10 +53,34 @@ class _EditProductWidgetState extends State<EditProductWidget> {
     locationController = TextEditingController(
       text: widget.productData?['origin'] as String? ?? 'Blida , Algeria'
     );
+    harvestDateController = TextEditingController(
+      text: widget.productData?['harvest_season'] as String? ?? ''
+    );
+    storageController = TextEditingController(
+      text: widget.productData?['storage_instructions'] as String? ?? ''
+    );
     selectedCategory = widget.product.category;
-    selectedAvailability = widget.product.status == 'available' ? 'available' : 'out of stock';
+    // Map backend status to frontend dropdown value
+    final status = widget.product.status;
+    if (status == 'available') {
+      selectedAvailability = 'available';
+    } else if (status == 'out_of_stock') {
+      selectedAvailability = 'out_of_stock';
+    } else {
+      selectedAvailability = 'unavailable';
+    }
     // Load is_organic from backend data
     isOrganic = widget.productData?['is_organic'] as bool? ?? false;
+    // Load product images from backend
+    final images = widget.productData?['images'] as List<dynamic>? ?? [];
+    _productImages = images
+        .map((img) => (img as Map<String, dynamic>?)?['image_path'] as String? ?? '')
+        .where((path) => path.isNotEmpty)
+        .toList();
+    // If no images array, fall back to single image_path
+    if (_productImages.isEmpty && widget.productData?['image_path'] != null) {
+      _productImages = [widget.productData!['image_path'] as String];
+    }
   }
 
   @override
@@ -61,11 +90,14 @@ class _EditProductWidgetState extends State<EditProductWidget> {
     weightController.dispose();
     priceController.dispose();
     locationController.dispose();
+    harvestDateController.dispose();
+    storageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(24),
       child: SingleChildScrollView(
@@ -77,8 +109,8 @@ class _EditProductWidgetState extends State<EditProductWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Edit Product',
+                Text(
+                  l10n.editProduct,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -96,20 +128,20 @@ class _EditProductWidgetState extends State<EditProductWidget> {
             const SizedBox(height: 24),
 
             // Product Name
-            _buildLabel('Product Name'),
+            _buildLabel(l10n.productName),
             const SizedBox(height: 8),
             _buildTextField(
               controller: nameController,
-              hintText: 'Organic Tomatoes',
+              hintText: l10n.enterProductName,
             ),
             const SizedBox(height: 20),
 
             // Category
-            _buildLabel('Category'),
+            _buildLabel(l10n.category),
             const SizedBox(height: 8),
             _buildDropdown(
               value: selectedCategory,
-              items: ['Vegetables', 'Fruits', 'Grains'],
+              items: ['Vegetables', 'Fruits', 'Grains'], // Keep English for backend
               onChanged: (value) {
                 setState(() {
                   selectedCategory = value!;
@@ -120,45 +152,64 @@ class _EditProductWidgetState extends State<EditProductWidget> {
             const SizedBox(height: 20),
 
             // Description
-            _buildLabel('Description'),
+            _buildLabel(l10n.description),
             const SizedBox(height: 8),
             _buildTextField(
               controller: descriptionController,
-              hintText: 'Product description',
+              hintText: l10n.enterProductDescription,
               maxLines: 3,
             ),
             const SizedBox(height: 20),
 
             // Weights (multiple options)
-            _buildLabel('Available Weights (comma-separated)'),
+            _buildLabel(l10n.availableWeights),
             const SizedBox(height: 8),
             _buildTextField(
               controller: weightController,
-              hintText: 'e.g., 500g, 1kg, 2kg',
+              hintText: l10n.enterWeightsExample,
               backgroundColor: Colors.grey.shade200,
             ),
             const SizedBox(height: 4),
             Text(
-              'Enter multiple weight options separated by commas',
+              l10n.weightsHint,
               style: TextStyle(fontSize: 12, color: Colors.grey[600], fontStyle: FontStyle.italic),
             ),
             const SizedBox(height: 20),
 
             // Price
-            _buildLabel('Price (DA/kg)'),
+            _buildLabel(l10n.productPrice),
             const SizedBox(height: 8),
             _buildTextField(
               controller: priceController,
-              hintText: '1200 DA',
+              hintText: l10n.enterPriceExample,
             ),
             const SizedBox(height: 20),
 
             // Location
-            _buildLabel('Location'),
+            _buildLabel(l10n.productLocation),
             const SizedBox(height: 8),
             _buildTextField(
               controller: locationController,
-              hintText: 'Blida , Algeria',
+              hintText: l10n.enterProductLocation,
+            ),
+            const SizedBox(height: 20),
+
+            // Harvest Date
+            _buildLabel(l10n.harvestDate),
+            const SizedBox(height: 8),
+            _buildTextField(
+              controller: harvestDateController,
+              hintText: l10n.harvestDateExample,
+            ),
+            const SizedBox(height: 20),
+
+            // Storage Instructions
+            _buildLabel(l10n.storageInstructions),
+            const SizedBox(height: 8),
+            _buildTextField(
+              controller: storageController,
+              hintText: l10n.storageExample,
+              maxLines: 3,
             ),
             const SizedBox(height: 20),
 
@@ -166,8 +217,8 @@ class _EditProductWidgetState extends State<EditProductWidget> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
-                  'Organic Certification',
+                Text(
+                  l10n.organicCertification,
                   style: TextStyle(
                     fontSize: 14,
                     color: Colors.black87,
@@ -189,11 +240,11 @@ class _EditProductWidgetState extends State<EditProductWidget> {
             const SizedBox(height: 20),
 
             // Availability
-            _buildLabel('Availability'),
+            _buildLabel(l10n.availability),
             const SizedBox(height: 8),
             _buildDropdown(
               value: selectedAvailability,
-              items: ['available', 'out of stock'],
+              items: ['available', 'out_of_stock', 'unavailable'],
               onChanged: (value) {
                 setState(() {
                   selectedAvailability = value!;
@@ -204,21 +255,17 @@ class _EditProductWidgetState extends State<EditProductWidget> {
             ),
             const SizedBox(height: 20),
 
-            // Product Image
-            _buildLabel('Product Image'),
-            const SizedBox(height: 8),
-            Container(
-              height: 120,
-              width: 160,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: const DecorationImage(
-                  image: AssetImage('lib/assets/IMAGE.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
+            // Product Images (Multiple)
+            MultipleImagePicker(
+              initialImages: _productImages,
+              onImagesChanged: (images) {
+                setState(() {
+                  _productImages = images;
+                });
+              },
+              maxImages: 10,
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 20),
 
             // Buttons
             BlocConsumer<FarmerProductCubit, FarmerProductState>(
@@ -303,7 +350,14 @@ class _EditProductWidgetState extends State<EditProductWidget> {
                               'origin': locationController.text.trim().isEmpty 
                                   ? null 
                                   : locationController.text.trim(),
+                              'harvest_season': harvestDateController.text.trim().isEmpty 
+                                  ? null 
+                                  : harvestDateController.text.trim(),
+                              'storage_instructions': storageController.text.trim().isEmpty 
+                                  ? null 
+                                  : storageController.text.trim(),
                               'is_organic': isOrganic,
+                              'image_paths': _productImages.isNotEmpty ? _productImages : null,
                               'status': selectedAvailability,
                               'weights': weights, // Include weights in update
                             },
@@ -399,6 +453,27 @@ class _EditProductWidgetState extends State<EditProductWidget> {
     required Color backgroundColor,
     IconData? icon,
   }) {
+    final l10n = AppLocalizations.of(context)!;
+    // Map English category values to translated labels
+    String getCategoryLabel(String category) {
+      switch (category) {
+        case 'Vegetables':
+          return l10n.vegetables;
+        case 'Fruits':
+          return l10n.fruits;
+        case 'Grains':
+          return l10n.grains;
+        case 'available':
+          return l10n.available;
+        case 'out_of_stock':
+          return l10n.outOfStock;
+        case 'unavailable':
+          return l10n.unavailable;
+        default:
+          return category;
+      }
+    }
+    
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
@@ -426,7 +501,7 @@ class _EditProductWidgetState extends State<EditProductWidget> {
                 items: items.map((String item) {
                   return DropdownMenuItem<String>(
                     value: item,
-                    child: Text(item),
+                    child: Text(getCategoryLabel(item)),
                   );
                 }).toList(),
                 onChanged: onChanged,

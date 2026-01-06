@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/data/models/farmerSide/order.dart';
 import 'package:mahsoul_dz/presentation/themes/colors.dart';
+import 'package:mahsoul_dz/core/utils/phone_launcher.dart';
 
 class OrderDetailsWidget extends StatefulWidget {
   // we must pass the order information
@@ -138,40 +139,89 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                     l10n.contact,
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      // TODO: Implement call functionality
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 7,
-                          vertical: 3,
-                        ),
-                        child: Row(
-                          children: [
-                            Icon(Icons.call, color: Colors.grey[600], size: 16),
-                            SizedBox(width: 5),
-                            Center(
-                              child: Text(
+                  Row(
+                    children: [
+                      // Call button
+                      GestureDetector(
+                        onTap: () async {
+                          final phoneNumber = widget.order.customer.phoneNumber;
+                          if (phoneNumber == null || phoneNumber.isEmpty) {
+                            PhoneLauncher.showErrorSnackbar(context, 'make phone call');
+                            return;
+                          }
+                          final success = await PhoneLauncher.makePhoneCall(phoneNumber);
+                          if (!success) {
+                            PhoneLauncher.showErrorSnackbar(context, 'make phone call');
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 7,
+                            vertical: 3,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.call, color: Colors.grey[600], size: 16),
+                              SizedBox(width: 5),
+                              Text(
                                 l10n.call,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey[600],
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
+                      SizedBox(width: 8),
+                      // WhatsApp button
+                      GestureDetector(
+                        onTap: () async {
+                          final phoneNumber = widget.order.customer.phoneNumber;
+                          if (phoneNumber == null || phoneNumber.isEmpty) {
+                            PhoneLauncher.showErrorSnackbar(context, 'open WhatsApp');
+                            return;
+                          }
+                          // Create a message template for order inquiry
+                          final message = 'Hello! I have an update about your order #${widget.order.id}.';
+                          final success = await PhoneLauncher.launchWhatsApp(phoneNumber, message: message);
+                          if (!success) {
+                            PhoneLauncher.showErrorSnackbar(context, 'open WhatsApp');
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFF25D366), // WhatsApp green
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 7,
+                            vertical: 3,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.chat, color: Colors.white, size: 16),
+                              SizedBox(width: 5),
+                              Text(
+                                'WhatsApp',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -262,7 +312,7 @@ class _OrderDetailsWidgetState extends State<OrderDetailsWidget> {
                   ),
                 ),
                 child: Text(
-                  'Cancel Order',
+                  l10n.cancel,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,

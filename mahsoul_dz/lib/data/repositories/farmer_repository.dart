@@ -62,6 +62,7 @@ class FarmerRepository {
     bool? isOrganic,
     String? storageInstructions,
     String? imagePath,
+    List<String>? imagePaths, // Multiple images
     String? status,
     required List<Map<String, dynamic>> weights,
   }) async {
@@ -81,7 +82,10 @@ class FarmerRepository {
           if (harvestSeason != null) 'harvest_season': harvestSeason,
           if (isOrganic != null) 'is_organic': isOrganic,
           if (storageInstructions != null) 'storage_instructions': storageInstructions,
-          if (imagePath != null) 'image_path': imagePath,
+          // Prefer image_paths over single image_path
+          ...(imagePaths != null && imagePaths.isNotEmpty 
+            ? {'image_paths': imagePaths}
+            : (imagePath != null ? {'image_path': imagePath} : {})),
           if (status != null) 'status': status,
           'weights': weightStrings,
         },
@@ -113,6 +117,7 @@ class FarmerRepository {
     bool? isOrganic,
     String? storageInstructions,
     String? imagePath,
+    List<String>? imagePaths, // Multiple images
     String? status,
     List<String>? weights,
   }) async {
@@ -126,7 +131,12 @@ class FarmerRepository {
       if (harvestSeason != null) data['harvest_season'] = harvestSeason;
       if (isOrganic != null) data['is_organic'] = isOrganic;
       if (storageInstructions != null) data['storage_instructions'] = storageInstructions;
-      if (imagePath != null) data['image_path'] = imagePath;
+      // Prefer image_paths over single image_path
+      if (imagePaths != null && imagePaths.isNotEmpty) {
+        data['image_paths'] = imagePaths;
+      } else if (imagePath != null) {
+        data['image_path'] = imagePath;
+      }
       if (status != null) data['status'] = status;
       if (weights != null && weights.isNotEmpty) {
         data['weights'] = weights;

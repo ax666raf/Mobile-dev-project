@@ -83,7 +83,7 @@ class ProfileRepository {
     required String imagePath,
   }) async {
     try {
-      final response = await _apiClient.put(
+      final response = await _apiClient.post(
         ApiEndpoints.profileImage,
         data: {
           'user_id': userId,

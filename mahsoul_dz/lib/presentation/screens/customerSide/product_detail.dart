@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/presentation/screens/customerSide/customer_side_screens.dart';
 import 'package:mahsoul_dz/presentation/widgets/customerSide/product_hero_image.dart';
+import 'package:mahsoul_dz/presentation/widgets/customerSide/product_image_gallery.dart';
 import 'package:mahsoul_dz/presentation/widgets/customerSide/product_info_card.dart';
 import 'package:mahsoul_dz/presentation/widgets/customerSide/weight_selector.dart';
 import 'package:mahsoul_dz/presentation/widgets/customerSide/price_summary_card.dart';
@@ -128,6 +129,16 @@ class _ProductPageState extends State<ProductPage> {
     final farmName = farmer?['farm_name'] as String? ?? '';
     final imagePath =
         product['image_path'] as String? ?? 'lib/assets/tomato_bg.png';
+    // Get all product images
+    final images = product['images'] as List<dynamic>? ?? [];
+    final imagePaths = images
+        .map((img) => (img as Map<String, dynamic>?)?['image_path'] as String? ?? '')
+        .where((path) => path.isNotEmpty)
+        .toList();
+    // If no images array, use single image_path
+    final allImagePaths = imagePaths.isNotEmpty 
+        ? imagePaths 
+        : (imagePath.isNotEmpty ? [imagePath] : ['lib/assets/tomato_bg.png']);
 
     // Format reviews
     final reviewItems = reviews.map((r) {
@@ -164,9 +175,9 @@ class _ProductPageState extends State<ProductPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Hero Image Section
-            ProductHeroImage(
-              imagePath: imagePath,
+            // Hero Image Gallery Section
+            ProductImageGallery(
+              imagePaths: allImagePaths,
               title: category,
               description: isOrganic ? l10n.organic : '',
               onBackPressed: () => Navigator.pop(context),

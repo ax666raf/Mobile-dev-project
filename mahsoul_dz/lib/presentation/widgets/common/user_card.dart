@@ -35,14 +35,12 @@ class UserCard extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color:
-                  (selected
-                          ? primaryColor
-                          : (isFarmer ? primaryColor : Colors.grey[800]!))
-                      .withOpacity(0.4),
-              spreadRadius: 0,
-              blurRadius: 20,
-              offset: const Offset(0, 4),
+              color: selected
+                  ? primaryColor.withOpacity(0.4)
+                  : Colors.grey[400]!.withOpacity(0.4),
+              spreadRadius: 1,
+              blurRadius: 25,
+              offset: const Offset(0, 6),
             ),
           ],
         ),
@@ -63,7 +61,7 @@ class UserCard extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
-                      color: isFarmer ? primaryColor : Colors.black,
+                      color: selected ? primaryColor : Colors.black,
                     ),
                     textAlign: TextAlign.center,
                   ),

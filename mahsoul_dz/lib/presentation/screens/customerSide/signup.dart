@@ -34,14 +34,14 @@ class _SignUpViewState extends State<SignUpView> {
   String _email = '';
   String _password = '';
   String _confirmPassword = '';
-  bool _agreeToTerms = false;
-  bool _subscribeToUpdates = false;
+  String _phoneNumber = '';
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -108,6 +108,62 @@ class _SignUpViewState extends State<SignUpView> {
                       hintText: l10n.enterFullName,
                       hintStyle: const TextStyle(fontWeight: FontWeight.w500),
                       prefixIcon: const Icon(Icons.person_outline, size: 20),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(color: Color(0xFF4CAF50)),
+                      ),
+                      filled: true,
+                      fillColor: const Color(0xFFFAFAFA),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 14,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Phone Number
+                  Text(
+                    l10n.phoneNumber,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    onChanged: (v) => setState(() => _phoneNumber = v),
+                    keyboardType: TextInputType.phone,
+                    validator: (v) {
+                      if (v == null || v.isEmpty) {
+                        return l10n.requiredField;
+                      }
+                      // Basic phone validation for Algeria (10 digits starting with 0 or +213)
+                      final cleaned = v.replaceAll(RegExp(r'[^\d+]'), '');
+                      if (cleaned.startsWith('0') && cleaned.length == 10) {
+                        return null; // Valid: 0555123456
+                      } else if (cleaned.startsWith('+213') && cleaned.length == 13) {
+                        return null; // Valid: +213555123456
+                      } else if (cleaned.startsWith('213') && cleaned.length == 12) {
+                        return null; // Valid: 213555123456
+                      } else if (cleaned.length >= 9 && cleaned.length <= 10) {
+                        return null; // Allow other formats
+                      }
+                      return l10n.invalidPhoneNumber;
+                    },
+                    decoration: InputDecoration(
+                      hintText: l10n.enterPhoneNumber,
+                      hintStyle: const TextStyle(fontWeight: FontWeight.w500),
+                      prefixIcon: const Icon(Icons.phone_outlined, size: 20),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8),
                         borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
@@ -246,97 +302,6 @@ class _SignUpViewState extends State<SignUpView> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-
-                  // Terms and Conditions Checkbox
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Checkbox(
-                          value: _agreeToTerms,
-                          onChanged: (value) {
-                            setState(() => _agreeToTerms = value ?? false);
-                          },
-                          activeColor: const Color(0xFF4CAF50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() => _agreeToTerms = !_agreeToTerms);
-                          },
-                          child: RichText(
-                            text: TextSpan(
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black87,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              children: [
-                                TextSpan(text: l10n.agreeToThe),
-                                TextSpan(
-                                  text: l10n.termsConditions,
-                                  style: TextStyle(
-                                    color: Color(0xFF4CAF50),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 12),
-
-                  // Subscribe Checkbox
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: Checkbox(
-                          value: _subscribeToUpdates,
-                          onChanged: (value) {
-                            setState(
-                              () => _subscribeToUpdates = value ?? false,
-                            );
-                          },
-                          activeColor: const Color(0xFF4CAF50),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 12),
-                      Expanded(
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(
-                              () => _subscribeToUpdates = !_subscribeToUpdates,
-                            );
-                          },
-                          child: Text(
-                            l10n.subscribeNewsletter,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 24),
 
                   // Sign Up Button
@@ -391,8 +356,7 @@ class _SignUpViewState extends State<SignUpView> {
                                       password: _password,
                                       userType: userType,
                                       fullName: _fullName,
-                                      phoneNumber:
-                                          null, // Can be added later if needed
+                                      phoneNumber: _phoneNumber, // Required field
                                     );
                                   }
                                 },

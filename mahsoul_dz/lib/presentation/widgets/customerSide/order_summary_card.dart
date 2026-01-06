@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 /// Order Summary Card Widget
 /// Displays the order summary with subtotal, delivery fee, and total
@@ -14,6 +15,7 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -30,8 +32,8 @@ class OrderSummaryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Order Summary',
+          Text(
+            l10n.orderSummary,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
@@ -41,9 +43,9 @@ class OrderSummaryCard extends StatelessWidget {
 
           const SizedBox(height: 16),
 
-          _buildSummaryRow('Subtotal', '${subtotal.toStringAsFixed(2)} DA'),
+          _buildSummaryRow(l10n.subtotal, '${subtotal.toStringAsFixed(2)} ${l10n.da}'),
           const SizedBox(height: 8),
-          _buildSummaryRow('Delivery Fee', 'FREE', isFree: true),
+          _buildSummaryRow(l10n.deliveryFee, l10n.free, isFree: true),
 
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -54,8 +56,8 @@ class OrderSummaryCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Total',
+              Text(
+                l10n.total,
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
@@ -63,7 +65,7 @@ class OrderSummaryCard extends StatelessWidget {
                 ),
               ),
               Text(
-                '${total.toStringAsFixed(2)} DA',
+                '${total.toStringAsFixed(2)} ${l10n.da}',
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

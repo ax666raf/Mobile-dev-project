@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/data/models/farmerSide/farmer_profile_model.dart';
+import 'package:mahsoul_dz/core/utils/image_storage_helper.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 class ProfileCard extends StatelessWidget {
   final FarmerProfileModel profile;
   final VoidCallback onEditProfile;
+  final VoidCallback? onEditImage;
 
   const ProfileCard({
     super.key,
     required this.profile,
     required this.onEditProfile,
+    this.onEditImage,
   });
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -30,7 +35,7 @@ class ProfileCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Profile Image with Verification Badge
+          // Profile Image with Verification Badge and Edit Icon
           Stack(
             children: [
               Container(
@@ -42,38 +47,17 @@ class ProfileCard extends StatelessWidget {
                   color: Colors.grey.shade200,
                 ),
                 child: ClipOval(
-                  child: profile.profileImageUrl.isNotEmpty
-                      ? Image.asset(
-                          profile.profileImageUrl,
-                          fit: BoxFit.cover,
-                          width: 100,
-                          height: 100,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.person,
-                              size: 50,
-                              color: Colors.grey.shade400,
-                            );
-                          },
-                        )
-                      : Image.asset(
-                          'lib/assets/farmerpfp.png',
-                          fit: BoxFit.cover,
-                          width: 100,
-                          height: 100,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Icon(
-                              Icons.person,
-                              size: 50,
-                              color: Colors.grey.shade400,
-                            );
-                          },
-                        ),
+                  child: ImageStorageHelper.getImageWidget(
+                    profile.profileImageUrl.isNotEmpty ? profile.profileImageUrl : 'lib/assets/farmerpfp.png',
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               if (profile.isVerified)
                 Positioned(
-                  bottom: 0,
+                  top: 0,
                   right: 0,
                   child: Container(
                     padding: const EdgeInsets.all(4),
@@ -86,6 +70,27 @@ class ProfileCard extends StatelessWidget {
                       Icons.check,
                       color: Colors.white,
                       size: 20,
+                    ),
+                  ),
+                ),
+              if (onEditImage != null)
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: GestureDetector(
+                    onTap: onEditImage,
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        color: Colors.green,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 2),
+                      ),
+                      child: const Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                        size: 16,
+                      ),
                     ),
                   ),
                 ),
@@ -107,7 +112,7 @@ class ProfileCard extends StatelessWidget {
           // Verified Farmer Badge
           if (profile.isVerified)
             Text(
-              'Verified Farmer',
+              l10n.verifiedFarmer,
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.green.shade700,
@@ -132,8 +137,8 @@ class ProfileCard extends StatelessWidget {
                   ),
                   elevation: 0,
                 ),
-                child: const Text(
-                  'Edit Profile',
+                child: Text(
+                  l10n.editProfile,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -145,13 +150,13 @@ class ProfileCard extends StatelessWidget {
           const SizedBox(height: 20),
           
           // Profile Information
-          _buildProfileInfo('Farm Location:', profile.farmLocation),
+          _buildProfileInfo('${l10n.farmLocation}:', profile.farmLocation),
           const SizedBox(height: 12),
-          _buildProfileInfo('Established:', profile.established),
+          _buildProfileInfo('${l10n.establishedYear}:', profile.established),
           const SizedBox(height: 12),
-          _buildProfileInfo('Contact Number:', profile.contactNumber),
+          _buildProfileInfo('${l10n.contactNumber}:', profile.contactNumber),
           const SizedBox(height: 12),
-          _buildProfileInfo('Email Address:', profile.emailAddress),
+          _buildProfileInfo('${l10n.emailAddress}:', profile.emailAddress),
         ],
       ),
     );

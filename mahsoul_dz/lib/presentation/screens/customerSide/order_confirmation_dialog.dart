@@ -144,8 +144,11 @@ class OrderConfirmationDialog extends StatelessWidget {
               child: OutlinedButton(
                 onPressed: () {
                   Navigator.of(context).pop();
-                  // Navigate to home
-                  // Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                  // Navigate to home (MainNavigation)
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/main',
+                    (route) => false,
+                  );
                 },
                 style: OutlinedButton.styleFrom(
                   foregroundColor: const Color(0xFF4CAF50),

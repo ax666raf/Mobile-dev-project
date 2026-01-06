@@ -67,7 +67,7 @@ class ImageStorageHelper {
   }
 
   static bool isAssetPath(String? path) {
-    if (path == null) return false;
+    if (path == null || path.isEmpty) return false;
     return path.startsWith('lib/assets/');
   }
 
@@ -92,6 +92,7 @@ class ImageStorageHelper {
         ApiEndpoints.uploadImage,
         file: imageFile,
         fieldName: 'file',
+        additionalData: {'type': type}, // Pass type to backend
       );
 
       if (response.statusCode == 200) {
@@ -124,7 +125,12 @@ class ImageStorageHelper {
     // If it's a server path (uploads/...), construct full URL
     if (imagePath.startsWith('uploads/')) {
       final baseUrl = ApiConfig.baseUrl.replaceAll('/api', '');
-      return '$baseUrl/$imagePath';
+      // Backend route is /uploads/<path:filename>
+      // Example: uploads/profiles/image.jpg -> http://10.0.2.2:5000/uploads/profiles/image.jpg
+      // The route will capture 'profiles/image.jpg' as the filename parameter
+      final imageUrl = '$baseUrl/$imagePath';
+      print('🔗 Constructed image URL: $imageUrl');
+      return imageUrl;
     }
 
     // Otherwise return as is (might be asset path or local path)
@@ -147,7 +153,15 @@ class ImageStorageHelper {
     }
 
     if (isAssetPath(imagePath)) {
-      // Asset image
+      // Asset image - double check it's not empty
+      if (imagePath.isEmpty) {
+        return Container(
+          width: width,
+          height: height,
+          color: Colors.grey[300],
+          child: const Icon(Icons.image, color: Colors.grey),
+        );
+      }
       return Image.asset(
         imagePath,
         width: width,
@@ -165,11 +179,18 @@ class ImageStorageHelper {
     } else if (isServerPath(imagePath)) {
       // Server image - load from URL
       final imageUrl = getImageUrl(imagePath);
+      print('🖼️ Loading server image from: $imageUrl');
       return Image.network(
         imageUrl,
         width: width,
         height: height,
         fit: fit,
+        key: ValueKey(imageUrl), // Use key to force rebuild when URL changes
+        cacheWidth: width?.toInt(),
+        cacheHeight: height?.toInt(),
+        headers: {
+          'Accept': 'image/*',
+        },
         loadingBuilder: (context, child, loadingProgress) {
           if (loadingProgress == null) return child;
           return Container(
@@ -187,11 +208,24 @@ class ImageStorageHelper {
           );
         },
         errorBuilder: (context, error, stackTrace) {
+          print('❌ Image load error for URL: $imageUrl');
+          print('❌ Error: $error');
+          print('❌ StackTrace: $stackTrace');
           return Container(
             width: width,
             height: height,
             color: Colors.grey[300],
-            child: const Icon(Icons.broken_image, color: Colors.grey),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.broken_image, color: Colors.grey),
+                const SizedBox(height: 4),
+                Text(
+                  'Failed to load',
+                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
+                ),
+              ],
+            ),
           );
         },
       );

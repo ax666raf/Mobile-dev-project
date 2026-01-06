@@ -47,7 +47,7 @@ class _MahsoulOrderScreenState extends State<MahsoulOrderScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              l10n.appName,
+              'Mahsoul', // Keep in English only
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

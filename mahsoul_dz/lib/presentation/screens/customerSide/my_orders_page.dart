@@ -7,6 +7,7 @@ import 'package:mahsoul_dz/presentation/widgets/customerSide/order_card.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/order_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/order_state.dart';
 import 'package:mahsoul_dz/core/di/dependency_injection.dart';
+import 'package:mahsoul_dz/core/utils/phone_launcher.dart';
 
 class MyOrdersPage extends StatefulWidget {
   final String customerId;
@@ -28,7 +29,6 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
 
   /// Handle filter selection
   void _onFilterSelected(String filter) {
-    final l10n = AppLocalizations.of(context)!;
     setState(() {
       _selectedFilter = filter;
     });
@@ -96,16 +96,23 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
                           final orderItems = orderData['items'] as List<dynamic>? ?? [];
                           final firstItem = orderItems.isNotEmpty ? orderItems.first as Map<String, dynamic>? : null;
                           
+                          // Get image path, ensuring it's not empty
+                          final rawImagePath = firstItem?['product']?['image_path'] as String?;
+                          final imagePath = (rawImagePath != null && rawImagePath.isNotEmpty)
+                              ? rawImagePath
+                              : 'lib/assets/tomate.png';
+                          
                           return OrderModel(
                             id: orderData['id'] as String? ?? '',
                             productName: firstItem?['product_name'] as String? ?? '',
                             farmName: orderData['farmer']?['farm_name'] as String? ?? '',
                             price: (orderData['total_price'] as num?)?.toString() ?? '0',
                             status: orderData['status'] as String? ?? '',
-                            imagePath: firstItem?['product']?['image_path'] as String? ?? 'lib/assets/tomate.png',
+                            imagePath: imagePath,
                             orderDate: orderData['order_date'] != null
                                 ? DateTime.fromMillisecondsSinceEpoch(orderData['order_date'] as int)
                                 : DateTime.now(),
+                            farmerPhoneNumber: orderData['farmer']?['phone_number'] as String?,
                           );
                         }).toList();
 
@@ -200,11 +207,29 @@ class _MyOrdersPageState extends State<MyOrdersPage> {
   Widget _buildOrderCard(OrderModel order) {
     return OrderCard(
       order: order,
-      onCall: () {
-        // TODO: Implement call with Cubit will be implemented later
+      onCall: () async {
+        final phoneNumber = order.farmerPhoneNumber;
+        if (phoneNumber == null || phoneNumber.isEmpty) {
+          PhoneLauncher.showErrorSnackbar(context, 'make phone call');
+          return;
+        }
+        final success = await PhoneLauncher.makePhoneCall(phoneNumber);
+        if (!success) {
+          PhoneLauncher.showErrorSnackbar(context, 'make phone call');
+        }
       },
-      onWhatsApp: () {
-        // TODO: Implement WhatsApp with Cubit will be implemented later
+      onWhatsApp: () async {
+        final phoneNumber = order.farmerPhoneNumber;
+        if (phoneNumber == null || phoneNumber.isEmpty) {
+          PhoneLauncher.showErrorSnackbar(context, 'open WhatsApp');
+          return;
+        }
+        // Create a message template for order inquiry
+        final message = 'Hello! I have a question about my order #${order.id} for ${order.productName}.';
+        final success = await PhoneLauncher.launchWhatsApp(phoneNumber, message: message);
+        if (!success) {
+          PhoneLauncher.showErrorSnackbar(context, 'open WhatsApp');
+        }
       },
     );
   }

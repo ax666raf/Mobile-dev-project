@@ -81,12 +81,17 @@ class _MenuPageState extends State<MenuPage> {
                                     'Shop Smarter',
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 30,
+                                      fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
                                   Text(
                                     'Save More!',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,

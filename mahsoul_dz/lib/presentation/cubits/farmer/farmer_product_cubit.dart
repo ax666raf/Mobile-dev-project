@@ -51,6 +51,7 @@ class FarmerProductCubit extends Cubit<FarmerProductState> {
     bool isOrganic = false,
     String? storageInstructions,
     String? imagePath,
+    List<String>? imagePaths, // Multiple images
     String? status,
     List<String>? weights,
   }) async {
@@ -69,6 +70,7 @@ class FarmerProductCubit extends Cubit<FarmerProductState> {
         isOrganic: isOrganic,
         storageInstructions: storageInstructions,
         imagePath: imagePath,
+        imagePaths: imagePaths, // Pass multiple images
         status: status,
         weights: weightsList.map((w) => {'weight_value': w, 'is_available': true}).toList(),
       );
@@ -103,6 +105,7 @@ class FarmerProductCubit extends Cubit<FarmerProductState> {
         isOrganic: updates['is_organic'] as bool?,
         storageInstructions: updates['storage_instructions'] as String?,
         imagePath: updates['image_path'] as String?,
+        imagePaths: updates['image_paths'] as List<String>?, // Multiple images
         status: updates['status'] as String?,
         weights: weights,
       );

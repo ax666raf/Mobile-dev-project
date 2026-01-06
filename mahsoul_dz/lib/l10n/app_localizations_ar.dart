@@ -98,6 +98,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get emailAddress => 'عنوان البريد الإلكتروني';
 
   @override
+  String get contactNumber => 'رقم الاتصال';
+
+  @override
   String get password => 'كلمة المرور';
 
   @override
@@ -296,6 +299,21 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get farmName => 'اسم المزرعة';
+
+  @override
+  String get enterFarmName => 'أدخل اسم المزرعة';
+
+  @override
+  String get establishedYear => 'سنة التأسيس';
+
+  @override
+  String get enterYear => 'أدخل السنة (مثال: 2020)';
+
+  @override
+  String get invalidYear => 'الرجاء إدخال سنة صالحة';
+
+  @override
+  String get enterFarmDescription => 'أدخل وصف المزرعة';
 
   @override
   String get farmDescription => 'وصف المزرعة';
@@ -624,6 +642,135 @@ class AppLocalizationsAr extends AppLocalizations {
   String get blida => 'البليدة';
 
   @override
+  String get annaba => 'عنابة';
+
+  @override
+  String get batna => 'باتنة';
+
+  @override
+  String get bejaia => 'بجاية';
+
+  @override
+  String get biskra => 'بسكرة';
+
+  @override
+  String get boumerdes => 'بومرداس';
+
+  @override
+  String get chlef => 'الشلف';
+
+  @override
+  String get djelfa => 'الجلفة';
+
+  @override
+  String get guelma => 'قالمة';
+
+  @override
+  String get jijel => 'جيجل';
+
+  @override
+  String get khenchela => 'خنشلة';
+
+  @override
+  String get laghouat => 'الأغواط';
+
+  @override
+  String get mascara => 'معسكر';
+
+  @override
+  String get medea => 'المدية';
+
+  @override
+  String get mostaganem => 'مستغانم';
+
+  @override
+  String get msila => 'المسيلة';
+
+  @override
+  String get mila => 'ميلة';
+
+  @override
+  String get ouargla => 'ورقلة';
+
+  @override
+  String get oued => 'الوادي';
+
+  @override
+  String get relizane => 'غليزان';
+
+  @override
+  String get saida => 'سعيدة';
+
+  @override
+  String get setif => 'سطيف';
+
+  @override
+  String get sidiBelAbbes => 'سيدي بلعباس';
+
+  @override
+  String get skikda => 'سكيكدة';
+
+  @override
+  String get soukAhras => 'سوق أهراس';
+
+  @override
+  String get tamanrasset => 'تمنراست';
+
+  @override
+  String get tebessa => 'تبسة';
+
+  @override
+  String get tiaret => 'تيارت';
+
+  @override
+  String get tindouf => 'تندوف';
+
+  @override
+  String get tipaza => 'تيبازة';
+
+  @override
+  String get tissemsilt => 'تيسمسيلت';
+
+  @override
+  String get tiziOuzou => 'تيزي وزو';
+
+  @override
+  String get tlemcen => 'تلمسان';
+
+  @override
+  String get adrar => 'أدرار';
+
+  @override
+  String get ainDefla => 'عين الدفلى';
+
+  @override
+  String get ainTemouchent => 'عين تيموشنت';
+
+  @override
+  String get bordjBouArreridj => 'برج بوعريريج';
+
+  @override
+  String get bouira => 'البويرة';
+
+  @override
+  String get elBayadh => 'البيض';
+
+  @override
+  String get elOued => 'الوادي';
+
+  @override
+  String get elTarf => 'الطارف';
+
+  @override
+  String get ghardaia => 'غرداية';
+
+  @override
+  String get illizi => 'إليزي';
+
+  @override
+  String get naama => 'النعامة';
+
+  @override
   String get call => 'اتصال';
 
   @override
@@ -711,6 +858,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get selectProductCategory => 'اختر فئة المنتج';
 
   @override
+  String get category => 'الفئة';
+
+  @override
+  String get organicCertification => 'الشهادة العضوية';
+
+  @override
   String get productWeight => 'وزن المنتج';
 
   @override
@@ -784,7 +937,8 @@ class AppLocalizationsAr extends AppLocalizations {
   String get remove => 'إزالة';
 
   @override
-  String get noImageSelected => 'لم يتم اختيار صورة';
+  String get noImageSelected =>
+      'لم يتم اختيار صورة. سيتم استخدام الصورة الأولى كغلاف.';
 
   @override
   String get deliveryDetails => 'تفاصيل التوصيل';
@@ -1081,4 +1235,47 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get pleaseLogin => 'يرجى تسجيل الدخول للوصول إلى هذه الميزة';
+
+  @override
+  String get viewDetails => 'عرض التفاصيل';
+
+  @override
+  String get availableWeights => 'الأوزان المتاحة';
+
+  @override
+  String get enterWeightsExample => 'مثال: 500غ، 1كغ، 2كغ (مفصولة بفواصل)';
+
+  @override
+  String get weightsHint =>
+      'أدخل خيارات وزن متعددة مفصولة بفواصل (مثال: 500غ، 1كغ، 2كغ)';
+
+  @override
+  String get enterPriceExample => 'أدخل السعر (مثال: 1200)';
+
+  @override
+  String get enterProductDescription => 'أدخل وصف المنتج';
+
+  @override
+  String get harvestDateExample => 'مثال: ربيع 2024، أكتوبر 2024';
+
+  @override
+  String get storageExample => 'مثال: احفظ في مكان بارد، برد بعد الفتح';
+
+  @override
+  String get unavailable => 'غير متوفر';
+
+  @override
+  String get verifiedFarmer => 'مزارع موثق';
+
+  @override
+  String get addImages => 'إضافة صور';
+
+  @override
+  String get addMoreImages => 'إضافة المزيد من الصور';
+
+  @override
+  String get productImages => 'صور المنتج';
+
+  @override
+  String get cover => 'الغلاف';
 }

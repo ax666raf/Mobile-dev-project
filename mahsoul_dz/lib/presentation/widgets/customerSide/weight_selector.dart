@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 /// Displays available weight options as selectable buttons
 class WeightSelector extends StatelessWidget {
@@ -15,12 +16,13 @@ class WeightSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Available Weights',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+        Text(
+          l10n.availableWeights,
+          style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
         Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mahsoul_dz/data/models/customerSide/order_model.dart';
 import 'package:mahsoul_dz/core/utils/image_storage_helper.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 /// Order Card Widget
 /// Displays a single order with product info, status, and action buttons
@@ -18,6 +19,7 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(16),
@@ -141,8 +143,8 @@ class OrderCard extends StatelessWidget {
                     size: 18,
                     color: Color(0xFF4CAF50),
                   ),
-                  label: const Text(
-                    'Call',
+                  label: Text(
+                    l10n.call,
                     style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,

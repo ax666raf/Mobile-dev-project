@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "597038238462",
+    "project_id": "mahsoul-92f33",
+    "storage_bucket": "mahsoul-92f33.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597038238462:android:826524c7ff8edb6765b3af",
+        "android_client_info": {
+          "package_name": "com.example.mahsoul_dz"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5Qrjb5CNzOA5DeWF43n2GeQ3dI0vjHJo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

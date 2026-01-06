@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 class LogoutButton extends StatelessWidget {
   final VoidCallback onTap;
@@ -10,6 +11,7 @@ class LogoutButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Center(
       child: InkWell(
         onTap: onTap,
@@ -32,7 +34,7 @@ class LogoutButton extends StatelessWidget {
               ),
               const SizedBox(width: 6),
               Text(
-                'Log Out',
+                l10n.logout,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,

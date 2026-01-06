@@ -55,6 +55,7 @@ class DeliveryAddressRepository {
     required String address,
     required String city,
     String? postalCode,
+    bool isDefault = false,
   }) async {
     try {
       final requestData = {
@@ -62,6 +63,7 @@ class DeliveryAddressRepository {
         'address': address,
         'city': city,
         if (postalCode != null && postalCode.isNotEmpty) 'postal_code': postalCode,
+        'is_default': isDefault,
       };
       
       print('📤 DeliveryAddressRepository.addAddress - Sending: $requestData');

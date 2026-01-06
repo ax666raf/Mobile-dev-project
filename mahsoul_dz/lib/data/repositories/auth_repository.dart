@@ -37,7 +37,7 @@ class AuthRepository {
     required String password,
     required String userType,
     String? fullName,
-    String? phoneNumber,
+    required String phoneNumber,
   }) async {
     try {
       final response = await _apiClient.post(
@@ -47,7 +47,7 @@ class AuthRepository {
           'password': password,
           'user_type': userType,
           if (fullName != null) 'full_name': fullName,
-          if (phoneNumber != null) 'phone_number': phoneNumber,
+          'phone_number': phoneNumber, // Required field
         },
       );
 

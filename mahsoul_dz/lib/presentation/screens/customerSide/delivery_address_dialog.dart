@@ -428,8 +428,14 @@ class _DeliveryAddressDialogState extends State<DeliveryAddressDialog> {
                       onPressed: _handleSave,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primaryColor,
+                        foregroundColor: Colors.white,
                       ),
-                      child: Text(l10n.save),
+                      child: Text(
+                        l10n.save,
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],

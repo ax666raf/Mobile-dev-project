@@ -6,6 +6,7 @@ class OrderModel {
   final String status;
   final String imagePath;
   final DateTime orderDate;
+  final String? farmerPhoneNumber;
 
   OrderModel({
     required this.id,
@@ -15,6 +16,7 @@ class OrderModel {
     required this.status,
     required this.imagePath,
     required this.orderDate,
+    this.farmerPhoneNumber,
   });
 
   // Get status color based on status
@@ -62,6 +64,7 @@ class OrderModel {
       orderDate: json['orderDate'] != null 
           ? DateTime.parse(json['orderDate'])
           : DateTime.now(),
+      farmerPhoneNumber: json['farmerPhoneNumber'] as String?,
     );
   }
 
@@ -75,6 +78,7 @@ class OrderModel {
       'status': status,
       'imagePath': imagePath,
       'orderDate': orderDate.toIso8601String(),
+      'farmerPhoneNumber': farmerPhoneNumber,
     };
   }
 }

@@ -4,7 +4,6 @@ import 'package:mahsoul_dz/presentation/themes/colors.dart';
 import 'dart:ui';
 import 'package:mahsoul_dz/presentation/widgets/customerSide/categories.dart';
 import 'package:mahsoul_dz/presentation/widgets/common/button.dart';
-import 'package:mahsoul_dz/presentation/widgets/customerSide/featuredFarmer.dart';
 import 'package:mahsoul_dz/presentation/widgets/common/Logo.dart';
 import 'package:mahsoul_dz/presentation/screens/customerSide/customer_side_screens.dart';
 
@@ -88,7 +87,7 @@ class _MenuPageState extends State<MenuPage> {
                               l10n.shopSmarter,
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
                               textAlign: TextAlign.left,
@@ -98,7 +97,7 @@ class _MenuPageState extends State<MenuPage> {
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
-                                fontSize: 30,
+                                fontSize: 22,
                               ),
                               textAlign: TextAlign.left,
                             ),
@@ -108,7 +107,7 @@ class _MenuPageState extends State<MenuPage> {
                                 // Handle discount code
                               },
                               child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
+                                borderRadius: BorderRadius.circular(16),
                                 child: BackdropFilter(
                                   filter: ImageFilter.blur(
                                     sigmaX: 10,
@@ -124,14 +123,14 @@ class _MenuPageState extends State<MenuPage> {
                                       ),
                                     ),
                                     padding: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 5,
+                                      horizontal: 8,
+                                      vertical: 4,
                                     ),
                                     child: Text(
                                       l10n.getDiscount,
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 12,
+                                        fontSize: 11,
                                       ),
                                     ),
                                   ),
@@ -219,25 +218,6 @@ class _MenuPageState extends State<MenuPage> {
                   },
                 ),
 
-                // featured farmers
-                SizedBox(height: 20),
-                Text(
-                  l10n.featuredFarmers,
-                  style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10),
-                FeaturedFarmer(
-                  profileImage: 'lib/assets/farmerpfp.png',
-                  name: 'John Doe',
-                  rating: '4.5',
-                  availability: l10n.available,
-                  location: l10n.distanceAway('2.5'),
-                  products: l10n.productsCount('100'),
-                ),
               ],
             ),
           ),

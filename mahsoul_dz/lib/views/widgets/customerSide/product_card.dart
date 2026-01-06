@@ -37,10 +37,25 @@ class ProductCard extends StatelessWidget {
               width: 120,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                image: DecorationImage(
-                  image: AssetImage(product.imagePath),
-                  fit: BoxFit.cover,
-                ),
+                color: Colors.grey[200],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: product.imagePath.isNotEmpty
+                    ? Image.asset(
+                        product.imagePath,
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[300],
+                            child: const Icon(Icons.broken_image, color: Colors.grey),
+                          );
+                        },
+                      )
+                    : Container(
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.image, color: Colors.grey),
+                      ),
               ),
             ),
             const SizedBox(height: 8),

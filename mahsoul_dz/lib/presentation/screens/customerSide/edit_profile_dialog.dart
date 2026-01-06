@@ -113,12 +113,14 @@ class _EditProfileDialogState extends State<EditProfileDialog> {
         }
       },
       child: Dialog(
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
         child: Container(
           padding: const EdgeInsets.all(24),
           constraints: const BoxConstraints(maxWidth: 400),
+          color: Colors.white,
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,

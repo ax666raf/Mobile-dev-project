@@ -274,6 +274,12 @@ abstract class AppLocalizations {
   /// **'Email Address'**
   String get emailAddress;
 
+  /// No description provided for @contactNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact Number'**
+  String get contactNumber;
+
   /// No description provided for @password.
   ///
   /// In en, this message translates to:
@@ -651,6 +657,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Farm Name'**
   String get farmName;
+
+  /// No description provided for @enterFarmName.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter farm name'**
+  String get enterFarmName;
+
+  /// No description provided for @establishedYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Established Year'**
+  String get establishedYear;
+
+  /// No description provided for @enterYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter year (e.g., 2020)'**
+  String get enterYear;
+
+  /// No description provided for @invalidYear.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid year'**
+  String get invalidYear;
+
+  /// No description provided for @enterFarmDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter farm description'**
+  String get enterFarmDescription;
 
   /// No description provided for @farmDescription.
   ///
@@ -1300,6 +1336,264 @@ abstract class AppLocalizations {
   /// **'Blida'**
   String get blida;
 
+  /// No description provided for @annaba.
+  ///
+  /// In en, this message translates to:
+  /// **'Annaba'**
+  String get annaba;
+
+  /// No description provided for @batna.
+  ///
+  /// In en, this message translates to:
+  /// **'Batna'**
+  String get batna;
+
+  /// No description provided for @bejaia.
+  ///
+  /// In en, this message translates to:
+  /// **'Béjaïa'**
+  String get bejaia;
+
+  /// No description provided for @biskra.
+  ///
+  /// In en, this message translates to:
+  /// **'Biskra'**
+  String get biskra;
+
+  /// No description provided for @boumerdes.
+  ///
+  /// In en, this message translates to:
+  /// **'Boumerdès'**
+  String get boumerdes;
+
+  /// No description provided for @chlef.
+  ///
+  /// In en, this message translates to:
+  /// **'Chlef'**
+  String get chlef;
+
+  /// No description provided for @djelfa.
+  ///
+  /// In en, this message translates to:
+  /// **'Djelfa'**
+  String get djelfa;
+
+  /// No description provided for @guelma.
+  ///
+  /// In en, this message translates to:
+  /// **'Guelma'**
+  String get guelma;
+
+  /// No description provided for @jijel.
+  ///
+  /// In en, this message translates to:
+  /// **'Jijel'**
+  String get jijel;
+
+  /// No description provided for @khenchela.
+  ///
+  /// In en, this message translates to:
+  /// **'Khenchela'**
+  String get khenchela;
+
+  /// No description provided for @laghouat.
+  ///
+  /// In en, this message translates to:
+  /// **'Laghouat'**
+  String get laghouat;
+
+  /// No description provided for @mascara.
+  ///
+  /// In en, this message translates to:
+  /// **'Mascara'**
+  String get mascara;
+
+  /// No description provided for @medea.
+  ///
+  /// In en, this message translates to:
+  /// **'Médéa'**
+  String get medea;
+
+  /// No description provided for @mostaganem.
+  ///
+  /// In en, this message translates to:
+  /// **'Mostaganem'**
+  String get mostaganem;
+
+  /// No description provided for @msila.
+  ///
+  /// In en, this message translates to:
+  /// **'M\'Sila'**
+  String get msila;
+
+  /// No description provided for @mila.
+  ///
+  /// In en, this message translates to:
+  /// **'Mila'**
+  String get mila;
+
+  /// No description provided for @ouargla.
+  ///
+  /// In en, this message translates to:
+  /// **'Ouargla'**
+  String get ouargla;
+
+  /// No description provided for @oued.
+  ///
+  /// In en, this message translates to:
+  /// **'Oued'**
+  String get oued;
+
+  /// No description provided for @relizane.
+  ///
+  /// In en, this message translates to:
+  /// **'Relizane'**
+  String get relizane;
+
+  /// No description provided for @saida.
+  ///
+  /// In en, this message translates to:
+  /// **'Saïda'**
+  String get saida;
+
+  /// No description provided for @setif.
+  ///
+  /// In en, this message translates to:
+  /// **'Sétif'**
+  String get setif;
+
+  /// No description provided for @sidiBelAbbes.
+  ///
+  /// In en, this message translates to:
+  /// **'Sidi Bel Abbès'**
+  String get sidiBelAbbes;
+
+  /// No description provided for @skikda.
+  ///
+  /// In en, this message translates to:
+  /// **'Skikda'**
+  String get skikda;
+
+  /// No description provided for @soukAhras.
+  ///
+  /// In en, this message translates to:
+  /// **'Souk Ahras'**
+  String get soukAhras;
+
+  /// No description provided for @tamanrasset.
+  ///
+  /// In en, this message translates to:
+  /// **'Tamanrasset'**
+  String get tamanrasset;
+
+  /// No description provided for @tebessa.
+  ///
+  /// In en, this message translates to:
+  /// **'Tébessa'**
+  String get tebessa;
+
+  /// No description provided for @tiaret.
+  ///
+  /// In en, this message translates to:
+  /// **'Tiaret'**
+  String get tiaret;
+
+  /// No description provided for @tindouf.
+  ///
+  /// In en, this message translates to:
+  /// **'Tindouf'**
+  String get tindouf;
+
+  /// No description provided for @tipaza.
+  ///
+  /// In en, this message translates to:
+  /// **'Tipaza'**
+  String get tipaza;
+
+  /// No description provided for @tissemsilt.
+  ///
+  /// In en, this message translates to:
+  /// **'Tissemsilt'**
+  String get tissemsilt;
+
+  /// No description provided for @tiziOuzou.
+  ///
+  /// In en, this message translates to:
+  /// **'Tizi Ouzou'**
+  String get tiziOuzou;
+
+  /// No description provided for @tlemcen.
+  ///
+  /// In en, this message translates to:
+  /// **'Tlemcen'**
+  String get tlemcen;
+
+  /// No description provided for @adrar.
+  ///
+  /// In en, this message translates to:
+  /// **'Adrar'**
+  String get adrar;
+
+  /// No description provided for @ainDefla.
+  ///
+  /// In en, this message translates to:
+  /// **'Aïn Defla'**
+  String get ainDefla;
+
+  /// No description provided for @ainTemouchent.
+  ///
+  /// In en, this message translates to:
+  /// **'Aïn Témouchent'**
+  String get ainTemouchent;
+
+  /// No description provided for @bordjBouArreridj.
+  ///
+  /// In en, this message translates to:
+  /// **'Bordj Bou Arréridj'**
+  String get bordjBouArreridj;
+
+  /// No description provided for @bouira.
+  ///
+  /// In en, this message translates to:
+  /// **'Bouira'**
+  String get bouira;
+
+  /// No description provided for @elBayadh.
+  ///
+  /// In en, this message translates to:
+  /// **'El Bayadh'**
+  String get elBayadh;
+
+  /// No description provided for @elOued.
+  ///
+  /// In en, this message translates to:
+  /// **'El Oued'**
+  String get elOued;
+
+  /// No description provided for @elTarf.
+  ///
+  /// In en, this message translates to:
+  /// **'El Tarf'**
+  String get elTarf;
+
+  /// No description provided for @ghardaia.
+  ///
+  /// In en, this message translates to:
+  /// **'Ghardaïa'**
+  String get ghardaia;
+
+  /// No description provided for @illizi.
+  ///
+  /// In en, this message translates to:
+  /// **'Illizi'**
+  String get illizi;
+
+  /// No description provided for @naama.
+  ///
+  /// In en, this message translates to:
+  /// **'Naâma'**
+  String get naama;
+
   /// No description provided for @call.
   ///
   /// In en, this message translates to:
@@ -1474,6 +1768,18 @@ abstract class AppLocalizations {
   /// **'Select the product category'**
   String get selectProductCategory;
 
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @organicCertification.
+  ///
+  /// In en, this message translates to:
+  /// **'Organic Certification'**
+  String get organicCertification;
+
   /// No description provided for @productWeight.
   ///
   /// In en, this message translates to:
@@ -1621,7 +1927,7 @@ abstract class AppLocalizations {
   /// No description provided for @noImageSelected.
   ///
   /// In en, this message translates to:
-  /// **'No image selected'**
+  /// **'No image selected. First image will be used as cover.'**
   String get noImageSelected;
 
   /// No description provided for @deliveryDetails.
@@ -2187,6 +2493,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please login to access this feature'**
   String get pleaseLogin;
+
+  /// No description provided for @viewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'View Details'**
+  String get viewDetails;
+
+  /// No description provided for @availableWeights.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Weights'**
+  String get availableWeights;
+
+  /// No description provided for @enterWeightsExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 500g, 1kg, 2kg (comma-separated)'**
+  String get enterWeightsExample;
+
+  /// No description provided for @weightsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter multiple weight options separated by commas (e.g., 500g, 1kg, 2kg)'**
+  String get weightsHint;
+
+  /// No description provided for @enterPriceExample.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter price (e.g., 1200)'**
+  String get enterPriceExample;
+
+  /// No description provided for @enterProductDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter product description'**
+  String get enterProductDescription;
+
+  /// No description provided for @harvestDateExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Spring 2024, October 2024'**
+  String get harvestDateExample;
+
+  /// No description provided for @storageExample.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Keep in cool place, Refrigerate after opening'**
+  String get storageExample;
+
+  /// No description provided for @unavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable'**
+  String get unavailable;
+
+  /// No description provided for @verifiedFarmer.
+  ///
+  /// In en, this message translates to:
+  /// **'Verified Farmer'**
+  String get verifiedFarmer;
+
+  /// No description provided for @addImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Images'**
+  String get addImages;
+
+  /// No description provided for @addMoreImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Add More Images'**
+  String get addMoreImages;
+
+  /// No description provided for @productImages.
+  ///
+  /// In en, this message translates to:
+  /// **'Product Images'**
+  String get productImages;
+
+  /// No description provided for @cover.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get cover;
 }
 
 class _AppLocalizationsDelegate

@@ -106,9 +106,9 @@ class CartRepository {
 
   Future<void> clearCart(String customerId) async {
     try {
-      await _apiClient.post(
+      await _apiClient.delete(
         ApiEndpoints.cartClear,
-        data: {'customer_id': customerId},
+        queryParameters: {'customer_id': customerId},
       );
     } on ApiException {
       rethrow;

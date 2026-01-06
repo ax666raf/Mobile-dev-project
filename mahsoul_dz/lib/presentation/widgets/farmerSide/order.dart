@@ -5,6 +5,8 @@ import 'package:mahsoul_dz/presentation/themes/colors.dart';
 import 'package:mahsoul_dz/presentation/widgets/farmerSide/order_details.dart';
 import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_order_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_order_state.dart';
+import 'package:mahsoul_dz/core/utils/phone_launcher.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 class OrderTile extends StatelessWidget {
   final Order order;
@@ -43,32 +45,87 @@ class OrderTile extends StatelessWidget {
 
               Row(
                 children: [
+                  // Call button
                   GestureDetector(
-                    onTap: () {
-                      // TODO: Implement call functionality
+                    onTap: () async {
+                      final phoneNumber = order.customer.phoneNumber;
+                      if (phoneNumber == null || phoneNumber.isEmpty) {
+                        PhoneLauncher.showErrorSnackbar(context, 'make phone call');
+                        return;
+                      }
+                      final success = await PhoneLauncher.makePhoneCall(phoneNumber);
+                      if (!success) {
+                        PhoneLauncher.showErrorSnackbar(context, 'make phone call');
+                      }
                     },
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(10),
                       ),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 7,
+                        vertical: 3,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.call, color: Colors.grey[600], size: 14),
+                          SizedBox(width: 3),
+                          Flexible(
+                            child: Text(
+                              AppLocalizations.of(context)!.call,
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey[600],
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 4),
+                  // WhatsApp button
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () async {
+                        final phoneNumber = order.customer.phoneNumber;
+                        if (phoneNumber == null || phoneNumber.isEmpty) {
+                          PhoneLauncher.showErrorSnackbar(context, 'open WhatsApp');
+                          return;
+                        }
+                        // Create a message template for order inquiry
+                        final message = 'Hello! I have an update about your order #${order.id}.';
+                        final success = await PhoneLauncher.launchWhatsApp(phoneNumber, message: message);
+                        if (!success) {
+                          PhoneLauncher.showErrorSnackbar(context, 'open WhatsApp');
+                        }
+                      },
                       child: Container(
                         decoration: BoxDecoration(
+                          color: Color(0xFF25D366), // WhatsApp green
                           borderRadius: BorderRadius.circular(10),
                         ),
                         padding: EdgeInsets.symmetric(
-                          horizontal: 7,
+                          horizontal: 6,
                           vertical: 3,
                         ),
                         child: Row(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.call, color: Colors.grey[600], size: 16),
-                            SizedBox(width: 5),
-                            Text(
-                              'call',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.grey[600],
+                            Icon(Icons.chat, color: Colors.white, size: 14),
+                            SizedBox(width: 3),
+                            Flexible(
+                              child: Text(
+                                AppLocalizations.of(context)!.whatsapp,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ],
@@ -76,37 +133,40 @@ class OrderTile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(width: 8),
+                  SizedBox(width: 4),
 
                   // view order details button
-                  GestureDetector(
-                    onTap: () {
-                      // show the order details
-                      showModalBottomSheet(
-                        context: context,
-                        isScrollControlled: true,
-                        backgroundColor: Colors.transparent,
-                        builder: (context) => Container(
-                          height: MediaQuery.of(context).size.height * 0.9,
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40),
+                  Flexible(
+                    child: GestureDetector(
+                      onTap: () {
+                        // show the order details
+                        showModalBottomSheet(
+                          context: context,
+                          isScrollControlled: true,
+                          backgroundColor: Colors.transparent,
+                          builder: (context) => Container(
+                            height: MediaQuery.of(context).size.height * 0.9,
+                            margin: EdgeInsets.symmetric(horizontal: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            child: OrderDetailsWidget(order: order),
                           ),
-                          child: OrderDetailsWidget(order: order),
+                        );
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: primaryColor),
                         ),
-                      );
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(color: primaryColor),
-                      ),
-                      padding: EdgeInsets.symmetric(horizontal: 7, vertical: 3),
-                      child: Text(
-                        'View Details',
-                        style: TextStyle(fontSize: 14, color: primaryColor),
+                        padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
+                        child: Text(
+                          AppLocalizations.of(context)!.viewDetails,
+                          style: TextStyle(fontSize: 12, color: primaryColor),
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                   ),
@@ -115,7 +175,7 @@ class OrderTile extends StatelessWidget {
             ],
           ),
         ),
-          SizedBox(width: 8),
+          SizedBox(width: 4),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
 

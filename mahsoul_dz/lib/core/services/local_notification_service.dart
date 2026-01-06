@@ -28,7 +28,31 @@ class LocalNotificationService {
       onDidReceiveNotificationResponse: _onNotificationTapped,
     );
 
+    // Create Android notification channel (required for Android 8.0+)
+    try {
+      final androidImplementation = _notifications
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>();
+      
+      if (androidImplementation != null) {
+        const androidChannel = AndroidNotificationChannel(
+          'order_channel',
+          'Order Notifications',
+          description: 'Notifications for new orders',
+          importance: Importance.high,
+          playSound: true,
+          enableVibration: true,
+        );
+        
+        await androidImplementation.createNotificationChannel(androidChannel);
+        print('✅ Android notification channel created');
+      }
+    } catch (e) {
+      print('⚠️ Error creating notification channel: $e');
+    }
+
     _initialized = true;
+    print('✅ Local notifications initialized');
   }
 
   void _onNotificationTapped(NotificationResponse response) {

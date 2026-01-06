@@ -28,21 +28,40 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     required String address,
     required String city,
     String? postalCode,
-    bool isDefault = false,
+    bool? isDefault, // null means auto-detect (first address = default)
   }) async {
     try {
+      // Check if this is the first address (auto-set as default if no addresses exist)
+      final currentState = state;
+      bool shouldBeDefault = false;
+      
+      if (isDefault != null) {
+        shouldBeDefault = isDefault;
+      } else {
+        // Auto-detect: if no addresses exist, this should be default
+        if (currentState is DeliveryAddressLoaded) {
+          shouldBeDefault = currentState.addresses.isEmpty;
+        } else {
+          // If state is not loaded yet, load addresses first to check
+          try {
+            final addresses = await _addressRepository.getAddresses(customerId);
+            shouldBeDefault = addresses.isEmpty;
+          } catch (e) {
+            // If we can't check, assume it's the first one
+            shouldBeDefault = true;
+          }
+        }
+      }
+      
       await _addressRepository.addAddress(
         customerId: customerId,
         address: address,
         city: city,
         postalCode: postalCode,
+        isDefault: shouldBeDefault,
       );
       
-      if (isDefault) {
-        loadAddresses();
-      } else {
-        loadAddresses();
-      }
+      loadAddresses(); // Reload to get updated list
     } on ApiException catch (e) {
       emit(DeliveryAddressError(e.message));
     } catch (e) {

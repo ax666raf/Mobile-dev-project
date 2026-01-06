@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 /// Cart Buttons Widget
 /// Contains Proceed to Checkout and Continue Shopping buttons
@@ -16,6 +17,7 @@ class CartButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         // Proceed to Checkout Button
@@ -32,8 +34,8 @@ class CartButtons extends StatelessWidget {
               ),
               elevation: 0,
             ),
-            child: const Text(
-              'Proceed to Checkout',
+            child: Text(
+              l10n.proceedToCheckout,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
@@ -57,7 +59,7 @@ class CartButtons extends StatelessWidget {
               ),
             ),
             child: Text(
-              'Continue Shopping',
+              l10n.continueShopping,
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,

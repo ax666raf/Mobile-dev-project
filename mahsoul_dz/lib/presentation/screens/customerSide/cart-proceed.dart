@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahsoul_dz/l10n/app_localizations.dart';
 import 'package:mahsoul_dz/presentation/screens/customerSide/customer_side_screens.dart';
-import 'package:mahsoul_dz/presentation/widgets/common/page_with_nav.dart';
+import 'package:mahsoul_dz/presentation/screens/customerSide/delivery_address_dialog.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/cart_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/cart_state.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/customer_profile_cubit.dart';
@@ -11,8 +11,6 @@ import 'package:mahsoul_dz/presentation/cubits/customer/delivery_address_cubit.d
 import 'package:mahsoul_dz/presentation/cubits/customer/delivery_address_state.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/order_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/customer/order_state.dart';
-import 'package:mahsoul_dz/presentation/cubits/auth/auth_cubit.dart';
-import 'package:mahsoul_dz/presentation/cubits/auth/auth_state.dart';
 import 'package:mahsoul_dz/core/di/dependency_injection.dart';
 
 /// Order Proceed Page - Shows customer information and order summary before confirmation
@@ -174,27 +172,46 @@ class OrderConfirmationPage extends StatelessWidget {
                             child: ElevatedButton(
                               onPressed: isLoading
                                   ? null
-                                  : () {
+                                  : () async {
                                       // Get delivery address and place order
                                       final addressCubit = context
                                           .read<DeliveryAddressCubit>();
+                                      
+                                      // Ensure addresses are loaded
+                                      if (addressCubit.state is! DeliveryAddressLoaded) {
+                                        await addressCubit.loadAddresses();
+                                      }
+                                      
                                       final addressState = addressCubit.state;
 
                                       String deliveryAddress = '';
-                                      if (addressState
-                                          is DeliveryAddressLoaded) {
+                                      if (addressState is DeliveryAddressLoaded) {
+                                        if (addressState.addresses.isEmpty) {
+                                          // No addresses - show dialog to add one
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(
+                                              content: Text(l10n.pleaseAddDeliveryAddress),
+                                              backgroundColor: Colors.orange,
+                                              action: SnackBarAction(
+                                                label: l10n.addNewAddress,
+                                                textColor: Colors.white,
+                                                onPressed: () {
+                                                  DeliveryAddressDialog.show(context);
+                                                },
+                                              ),
+                                            ),
+                                          );
+                                          return;
+                                        }
+                                        
+                                        // Find default address, or use first one if no default
                                         final defaultAddress = addressState
                                             .addresses
                                             .firstWhere(
                                               (addr) =>
                                                   addr['is_default'] == true ||
                                                   addr['is_default'] == 1,
-                                              orElse: () =>
-                                                  addressState
-                                                      .addresses
-                                                      .isNotEmpty
-                                                  ? addressState.addresses.first
-                                                  : {},
+                                              orElse: () => addressState.addresses.first,
                                             );
 
                                         if (defaultAddress.isNotEmpty) {
@@ -213,6 +230,31 @@ class OrderConfirmationPage extends StatelessWidget {
                                           deliveryAddress =
                                               '$address, $city${postalCode.isNotEmpty ? ', $postalCode' : ''}';
                                         }
+                                      } else if (addressState is DeliveryAddressLoading) {
+                                        // Still loading - wait a bit
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Text(l10n.loading),
+                                            backgroundColor: Colors.blue,
+                                          ),
+                                        );
+                                        return;
+                                      } else {
+                                        // Error or initial state - try to load
+                                        await addressCubit.loadAddresses();
+                                        final newState = addressCubit.state;
+                                        if (newState is DeliveryAddressLoaded && newState.addresses.isNotEmpty) {
+                                          final defaultAddress = newState.addresses.firstWhere(
+                                            (addr) => addr['is_default'] == true || addr['is_default'] == 1,
+                                            orElse: () => newState.addresses.first,
+                                          );
+                                          if (defaultAddress.isNotEmpty) {
+                                            final address = defaultAddress['address'] as String? ?? '';
+                                            final city = defaultAddress['city'] as String? ?? '';
+                                            final postalCode = defaultAddress['postal_code'] as String? ?? '';
+                                            deliveryAddress = '$address, $city${postalCode.isNotEmpty ? ', $postalCode' : ''}';
+                                          }
+                                        }
                                       }
 
                                       if (deliveryAddress.isEmpty) {
@@ -224,6 +266,13 @@ class OrderConfirmationPage extends StatelessWidget {
                                               l10n.pleaseAddDeliveryAddress,
                                             ),
                                             backgroundColor: Colors.orange,
+                                            action: SnackBarAction(
+                                              label: l10n.addNewAddress,
+                                              textColor: Colors.white,
+                                              onPressed: () {
+                                                DeliveryAddressDialog.show(context);
+                                              },
+                                            ),
                                           ),
                                         );
                                         return;
@@ -383,14 +432,6 @@ class OrderConfirmationPage extends StatelessWidget {
                       // Open delivery address dialog
                       DeliveryAddressDialog.show(context);
                     },
-                  ),
-                  const SizedBox(height: 18),
-                  _buildInfoRow(
-                    context,
-                    Icons.note_outlined,
-                    l10n.orderNotes,
-                    l10n.addNotes,
-                    l10n,
                   ),
                 ],
               ),

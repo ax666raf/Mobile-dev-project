@@ -64,6 +64,8 @@ class CustomerProfileCubit extends Cubit<CustomerProfileState> {
         userId: userId,
         imagePath: imagePath,
       );
+      // Small delay to ensure backend has committed the change
+      await Future.delayed(const Duration(milliseconds: 300));
       loadProfile(); // Reload profile
     } on ApiException catch (e) {
       emit(CustomerProfileError(e.message));

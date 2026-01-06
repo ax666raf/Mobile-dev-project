@@ -47,15 +47,21 @@ class _OrdersPageState extends State<OrdersPage> {
     String customerName = l10n.unknownCustomer;
 
     // Get customer data from response
+    String? customerPhone;
     if (orderData.containsKey('customer')) {
       final customerData = orderData['customer'] as Map<String, dynamic>? ?? {};
       customerName =
           customerData['full_name'] as String? ??
           customerData['fullName'] as String? ??
           'Customer';
+      customerPhone = customerData['phone_number'] as String?;
     }
 
-    final customer = Customer(id: customerId, fullName: customerName);
+    final customer = Customer(
+      id: customerId,
+      fullName: customerName,
+      phoneNumber: customerPhone,
+    );
 
     return Order(
       id: orderData['id'] as String?,

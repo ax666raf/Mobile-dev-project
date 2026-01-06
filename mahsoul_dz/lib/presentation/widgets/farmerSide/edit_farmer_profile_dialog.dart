@@ -4,6 +4,7 @@ import 'package:mahsoul_dz/presentation/themes/colors.dart';
 import 'package:mahsoul_dz/presentation/widgets/common/CustomFormField.dart';
 import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_profile_cubit.dart';
 import 'package:mahsoul_dz/presentation/cubits/farmer/farmer_profile_state.dart';
+import 'package:mahsoul_dz/l10n/app_localizations.dart';
 
 class EditFarmerProfileDialog extends StatefulWidget {
   final Map<String, dynamic> currentProfile;
@@ -52,8 +53,7 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
     _descriptionController = TextEditingController(
       text: farmerData['description'] as String? ?? '',
     );
-    // Extract year from established_year or created_at
-    // Backend stores established_year as String, so we need to handle it as String first
+    
     final establishedYearStr = farmerData['established_year'] as String?;
     if (establishedYearStr != null && establishedYearStr.isNotEmpty) {
       _establishedYearController = TextEditingController(text: establishedYearStr);
@@ -97,6 +97,7 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return BlocListener<FarmerProfileCubit, FarmerProfileState>(
       listener: (context, state) {
         if (state is FarmerProfileLoaded) {
@@ -117,12 +118,14 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
         }
       },
       child: Dialog(
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
         child: Container(
           padding: const EdgeInsets.all(24),
           constraints: const BoxConstraints(maxWidth: 400, maxHeight: 600),
+          color: Colors.white,
           child: SingleChildScrollView(
             child: Form(
               key: _formKey,
@@ -135,7 +138,7 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        'Edit Profile',
+                        l10n.editProfile,
                         style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
@@ -152,16 +155,16 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
 
                   // Full Name
                   Text(
-                    'Full Name',
+                    l10n.fullName,
                     style: TextStyle(fontSize: 14, color: Colors.grey[700], fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   CustomFormField(
                     controller: _nameController,
-                    hintText: 'Enter your full name',
+                    hintText: l10n.enterFullName,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Full name is required';
+                        return l10n.requiredField;
                       }
                       return null;
                     },
@@ -170,16 +173,16 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
 
                   // Phone Number
                   Text(
-                    'Phone Number',
+                    l10n.phoneNumber,
                     style: TextStyle(fontSize: 14, color: Colors.grey[700], fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   CustomFormField(
                     controller: _phoneController,
-                    hintText: 'Enter phone number',
+                    hintText: l10n.enterPhoneNumber,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Phone number is required';
+                        return l10n.requiredField;
                       }
                       return null;
                     },
@@ -188,19 +191,19 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
 
                   // Email
                   Text(
-                    'Email',
+                    l10n.email,
                     style: TextStyle(fontSize: 14, color: Colors.grey[700], fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   CustomFormField(
                     controller: _emailController,
-                    hintText: 'Enter email address',
+                    hintText: l10n.enterEmailAddress,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Email is required';
+                        return l10n.requiredField;
                       }
                       if (!value.contains('@')) {
-                        return 'Please enter a valid email';
+                        return l10n.invalidEmail;
                       }
                       return null;
                     },
@@ -209,16 +212,16 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
 
                   // Farm Name
                   Text(
-                    'Farm Name',
+                    l10n.farmName,
                     style: TextStyle(fontSize: 14, color: Colors.grey[700], fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   CustomFormField(
                     controller: _farmNameController,
-                    hintText: 'Enter farm name',
+                    hintText: l10n.enterFarmName,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Farm name is required';
+                        return l10n.requiredField;
                       }
                       return null;
                     },
@@ -227,16 +230,16 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
 
                   // Farm Location
                   Text(
-                    'Farm Location',
+                    l10n.farmLocation,
                     style: TextStyle(fontSize: 14, color: Colors.grey[700], fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   CustomFormField(
                     controller: _farmLocationController,
-                    hintText: 'Enter farm location',
+                    hintText: l10n.enterFarmLocation,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Farm location is required';
+                        return l10n.requiredField;
                       }
                       return null;
                     },
@@ -245,23 +248,23 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
 
                   // Established Year
                   Text(
-                    'Established Year',
+                    l10n.establishedYear,
                     style: TextStyle(fontSize: 14, color: Colors.grey[700], fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
                   CustomFormField(
                     controller: _establishedYearController,
-                    hintText: 'Enter year (e.g., 2020)',
+                    hintText: l10n.enterYear,
                     validator: (value) {
                       if (value == null || value.trim().isEmpty) {
-                        return 'Established year is required';
+                        return l10n.requiredField;
                       }
                       final year = int.tryParse(value.trim());
                       if (year == null) {
-                        return 'Please enter a valid year';
+                        return l10n.invalidYear;
                       }
                       if (year < 1900 || year > DateTime.now().year) {
-                        return 'Please enter a valid year';
+                        return l10n.invalidYear;
                       }
                       return null;
                     },
@@ -270,7 +273,7 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
 
                   // Description
                   Text(
-                    'Description',
+                    l10n.description,
                     style: TextStyle(fontSize: 14, color: Colors.grey[700], fontWeight: FontWeight.w500),
                   ),
                   const SizedBox(height: 8),
@@ -280,7 +283,7 @@ class _EditFarmerProfileDialogState extends State<EditFarmerProfileDialog> {
                       controller: _descriptionController,
                       maxLines: 3,
                       decoration: InputDecoration(
-                        hintText: 'Enter farm description',
+                        hintText: l10n.enterFarmDescription,
                         hintStyle: TextStyle(
                           fontSize: 14, 
                           color: Colors.grey.shade600),

@@ -99,6 +99,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get emailAddress => 'Email Address';
 
   @override
+  String get contactNumber => 'Contact Number';
+
+  @override
   String get password => 'Password';
 
   @override
@@ -297,6 +300,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get farmName => 'Farm Name';
+
+  @override
+  String get enterFarmName => 'Enter farm name';
+
+  @override
+  String get establishedYear => 'Established Year';
+
+  @override
+  String get enterYear => 'Enter year (e.g., 2020)';
+
+  @override
+  String get invalidYear => 'Please enter a valid year';
+
+  @override
+  String get enterFarmDescription => 'Enter farm description';
 
   @override
   String get farmDescription => 'Farm Description';
@@ -625,6 +643,135 @@ class AppLocalizationsEn extends AppLocalizations {
   String get blida => 'Blida';
 
   @override
+  String get annaba => 'Annaba';
+
+  @override
+  String get batna => 'Batna';
+
+  @override
+  String get bejaia => 'Béjaïa';
+
+  @override
+  String get biskra => 'Biskra';
+
+  @override
+  String get boumerdes => 'Boumerdès';
+
+  @override
+  String get chlef => 'Chlef';
+
+  @override
+  String get djelfa => 'Djelfa';
+
+  @override
+  String get guelma => 'Guelma';
+
+  @override
+  String get jijel => 'Jijel';
+
+  @override
+  String get khenchela => 'Khenchela';
+
+  @override
+  String get laghouat => 'Laghouat';
+
+  @override
+  String get mascara => 'Mascara';
+
+  @override
+  String get medea => 'Médéa';
+
+  @override
+  String get mostaganem => 'Mostaganem';
+
+  @override
+  String get msila => 'M\'Sila';
+
+  @override
+  String get mila => 'Mila';
+
+  @override
+  String get ouargla => 'Ouargla';
+
+  @override
+  String get oued => 'Oued';
+
+  @override
+  String get relizane => 'Relizane';
+
+  @override
+  String get saida => 'Saïda';
+
+  @override
+  String get setif => 'Sétif';
+
+  @override
+  String get sidiBelAbbes => 'Sidi Bel Abbès';
+
+  @override
+  String get skikda => 'Skikda';
+
+  @override
+  String get soukAhras => 'Souk Ahras';
+
+  @override
+  String get tamanrasset => 'Tamanrasset';
+
+  @override
+  String get tebessa => 'Tébessa';
+
+  @override
+  String get tiaret => 'Tiaret';
+
+  @override
+  String get tindouf => 'Tindouf';
+
+  @override
+  String get tipaza => 'Tipaza';
+
+  @override
+  String get tissemsilt => 'Tissemsilt';
+
+  @override
+  String get tiziOuzou => 'Tizi Ouzou';
+
+  @override
+  String get tlemcen => 'Tlemcen';
+
+  @override
+  String get adrar => 'Adrar';
+
+  @override
+  String get ainDefla => 'Aïn Defla';
+
+  @override
+  String get ainTemouchent => 'Aïn Témouchent';
+
+  @override
+  String get bordjBouArreridj => 'Bordj Bou Arréridj';
+
+  @override
+  String get bouira => 'Bouira';
+
+  @override
+  String get elBayadh => 'El Bayadh';
+
+  @override
+  String get elOued => 'El Oued';
+
+  @override
+  String get elTarf => 'El Tarf';
+
+  @override
+  String get ghardaia => 'Ghardaïa';
+
+  @override
+  String get illizi => 'Illizi';
+
+  @override
+  String get naama => 'Naâma';
+
+  @override
   String get call => 'Call';
 
   @override
@@ -712,6 +859,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get selectProductCategory => 'Select the product category';
 
   @override
+  String get category => 'Category';
+
+  @override
+  String get organicCertification => 'Organic Certification';
+
+  @override
   String get productWeight => 'Product Weight';
 
   @override
@@ -785,7 +938,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get remove => 'Remove';
 
   @override
-  String get noImageSelected => 'No image selected';
+  String get noImageSelected =>
+      'No image selected. First image will be used as cover.';
 
   @override
   String get deliveryDetails => 'Delivery Details';
@@ -1078,4 +1232,48 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get pleaseLogin => 'Please login to access this feature';
+
+  @override
+  String get viewDetails => 'View Details';
+
+  @override
+  String get availableWeights => 'Available Weights';
+
+  @override
+  String get enterWeightsExample => 'e.g., 500g, 1kg, 2kg (comma-separated)';
+
+  @override
+  String get weightsHint =>
+      'Enter multiple weight options separated by commas (e.g., 500g, 1kg, 2kg)';
+
+  @override
+  String get enterPriceExample => 'Enter price (e.g., 1200)';
+
+  @override
+  String get enterProductDescription => 'Enter product description';
+
+  @override
+  String get harvestDateExample => 'e.g., Spring 2024, October 2024';
+
+  @override
+  String get storageExample =>
+      'e.g., Keep in cool place, Refrigerate after opening';
+
+  @override
+  String get unavailable => 'Unavailable';
+
+  @override
+  String get verifiedFarmer => 'Verified Farmer';
+
+  @override
+  String get addImages => 'Add Images';
+
+  @override
+  String get addMoreImages => 'Add More Images';
+
+  @override
+  String get productImages => 'Product Images';
+
+  @override
+  String get cover => 'Cover';
 }
