@@ -20,6 +20,7 @@ import 'package:mahsoul_dz/presentation/screens/farmerSide/farmer_side_screens.d
     hide LoginPage;
 import 'package:mahsoul_dz/core/services/local_notification_service.dart';
 import 'package:mahsoul_dz/core/services/fcm_service.dart';
+import 'package:mahsoul_dz/core/utils/user_state.dart';
 
 // Global navigator key for navigation from notifications
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -32,6 +33,27 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   print('Background message received: ${message.messageId}');
   // Background notifications are handled by the system
+}
+
+// Helper function to handle notification taps
+void _handleNotificationTap(Map<String, dynamic> data) {
+  // Try to get user type from notification data first
+  final userType = data['user_type'];
+  
+  if (userType == 'farmer') {
+    navigatorKey.currentState?.pushNamed('/OrdersPage');
+  } else if (userType == 'customer') {
+    navigatorKey.currentState?.pushNamed('/main');
+  } else {
+    // If no user_type in data, use stored current user type
+    final currentUserType = UserState.currentUserType;
+    if (currentUserType == 'farmer') {
+      navigatorKey.currentState?.pushNamed('/OrdersPage');
+    } else {
+      // Default to customer main page
+      navigatorKey.currentState?.pushNamed('/main');
+    }
+  }
 }
 
 void main() async {
@@ -49,33 +71,29 @@ void main() async {
   // Initialize FCM background handler
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   
+  // Initialize local notifications first
+  final localNotificationService = LocalNotificationService();
+  await localNotificationService.initialize();
+  
   // Initialize FCM service
   try {
     final fcmService = FCMService();
     await fcmService.initialize();
     
-    // Set up notification tap handler
+    // Set up notification tap handler for FCM background messages
     fcmService.onNotificationTapped = (data) {
-      // Navigate to orders page when notification is tapped
-      final userType = data['user_type'] ?? 'farmer';
-      if (userType == 'farmer') {
-        navigatorKey.currentState?.pushNamed('/OrdersPage');
-      } else {
-        // For customers, navigate to their orders page
-        final customerId = data['customer_id'];
-        if (customerId != null) {
-          // Navigate to customer orders - you may need to adjust this route
-          navigatorKey.currentState?.pushNamed('/main');
-        }
-      }
+      _handleNotificationTap(data);
     };
+    
+    // Set up notification tap handler for local notifications
+    localNotificationService.onNotificationTapped = (data) {
+      _handleNotificationTap(data);
+    };
+    
     print('✅ FCM service initialized successfully');
   } catch (e) {
     print('⚠️ FCM service initialization error: $e');
   }
-
-  // Initialize local notifications
-  await LocalNotificationService().initialize();
 
   runApp(MyApp());
 }

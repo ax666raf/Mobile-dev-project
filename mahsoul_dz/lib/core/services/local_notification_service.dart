@@ -42,10 +42,15 @@ class LocalNotificationService {
           importance: Importance.high,
           playSound: true,
           enableVibration: true,
+          showBadge: true,
         );
         
         await androidImplementation.createNotificationChannel(androidChannel);
-        print('✅ Android notification channel created');
+        print('✅ Android notification channel created: order_channel');
+        
+        // Request notification permissions for Android 13+
+        final granted = await androidImplementation.requestNotificationsPermission();
+        print('📱 Notification permission granted: $granted');
       }
     } catch (e) {
       print('⚠️ Error creating notification channel: $e');
@@ -55,9 +60,20 @@ class LocalNotificationService {
     print('✅ Local notifications initialized');
   }
 
+  Function(Map<String, dynamic>)? onNotificationTapped;
+
   void _onNotificationTapped(NotificationResponse response) {
-    // This will be handled by the notification handler in main.dart
-    // The payload will contain order_id for navigation
+    print('🔔 Notification tapped! Payload: ${response.payload}');
+    // Parse payload and trigger callback
+    if (onNotificationTapped != null && response.payload != null) {
+      try {
+        // Payload is stored as string representation of map
+        // For now, pass empty map - the navigation will use current user type
+        onNotificationTapped!({});
+      } catch (e) {
+        print('⚠️ Error handling notification tap: $e');
+      }
+    }
   }
 
   Future<void> showNotification({
@@ -68,13 +84,23 @@ class LocalNotificationService {
   }) async {
     if (!_initialized) await initialize();
 
-    const androidDetails = AndroidNotificationDetails(
+    print('🔔 Attempting to show notification:');
+    print('   ID: $id');
+    print('   Title: $title');
+    print('   Body: $body');
+    print('   Channel: order_channel');
+
+    final androidDetails = AndroidNotificationDetails(
       'order_channel',
       'Order Notifications',
       channelDescription: 'Notifications for new orders',
       importance: Importance.high,
       priority: Priority.high,
       showWhen: true,
+      enableVibration: true,
+      playSound: true,
+      styleInformation: BigTextStyleInformation(body),
+      icon: '@mipmap/ic_launcher',
     );
 
     const iosDetails = DarwinNotificationDetails(
@@ -83,12 +109,19 @@ class LocalNotificationService {
       presentSound: true,
     );
 
-    const details = NotificationDetails(
+    final details = NotificationDetails(
       android: androidDetails,
       iOS: iosDetails,
     );
 
-    await _notifications.show(id, title, body, details, payload: payload);
+    try {
+      await _notifications.show(id, title, body, details, payload: payload);
+      print('✅ Notification show() called successfully with ID: $id');
+      print('   Check notification tray (swipe down from top)');
+    } catch (e) {
+      print('❌ Error showing notification: $e');
+      print('   Stack trace: ${StackTrace.current}');
+    }
   }
 
   Future<void> cancelAll() async {

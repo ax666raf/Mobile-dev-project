@@ -63,19 +63,20 @@ class FCMService {
     print('   Data: ${message.data}');
     
     // Show local notification
+    // Store the data in payload so it can be accessed when notification is tapped
+    final payload = message.data.isNotEmpty 
+        ? message.data.toString() 
+        : '{}';
+    
     _localNotifications.showNotification(
       id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
       title: message.notification?.title ?? 'New Order',
       body: message.notification?.body ?? 'You have a new order',
-      payload: message.data.toString(),
+      payload: payload,
     );
     
     print('✅ Local notification shown');
-
-    // Trigger callback if set
-    if (onNotificationTapped != null) {
-      onNotificationTapped!(message.data);
-    }
+    // Don't navigate immediately - wait for user to tap notification
   }
 
   void _handleBackgroundMessage(RemoteMessage message) {

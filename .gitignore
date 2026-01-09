@@ -101,6 +101,27 @@ mahsoul_dz/ios/**/*.ipa
 mahsoul_dz/ios/**/*.xcuserdatad
 
 # ============================================
+# Backend - Uploads (user-uploaded files)
+# ============================================
+mahsoul_backend/uploads/
+mahsoul_backend/**/uploads/
+
+# ============================================
+# Backend - Firebase Service Account Keys (SENSITIVE - DO NOT COMMIT)
+# ============================================
+mahsoul_backend/*firebase*adminsdk*.json
+mahsoul_backend/**/*firebase*adminsdk*.json
+mahsoul_backend/*service*account*.json
+mahsoul_backend/**/*service*account*.json
+
+# ============================================
+# Flutter - Firebase Config (usually safe, but can be ignored if needed)
+# ============================================
+# Note: google-services.json is usually safe to commit, but uncomment if you want to ignore it
+# mahsoul_dz/android/app/google-services.json
+# mahsoul_dz/ios/Runner/GoogleService-Info.plist
+
+# ============================================
 # IDE and Editor files
 # ============================================
 **/.idea/

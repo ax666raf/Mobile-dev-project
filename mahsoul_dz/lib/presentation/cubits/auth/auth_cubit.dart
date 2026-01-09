@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mahsoul_dz/data/repositories/auth_repository.dart';
 import 'package:mahsoul_dz/core/errors/api_exception.dart';
 import 'package:mahsoul_dz/core/services/fcm_service.dart';
+import 'package:mahsoul_dz/core/utils/user_state.dart';
 import 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -26,9 +27,13 @@ class AuthCubit extends Cubit<AuthState> {
         // Don't fail login if FCM registration fails
       }
       
+      final userType = user['user_type'] as String;
+      // Store user type globally for notification navigation
+      UserState.setUserType(userType);
+      
       emit(AuthAuthenticated(
         userId: userId,
-        userType: user['user_type'] as String,
+        userType: userType,
       ));
     } on ApiException catch (e) {
       emit(AuthError(e.message));
@@ -67,9 +72,13 @@ class AuthCubit extends Cubit<AuthState> {
         // Don't fail signup if FCM registration fails
       }
       
+      final userTypeFromResponse = user['user_type'] as String;
+      // Store user type globally for notification navigation
+      UserState.setUserType(userTypeFromResponse);
+      
       emit(AuthAuthenticated(
         userId: userId,
-        userType: user['user_type'] as String,
+        userType: userTypeFromResponse,
       ));
     } on ApiException catch (e) {
       emit(AuthError(e.message));
@@ -100,6 +109,8 @@ class AuthCubit extends Cubit<AuthState> {
         }
       }
       
+      // Clear user type on logout
+      UserState.clear();
       emit(AuthUnauthenticated());
     } on ApiException catch (e) {
       emit(AuthError(e.message));

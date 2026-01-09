@@ -1,5 +1,9 @@
+from dotenv import load_dotenv
 from app import create_app
 from config import Config
+
+# Load environment variables from .env file if it exists
+load_dotenv()
 
 app = create_app(Config)
 
@@ -8,6 +12,18 @@ if __name__ == '__main__':
     print("[INFO] Server running at http://localhost:5000")
     print("[INFO] Accessible from Android emulator at http://10.0.2.2:5000")
     print("[INFO] Accessible from network at http://0.0.0.0:5000")
+    print("=" * 50)
+    
+    # Verify Firebase configuration (optional - will initialize when first notification is sent)
+    try:
+        from app.utils.fcm_service import FCMService
+        if FCMService.initialize():
+            print("✅ Firebase Admin SDK configured and ready")
+        else:
+            print("⚠️ Firebase Admin SDK not configured (notifications will be saved but not pushed)")
+    except Exception as e:
+        print(f"⚠️ Firebase verification skipped: {e}")
+    
     print("=" * 50)
     app.run(debug=True, host='0.0.0.0', port=5000, threaded=True)
 

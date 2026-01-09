@@ -44,13 +44,20 @@ def add_address():
         postal_code = data.get('postal_code')
         is_default = data.get('is_default', False)
         
-        print(f"🔵 Extracted: customer_id={customer_id}, address={address}, city={city}, postal_code={postal_code}")
+        print(f"🔵 Extracted: customer_id={customer_id}, address={address}, city={city}, postal_code={postal_code}, is_default={is_default}")
         
         if not customer_id or not address or not city:
             return jsonify({'error': 'customer_id, address, and city required'}), 400
     
         try:
-            if is_default:
+            # Check if this is the first address for this customer
+            existing_addresses = DeliveryAddress.query.filter_by(customer_id=customer_id).all()
+            if len(existing_addresses) == 0:
+                # First address - automatically set as default
+                is_default = True
+                print(f"🔵 First address for customer - automatically setting as default")
+            elif is_default:
+                # If setting as default, unset all other addresses
                 DeliveryAddress.query.filter_by(customer_id=customer_id).update({'is_default': False})
             
             now = int(datetime.now().timestamp() * 1000)

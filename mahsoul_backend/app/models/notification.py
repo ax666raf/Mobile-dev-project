@@ -18,6 +18,17 @@ class Notification(db.Model):
     order = db.relationship('Order', backref='notifications')
     
     def to_dict(self):
+        try:
+            order_data = None
+            if self.order:
+                order_data = {
+                    'id': self.order.id,
+                    'status': self.order.status,
+                    'total_price': self.order.total_price,
+                }
+        except Exception:
+            order_data = None
+        
         return {
             'id': self.id,
             'farmer_id': self.farmer_id,
@@ -27,9 +38,5 @@ class Notification(db.Model):
             'type': self.type,
             'is_read': self.is_read,
             'created_at': self.created_at,
-            'order': {
-                'id': self.order.id,
-                'status': self.order.status,
-                'total_price': self.order.total_price,
-            } if self.order else None
+            'order': order_data
         }

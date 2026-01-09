@@ -47,7 +47,7 @@ def get_product(product_id):
             return jsonify({'error': 'Product not found'}), 404
         
         include_reviews = request.args.get('include_reviews', 'false').lower() == 'true'
-        return jsonify(product.to_dict(include_reviews=include_reviews)), 200
+        return jsonify(product.to_dict(include_reviews=include_reviews, include_images=True)), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 

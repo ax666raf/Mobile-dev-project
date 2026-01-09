@@ -45,9 +45,13 @@ def signup():
         email = data.get('email')
         password = data.get('password')
         user_type = data.get('user_type')
+        phone_number = data.get('phone_number')
         
         if not email or not password or not user_type:
             return jsonify({'error': 'Email, password, and user_type required'}), 400
+        
+        if not phone_number:
+            return jsonify({'error': 'Phone number is required'}), 400
         
         if user_type not in ['customer', 'farmer']:
             return jsonify({'error': 'Invalid user_type. Must be "customer" or "farmer"'}), 400

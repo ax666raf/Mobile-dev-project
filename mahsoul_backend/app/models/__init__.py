@@ -11,6 +11,8 @@ from app.models.review import Review
 from app.models.delivery_address import DeliveryAddress
 from app.models.notification import Notification
 from app.models.favorite import Favorite
+from app.models.fcm_token import FCMToken
+from app.models.product_image import ProductImage
 
 __all__ = [
     'User',
@@ -18,6 +20,7 @@ __all__ = [
     'FarmerProfile',
     'Product',
     'ProductWeight',
+    'ProductImage',
     'CartItem',
     'Order',
     'OrderItem',
@@ -25,5 +28,6 @@ __all__ = [
     'DeliveryAddress',
     'Notification',
     'Favorite',
+    'FCMToken',
 ]
 

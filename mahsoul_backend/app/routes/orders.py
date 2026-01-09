@@ -4,6 +4,8 @@ from app.models.order import Order
 from app.models.order_item import OrderItem
 from app.models.cart_item import CartItem
 from app.models.product import Product
+from app.models.farmer_profile import FarmerProfile
+from app.models.customer_profile import CustomerProfile
 import uuid
 from datetime import datetime
 import re
@@ -51,9 +53,54 @@ def get_orders():
         
         orders = query.order_by(Order.created_at.desc()).all()
         
+        # Include farmer/customer information based on who is requesting
+        orders_data = []
+        for order in orders:
+            order_dict = order.to_dict(include_items=True)
+            
+            # If customer is requesting, include farmer information
+            if customer_id:
+                if order.farmer_user:
+                    farmer_profile = FarmerProfile.query.filter_by(user_id=order.farmer_id).first()
+                    # Use contact_number from farmer_profile if available, else use phone_number from user
+                    farmer_phone = None
+                    if farmer_profile and farmer_profile.contact_number:
+                        farmer_phone = farmer_profile.contact_number
+                    elif order.farmer_user.phone_number:
+                        farmer_phone = order.farmer_user.phone_number
+                    
+                    order_dict['farmer'] = {
+                        'id': order.farmer_user.id,
+                        'full_name': order.farmer_user.full_name,
+                        'email': order.farmer_user.email,
+                        'phone_number': farmer_phone,
+                        'farm_name': farmer_profile.farm_name if farmer_profile else None,
+                    }
+            
+            # If farmer is requesting, include customer information
+            if farmer_id:
+                if order.customer_user:
+                    # Get phone number - check if column exists and has value
+                    customer_phone = None
+                    try:
+                        customer_phone = order.customer_user.phone_number
+                        if not customer_phone:
+                            print(f"⚠️ Customer {order.customer_user.id} has no phone_number in database")
+                    except AttributeError as e:
+                        print(f"⚠️ phone_number column might not exist in users table: {e}")
+                    
+                    order_dict['customer'] = {
+                        'id': order.customer_user.id,
+                        'full_name': order.customer_user.full_name,
+                        'email': order.customer_user.email,
+                        'phone_number': customer_phone,
+                    }
+            
+            orders_data.append(order_dict)
+        
         return jsonify({
-            'orders': [o.to_dict(include_items=True) for o in orders],
-            'count': len(orders)
+            'orders': orders_data,
+            'count': len(orders_data)
         }), 200
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -150,6 +197,17 @@ def place_order():
         
         for item in cart_items:
             db.session.delete(item)
+        
+        # Update customer's total_orders
+        customer_profile = CustomerProfile.query.filter_by(user_id=customer_id).first()
+        if customer_profile:
+            customer_profile.total_orders = (customer_profile.total_orders or 0) + 1
+        
+        # Update farmer's orders_completed and total_earnings
+        farmer_profile = FarmerProfile.query.filter_by(user_id=farmer_id).first()
+        if farmer_profile:
+            farmer_profile.orders_completed = (farmer_profile.orders_completed or 0) + 1
+            farmer_profile.total_earnings = (farmer_profile.total_earnings or 0.0) + total_price
         
         db.session.commit()
         

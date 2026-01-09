@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from app.utils.database import db
 from app.models.product import Product
 from app.models.product_weight import ProductWeight
+from app.models.product_image import ProductImage
 from app.models.order import Order
 from app.models.farmer_profile import FarmerProfile
 from sqlalchemy import func
@@ -86,6 +87,26 @@ def add_product():
             )
             db.session.add(weight)
         
+        # Add product images (multiple images support)
+        image_paths = data.get('image_paths', [])
+        if not image_paths and data.get('image_path'):
+            # Backward compatibility: if single image_path provided, add it
+            image_paths = [data.get('image_path')]
+        
+        for index, image_path in enumerate(image_paths):
+            if image_path:  # Only add if image_path is not None/empty
+                product_image = ProductImage(
+                    id=str(uuid.uuid4()),
+                    product_id=product.id,
+                    image_path=image_path,
+                    is_primary=(index == 0),  # First image is primary
+                    display_order=index,
+                )
+                db.session.add(product_image)
+                # Set product.image_path to first image for backward compatibility
+                if index == 0:
+                    product.image_path = image_path
+        
         # Update farmer's active products count
         farmer_profile = FarmerProfile.query.filter_by(user_id=farmer_id).first()
         if farmer_profile:
@@ -98,7 +119,7 @@ def add_product():
         
         return jsonify({
             'message': 'Product added successfully',
-            'product': product.to_dict()
+            'product': product.to_dict(include_images=True)
         }), 201
     except Exception as e:
         db.session.rollback()
@@ -141,11 +162,43 @@ def update_product(product_id):
                 )
                 db.session.add(weight)
         
+        # Update product images if provided
+        if 'image_paths' in data:
+            # Delete existing images
+            ProductImage.query.filter_by(product_id=product_id).delete()
+            # Add new images
+            image_paths = data.get('image_paths', [])
+            for index, image_path in enumerate(image_paths):
+                if image_path:  # Only add if image_path is not None/empty
+                    product_image = ProductImage(
+                        id=str(uuid.uuid4()),
+                        product_id=product_id,
+                        image_path=image_path,
+                        is_primary=(index == 0),  # First image is primary
+                        display_order=index,
+                    )
+                    db.session.add(product_image)
+                    # Update product.image_path to first image for backward compatibility
+                    if index == 0:
+                        product.image_path = image_path
+        elif 'image_path' in data and data.get('image_path'):
+            # Backward compatibility: if single image_path provided, update images
+            ProductImage.query.filter_by(product_id=product_id).delete()
+            product_image = ProductImage(
+                id=str(uuid.uuid4()),
+                product_id=product_id,
+                image_path=data['image_path'],
+                is_primary=True,
+                display_order=0,
+            )
+            db.session.add(product_image)
+            product.image_path = data['image_path']
+        
         db.session.commit()
         
         return jsonify({
             'message': 'Product updated successfully',
-            'product': product.to_dict()
+            'product': product.to_dict(include_images=True)
         }), 200
     except Exception as e:
         db.session.rollback()
@@ -202,11 +255,20 @@ def get_farmer_orders():
             order_dict = order.to_dict(include_items=True)
             # Add customer information
             if order.customer_user:
+                # Get phone number - check if column exists and has value
+                customer_phone = None
+                try:
+                    customer_phone = order.customer_user.phone_number
+                    if not customer_phone:
+                        print(f"⚠️ Customer {order.customer_user.id} has no phone_number in database")
+                except AttributeError as e:
+                    print(f"⚠️ phone_number column might not exist in users table: {e}")
+                
                 order_dict['customer'] = {
                     'id': order.customer_user.id,
                     'full_name': order.customer_user.full_name,
                     'email': order.customer_user.email,
-                    'phone_number': order.customer_user.phone_number,
+                    'phone_number': customer_phone,
                 }
             orders_data.append(order_dict)
         

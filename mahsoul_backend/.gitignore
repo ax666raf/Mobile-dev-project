@@ -7,9 +7,6 @@ __pycache__/
 *.egg-info/
 dist/
 build/
-*.pyc
-*.pyo
-*.pyd
 
 # Virtual Environment
 venv/
@@ -17,13 +14,6 @@ env/
 ENV/
 .venv/
 virtualenv/
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-*.env
-.envrc
 
 # Database files
 instance/
@@ -34,9 +24,21 @@ instance/
 *.sqlite
 *.sqlite3
 
-# Flask
-instance/
-.webassets-cache
+# Environment variables
+.env
+.env.local
+.env.*.local
+*.env
+
+# Uploads (user-uploaded files - DO NOT COMMIT)
+uploads/
+**/uploads/
+
+# Firebase Service Account Keys (DO NOT COMMIT)
+*firebase*adminsdk*.json
+**/*firebase*adminsdk*.json
+*service*account*.json
+**/*service*account*.json
 
 # IDE
 .vscode/
@@ -47,9 +49,3 @@ instance/
 
 # Logs
 *.log
-logs/
-
-# OS
-.DS_Store
-Thumbs.db
-

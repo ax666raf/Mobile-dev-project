@@ -92,12 +92,6 @@ class _MenuPageState extends State<MenuPage> {
                                       fontSize: 18,
                                     ),
                                   ),
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white,
-                                      fontSize: 30,
-                                    ),
-                                  ),
                                   const SizedBox(height: 10),
                                   GestureDetector(
                                     onTap: () {

@@ -29,7 +29,7 @@ class Product(db.Model):
     order_items = db.relationship('OrderItem', backref='product', cascade='all, delete-orphan')
     favorites = db.relationship('Favorite', backref='product', cascade='all, delete-orphan')
     
-    def to_dict(self, include_weights=True, include_reviews=False):
+    def to_dict(self, include_weights=True, include_reviews=False, include_images=True):
         """Convert product to dictionary"""
         result = {
             'id': self.id,
@@ -43,7 +43,7 @@ class Product(db.Model):
             'harvest_season': self.harvest_season,
             'is_organic': bool(self.is_organic),
             'storage_instructions': self.storage_instructions,
-            'image_path': self.image_path,
+            'image_path': self.image_path,  # Keep for backward compatibility (primary image)
             'rating': self.rating,
             'review_count': self.review_count,
             'status': self.status,
@@ -56,6 +56,15 @@ class Product(db.Model):
         
         if include_reviews:
             result['reviews'] = [r.to_dict() for r in self.reviews]
+        
+        if include_images:
+            # Include all product images, sorted by display_order
+            images = [img.to_dict() for img in sorted(self.images, key=lambda x: (x.display_order, x.created_at))]
+            result['images'] = images
+            # Set primary image path from first image if available, otherwise use image_path
+            if images:
+                primary_image = next((img for img in images if img['is_primary']), images[0])
+                result['image_path'] = primary_image['image_path']
         
         return result
 
